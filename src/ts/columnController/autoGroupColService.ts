@@ -70,6 +70,7 @@ export class AutoGroupColService {
 
         let newCol = new Column(defaultAutoColDef, colId, true);
         this.context.wireBean(newCol);
+        newCol.setAutoGroupColumn(true);
 
         return newCol;
     }
@@ -80,9 +81,6 @@ export class AutoGroupColService {
             headerName: localeTextFunc('group', 'Group'),
             cellRenderer: 'agGroupCellRenderer'
         };
-
-        // we never allow moving the group column
-        defaultAutoColDef.suppressMovable = true;
 
         if (rowGroupCol) {
             let rowGroupColDef = rowGroupCol.getColDef();

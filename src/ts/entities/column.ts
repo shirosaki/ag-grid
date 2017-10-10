@@ -95,6 +95,9 @@ export class Column implements ColumnGroupChild, OriginalColumnGroupChild, IEven
     private rowGroupActive = false;
     private pivotActive = false;
     private aggregationActive = false;
+    private autoGroupColumn = false;
+
+    private fakePaths: Array<any>;
 
     private primary: boolean;
 
@@ -609,6 +612,22 @@ export class Column implements ColumnGroupChild, OriginalColumnGroupChild, IEven
 
     public isValueActive(): boolean {
         return this.aggregationActive;
+    }
+
+    public setAutoGroupColumn(value: boolean): void {
+        this.autoGroupColumn = value;
+    }
+
+    public isAutoGroupColumn(): boolean {
+        return this.autoGroupColumn === true;
+    }
+
+    public setFakePaths(value: Array<any>): void {
+        this.fakePaths = value;
+    }
+
+    public getFakePaths(): Array<any> {
+        return this.fakePaths;
     }
 
     public isAllowPivot(): boolean {

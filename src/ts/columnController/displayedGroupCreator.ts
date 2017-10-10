@@ -136,19 +136,25 @@ export class DisplayedGroupCreator {
         });
     }
 
-    private createFakePath(balancedColumnTree: OriginalColumnGroupChild[]): OriginalColumnGroup[] {
+    private createFakePath(balancedColumnTree: OriginalColumnGroupChild[], column: Column): OriginalColumnGroup[] {
         let result: OriginalColumnGroup[] = [];
         let currentChildren = balancedColumnTree;
         // this while look does search on the balanced tree, so our result is the right length
         let index = 0;
+        // reuse fake paths to update left position after moving
+        let fakePaths = column.getFakePaths() || [];
         while (currentChildren && currentChildren[0] && currentChildren[0] instanceof OriginalColumnGroup) {
             // putting in a deterministic fake id, in case the API in the future needs to reference the col
-            let fakePath = new OriginalColumnGroup(null, 'FAKE_PATH_' + index, true);
-            this.context.wireBean(fakePath);
+            let fakePath = fakePaths[index];
+            if (!fakePath) {
+                fakePath = fakePaths[index] = new OriginalColumnGroup(null, 'FAKE_PATH_' + index, true);
+                this.context.wireBean(fakePath);
+            }
             result.push(fakePath);
             currentChildren = (<OriginalColumnGroup>currentChildren[0]).getChildren();
             index++;
         }
+        column.setFakePaths(fakePaths);
         return result;
     }
 
@@ -165,7 +171,7 @@ export class DisplayedGroupCreator {
         if (found) {
             return result;
         } else {
-            return this.createFakePath(balancedColumnTree);
+            return this.createFakePath(balancedColumnTree, column);
         }
 
         function recursePath(balancedColumnTree: OriginalColumnGroupChild[], dept: number): void {

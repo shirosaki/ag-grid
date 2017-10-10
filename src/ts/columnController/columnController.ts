@@ -918,6 +918,9 @@ export class ColumnController {
         if (failedRules) { return; }
 
         _.moveInArray(this.gridColumns, columnsToMove, toIndex);
+        if (!this.secondaryColumns) {
+            this.primaryColumns = this.gridColumns.slice();
+        }
 
         this.updateDisplayedColumns();
 
@@ -1275,6 +1278,8 @@ export class ColumnController {
         let primaryColumns = this.getColumnsFromTree(this.primaryBalancedTree);
         let state: any[] = [];
 
+        this.primaryColumns = primaryColumns;
+
         if (primaryColumns) {
             primaryColumns.forEach( (column) => {
                 state.push({
@@ -1307,13 +1312,14 @@ export class ColumnController {
 
         let rowGroupIndexes: {[key: string]: number} = {};
         let pivotIndexes: {[key: string]: number} = {};
+        let failedState: any[] = [];
 
         if (columnState) {
             columnState.forEach( (stateItem: any)=> {
                 let column = this.getPrimaryColumn(stateItem.colId);
                 if (!column) {
-                    console.warn('ag-grid: column ' + stateItem.colId + ' not found');
-                    success = false;
+                    // auto group columns fail here, try later
+                    failedState.push(stateItem);
                 } else {
                     this.syncColumnWithStateItem(column, stateItem, rowGroupIndexes, pivotIndexes);
                     _.removeFromArray(columnsWithNoState, column);
@@ -1337,6 +1343,26 @@ export class ColumnController {
             return indexA - indexB;
         });
 
+        // set auto group column state and the order in primaryColumns
+        this.createGroupAutoColumnsIfNeeded();
+        let autoGroupColumns: any[] = [];
+        failedState.forEach( (stateItem) => {
+            var column = this.getPrimaryColumn(stateItem.colId);
+            if (!column) {
+                console.warn('ag-grid: column ' + stateItem.colId + ' not found');
+                success = false;
+            } else {
+                this.syncColumnWithStateItem(column, stateItem, {}, {});
+                _.removeFromArray(this.primaryColumns, column);
+                autoGroupColumns.push([column, columnState.indexOf(stateItem)]);
+            }
+        });
+        autoGroupColumns.forEach( (column) => {
+            _.insertIntoArray(this.primaryColumns, column[0], column[1]);
+        });
+        if (!this.secondaryColumns) {
+            this.gridColumns = this.primaryColumns.slice();
+        }
         this.updateDisplayedColumns();
 
         let event: ColumnEverythingChangedEvent = {
@@ -1816,6 +1842,8 @@ export class ColumnController {
 
         let columnsForDisplay: Column[];
 
+        this.createGroupAutoColumnsIfNeeded();
+
         if (this.pivotMode && !this.secondaryColumnsPresent) {
             // pivot mode is on, but we are not pivoting, so we only
             // show columns we are aggregating on
@@ -1825,10 +1853,7 @@ export class ColumnController {
             // or secondary columns, whatever the gridColumns are set to
             columnsForDisplay = _.filter(this.gridColumns, column => column.isVisible() );
         }
-
-        this.createGroupAutoColumnsIfNeeded();
-
-        if (_.exists(this.groupAutoColumns)) {
+        if (this.pivotMode && _.exists(this.groupAutoColumns)) {
             columnsForDisplay = this.groupAutoColumns.concat(columnsForDisplay);
         }
 
@@ -2310,8 +2335,32 @@ export class ColumnController {
 
         if (needAutoColumns) {
             this.groupAutoColumns = this.autoGroupColService.createAutoGroupColumns(this.rowGroupColumns);
+            // merge groupAutoColumns to primaryColumns
+            this.groupAutoColumns.forEach( groupCol => {
+                let colIndex = -1;
+                for (let i = 0; i < this.primaryColumns.length; i++) {
+                    if (groupCol.getColId() === this.primaryColumns[i].getColId()) {
+                        colIndex = i;
+                        break;
+                    }
+                }
+                if (colIndex >= 0) {
+                    let stateItem = this.createStateItemFromColumn(this.primaryColumns[colIndex]);
+                    this.syncColumnWithStateItem(groupCol, stateItem, {}, {});
+                    this.primaryColumns[colIndex] = groupCol;
+                } else {
+                    this.primaryColumns.unshift(groupCol);
+                }
+            });
+            this.primaryColumns = this.primaryColumns.filter( column => {
+                return !column.isAutoGroupColumn() || this.groupAutoColumns.indexOf(column) >= 0;
+            });
         } else {
             this.groupAutoColumns = null;
+            this.primaryColumns = this.primaryColumns.filter( column => !column.isAutoGroupColumn() );
+        }
+        if (!this.secondaryColumns) {
+            this.gridColumns = this.primaryColumns.slice();
         }
     }
 

@@ -77,7 +77,8 @@ export class MoveColumnController {
         let hideColumnOnExit = !this.gridOptionsWrapper.isSuppressDragLeaveHidesColumns() && !draggingEvent.fromNudge;
         if (hideColumnOnExit) {
             let dragItem = draggingEvent.dragSource.dragItemCallback();
-            let columns = dragItem.columns;
+            // auto group columns cannot be hidden
+            let columns = dragItem.columns.filter( column => !column.isAutoGroupColumn() );
             this.columnController.setColumnsVisible(columns, false);
         }
         this.ensureIntervalCleared();
