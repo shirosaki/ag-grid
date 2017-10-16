@@ -5,6 +5,7 @@ import {GroupInstanceIdCreator} from "./groupInstanceIdCreator";
 import {ColumnGroupChild} from "../entities/columnGroupChild";
 import {ColumnGroup} from "../entities/columnGroup";
 import {OriginalColumnGroup} from "../entities/originalColumnGroup";
+import {ColGroupDef} from "../entities/colDef";
 import {Bean, Context} from "../context/context";
 import {Utils as _} from "../utils";
 import {Autowired} from "../context/context";
@@ -147,7 +148,8 @@ export class DisplayedGroupCreator {
             // putting in a deterministic fake id, in case the API in the future needs to reference the col
             let fakePath = fakePaths[index];
             if (!fakePath) {
-                fakePath = fakePaths[index] = new OriginalColumnGroup(null, 'FAKE_PATH_' + index, true);
+                let colGroupDef = <ColGroupDef> { headerName: '' };
+                fakePath = fakePaths[index] = new OriginalColumnGroup(colGroupDef, 'FAKE_PATH_' + index, true);
                 this.context.wireBean(fakePath);
             }
             result.push(fakePath);
