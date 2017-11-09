@@ -94,10 +94,10 @@ export class FlattenStage implements IRowNodeStage {
             if (isParent) {
                 // we traverse the group if it is expended, however we always traverse if the parent node
                 // was removed (as the group will never be opened if it is not displayed, we show the children instead)
-                if (rowNode.expanded || isRemovedSingleChildrenGroup) {
+                if (rowNode.expanded || isRemovedSingleChildrenGroup || isRemovedLowestSingleChildrenGroup) {
 
                     // if the parent was excluded, then ui level is that of the parent
-                    let uiLevelForChildren = isRemovedSingleChildrenGroup ? uiLevel : uiLevel + 1;
+                    let uiLevelForChildren = (isRemovedSingleChildrenGroup || isRemovedLowestSingleChildrenGroup) ? uiLevel : uiLevel + 1;
                     this.recursivelyAddToRowsToDisplay(rowNode.childrenAfterSort, result,
                         nextRowTop, skipLeafNodes, uiLevelForChildren);
 
