@@ -2336,6 +2336,7 @@ export class ColumnController {
         if (needAutoColumns) {
             this.groupAutoColumns = this.autoGroupColService.createAutoGroupColumns(this.rowGroupColumns);
             // merge groupAutoColumns to primaryColumns
+            let autoGroupColumnIndex = this.gridOptionsWrapper.getAutoGroupColumnIndex() || 0;
             this.groupAutoColumns.forEach( groupCol => {
                 let colIndex = -1;
                 for (let i = 0; i < this.primaryColumns.length; i++) {
@@ -2349,7 +2350,7 @@ export class ColumnController {
                     this.syncColumnWithStateItem(groupCol, stateItem, {}, {});
                     this.primaryColumns[colIndex] = groupCol;
                 } else {
-                    this.primaryColumns.unshift(groupCol);
+                    this.primaryColumns.splice(autoGroupColumnIndex, 0, groupCol);
                 }
             });
             this.primaryColumns = this.primaryColumns.filter( column => {
