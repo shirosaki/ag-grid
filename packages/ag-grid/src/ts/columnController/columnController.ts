@@ -1414,6 +1414,10 @@ export class ColumnController {
         let columnStateList: ColumnState[] = this.primaryColumns.map(this.createStateItemFromColumn.bind(this));
 
         if (!this.pivotMode) {
+            if (this.groupAutoColumns) {
+                // to keep the order of auto group column in setColumnState()
+                columnStateList.push(<ColumnState> { colId: AutoGroupColService.GROUP_AUTO_COLUMN_ID });
+            }
             this.orderColumnStateList(columnStateList);
         }
 
@@ -1471,6 +1475,9 @@ export class ColumnController {
 
         if (columnState) {
             columnState.forEach((stateItem: any) => {
+                if (stateItem.colId == AutoGroupColService.GROUP_AUTO_COLUMN_ID) {
+                    return;
+                }
                 let column = this.getPrimaryColumn(stateItem.colId);
                 if (!column) {
                     console.warn('ag-grid: column ' + stateItem.colId + ' not found');
