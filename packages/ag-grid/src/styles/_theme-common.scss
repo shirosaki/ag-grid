@@ -582,6 +582,10 @@ $tool-panel-box-padding: 4px 4px 10px 4px;
         border-right: $ag-border-1;
         //.ag-column-drop-cell
         //    padding 2px
+        & > div:first-child {
+            float: left;
+            height: 100%;
+        }
     }
     /* this is for the column drops that appear in the toolPanel */
     .ag-column-drop-vertical {
