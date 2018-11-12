@@ -80,6 +80,7 @@ export interface GridOptions {
      ****************************************************************/
 
     // set once in init, can never change
+    suppressBrowserResizeObserver?: boolean
     rowDragManaged?: boolean;
     suppressRowDrag?: boolean;
     ensureDomOrder?: boolean;

@@ -242,7 +242,7 @@ export class Utils {
 
     static filter<T>(array: T[], callback: (item: T) => boolean): T[] {
         let result: T[] = [];
-        array.forEach(function (item: T) {
+        array.forEach(function(item: T) {
             if (callback(item)) {
                 result.push(item);
             }
@@ -281,7 +281,7 @@ export class Utils {
     static assign(object: any, ...sources: any[]): any {
         sources.forEach(source => {
             if (this.exists(source)) {
-                this.iterateObject(source, function (key: string, value: any) {
+                this.iterateObject(source, function(key: string, value: any) {
                     object[key] = value;
                 });
             }
@@ -360,7 +360,7 @@ export class Utils {
                     break;
                 }
             } else {
-                let callback = <(item: T) => void> predicate;
+                const callback = predicate as (item: T) => boolean;
                 if (callback(item)) {
                     firstMatchingItem = item;
                     break;
@@ -371,7 +371,7 @@ export class Utils {
     }
 
     static toStrings<T>(array: T[]): string[] {
-        return this.map(array, function (item) {
+        return this.map(array, function(item) {
             if (item === undefined || item === null || !item.toString) {
                 return null;
             } else {
@@ -872,11 +872,11 @@ export class Utils {
         }
     }
 
-    static formatWidth(width: number | string) {
-        if (typeof width === "number") {
-            return width + "px";
+    static formatSize(size: number | string) {
+        if (typeof size === "number") {
+            return size + "px";
         } else {
-            return width;
+            return size;
         }
     }
 
@@ -1095,6 +1095,20 @@ export class Utils {
         this.addOrRemoveCssClass(element, 'ag-visibility-hidden', hidden);
     }
 
+    static setFixedWidth(element: HTMLElement, width: string | number) {
+        width = this.formatSize(width);
+        element.style.width = width;
+        element.style.maxWidth = width;
+        element.style.minWidth = width;
+    }
+
+    static setFixedHeight(element: HTMLElement, height: string | number) {
+        height = this.formatSize(height);
+        element.style.height = height;
+        element.style.maxHeight = height;
+        element.style.minHeight = height;
+    }
+
     static isBrowserIE(): boolean {
         if (this.isIE === undefined) {
             this.isIE = /*@cc_on!@*/false || !!(<any>document).documentMode; // At least IE6
@@ -1114,8 +1128,8 @@ export class Utils {
             let anyWindow = <any> window;
             // taken from https://github.com/ag-grid/ag-grid/issues/550
             this.isSafari = Object.prototype.toString.call(anyWindow.HTMLElement).indexOf('Constructor') > 0
-                || (function (p) {
-                    return p.toString() === "[object SafariRemoteNotification]";
+                || (function(p) {
+                    return p ? p.toString() === "[object SafariRemoteNotification]" : false;
                 })
                 (!anyWindow.safari || anyWindow.safari.pushNotification);
         }
@@ -1184,9 +1198,9 @@ export class Utils {
         // https://developer.mozilla.org/en-US/docs/Web/API/Event
 
         let eventNoType = <any> event;
-        if (event.deepPath) {
+        if (eventNoType.deepPath) {
             // IE supports deep path
-            return event.deepPath();
+            return eventNoType.deepPath();
         } else if (eventNoType.path) {
             // Chrome supports path
             return eventNoType.path;
@@ -1502,7 +1516,7 @@ export class Utils {
         var timeout: any;
 
         // Calling debounce returns a new anonymous function
-        return function () {
+        return function() {
             // reference the context and args for the setTimeout function
             var context = this,
                 args = arguments;
@@ -1518,7 +1532,7 @@ export class Utils {
             clearTimeout(timeout);
 
             // Set the new timeout
-            timeout = setTimeout(function () {
+            timeout = setTimeout(function() {
 
                 // Inside the timeout function, clear the timeout variable
                 // which will let the next execution run when in 'immediate' mode
@@ -1720,17 +1734,20 @@ export class Utils {
         return v;
     }
 
-    static string_similarity = function(str1:string, str2:string) {
-        var hit_count, j, k, len, len1, pairs1, pairs2, union, x, y;
+    static string_similarity = function(str1: string, str2: string) {
         if (str1.length > 0 && str2.length > 0) {
-            pairs1 = Utils.get_bigrams(str1);
-            pairs2 = Utils.get_bigrams(str2);
-            union = pairs1.length + pairs2.length;
-            hit_count = 0;
+            const pairs1 = Utils.get_bigrams(str1);
+            const pairs2 = Utils.get_bigrams(str2);
+            const union = pairs1.length + pairs2.length;
+            let hit_count = 0;
+            let j;
+            let len;
             for (j = 0, len = pairs1.length; j < len; j++) {
-                x = pairs1[j];
+                const x = pairs1[j];
+                let k;
+                let len1;
                 for (k = 0, len1 = pairs2.length; k < len1; k++) {
-                    y = pairs2[k];
+                    const y = pairs2[k];
                     if (x === y) {
                         hit_count++;
                     }

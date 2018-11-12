@@ -75,6 +75,7 @@ import {HeightScaler} from "./rendering/heightScaler";
 import {SelectableService} from "./rowNodes/selectableService";
 import {AutoHeightCalculator} from "./rendering/autoHeightCalculator";
 import {PaginationComp} from "./rowModels/pagination/paginationComp";
+import { ResizeObserverService } from "./misc/resizeObserverService";
 
 export interface GridParams {
     // used by Web Components
@@ -193,7 +194,7 @@ export class Grid {
                 CellNavigationService, FilterStage, SortStage, FlattenStage, FilterService, RowNodeFactory,
                 CellEditorFactory, CellRendererService, ValueFormatterService, StylingService, ScrollVisibleService,
                 ColumnHoverService, ColumnAnimationService, SortService, SelectableService, AutoGroupColService, ImmutableService,
-                ChangeDetectionService, Environment, AnimationFrameService, SortController],
+                ChangeDetectionService, Environment, AnimationFrameService, SortController, ResizeObserverService],
             components: components,
             debug: !!gridOptions.debug
         };

@@ -95,6 +95,8 @@ export class GridOptionsWrapper {
 
     public static PROP_GRID_AUTO_HEIGHT = 'gridAutoHeight';
 
+    public static PROP_DOM_LAYOUT = 'domLayout';
+
     @Autowired('gridOptions') private gridOptions: GridOptions;
     @Autowired('columnController') private columnController: ColumnController;
     @Autowired('eventService') private eventService: EventService;
@@ -108,6 +110,8 @@ export class GridOptionsWrapper {
     private propertyEventService: EventService = new EventService();
 
     private domDataKey = '__AG_'+Math.random().toString();
+
+    private layoutElements: HTMLElement[] = [];
 
     private agWire(@Qualifier('gridApi') gridApi: GridApi, @Qualifier('columnApi') columnApi: ColumnApi): void {
         this.gridOptions.api = gridApi;
@@ -253,6 +257,9 @@ export class GridOptionsWrapper {
 
     public isFullRowEdit() { return this.gridOptions.editType === 'fullRow'; }
     public isSuppressFocusAfterRefresh() { return isTrue(this.gridOptions.suppressFocusAfterRefresh); }
+    public isSuppressBrowserResizeObserver() {
+        return isTrue(this.gridOptions.suppressBrowserResizeObserver);
+    }
     public isShowToolPanel() { return isTrue(this.gridOptions.showToolPanel); }
     public isToolPanelSuppressValues() { return isTrue(this.gridOptions.toolPanelSuppressValues); }
     public isToolPanelSuppressPivots() {
@@ -304,6 +311,24 @@ export class GridOptionsWrapper {
     public isSuppressScrollOnNewData() { return isTrue(this.gridOptions.suppressScrollOnNewData); }
     public isRowDragManaged() { return isTrue(this.gridOptions.rowDragManaged); }
     public isSuppressRowDrag() { return isTrue(this.gridOptions.suppressRowDrag); }
+
+    // returns either 'print', 'autoHeight' or 'normal' (normal is the default)
+    public getDomLayout(): string {
+
+        const domLayout = this.gridOptions.domLayout;
+
+        if (domLayout === Constants.DOM_LAYOUT_PRINT
+            || domLayout === Constants.DOM_LAYOUT_AUTO_HEIGHT
+            || domLayout === Constants.DOM_LAYOUT_NORMAL) {
+            return domLayout;
+        } else if (domLayout === null || domLayout === undefined) {
+            return Constants.DOM_LAYOUT_NORMAL;
+        } else {
+            _.doOnce(() => console.warn(`ag-Grid: ${this.gridOptions.domLayout} is not valid for DOM Layout, valid values are ${Constants.DOM_LAYOUT_NORMAL}, ${Constants.DOM_LAYOUT_AUTO_HEIGHT} and ${Constants.DOM_LAYOUT_PRINT}`),
+                'warn about dom layout values');
+            return Constants.DOM_LAYOUT_NORMAL;
+        }
+    }
 
     public isGridAutoHeight() { return isTrue(this.gridOptions.gridAutoHeight); }
 
@@ -495,6 +520,26 @@ export class GridOptionsWrapper {
             };
             this.propertyEventService.dispatchEvent(event);
         }
+    }
+
+    // this logic is repeated in lots of places. any element that had different CSS
+    // dependent on the layout needs to have the layout class added ot it.
+    public addLayoutElement(element: HTMLElement): void {
+        this.layoutElements.push(element);
+        this.updateLayoutClasses();
+    }
+
+    private updateLayoutClasses(): void {
+        const domLayout = this.getDomLayout();
+        const domLayoutAutoHeight = domLayout === Constants.DOM_LAYOUT_AUTO_HEIGHT;
+        const domLayoutPrint = domLayout === Constants.DOM_LAYOUT_PRINT;
+        const domLayoutNormal = domLayout === Constants.DOM_LAYOUT_NORMAL;
+
+        this.layoutElements.forEach(e => {
+            _.addOrRemoveCssClass(e, 'ag-layout-auto-height', domLayoutAutoHeight);
+            _.addOrRemoveCssClass(e, 'ag-layout-normal', domLayoutNormal);
+            _.addOrRemoveCssClass(e, 'ag-layout-print', domLayoutPrint);
+        });
     }
 
     public addEventListener(key: string, listener: Function): void {

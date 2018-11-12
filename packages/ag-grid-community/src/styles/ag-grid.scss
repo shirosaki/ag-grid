@@ -196,7 +196,6 @@ ag-grid-aurelia {
 
 .ag-dnd-ghost-icon {
     display: inline-block;
-    float: left;
     padding: 2px;
 }
 
@@ -320,31 +319,32 @@ ag-grid-aurelia {
     padding-top: 30px;
 }
 
-
-.ag-body {
+.ag-body-viewport {
     box-sizing: border-box;
     display: flex;
-    position: relative; // needed so rows translate is relative to this container
-}
+    overflow: hidden;
 
-.ag-layout-normal .ag-body {
-    flex: 1;
-    height: 0px; // that's the min height, 'flex 1' then extends it to take all available space
-    min-height: 0px; // min-height needed for firefox
+    &.ag-layout-normal {
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 // we want the pinned left to always be on the left, and the pinned right
 // always to be on the right. hence we do row-reverse for rtl, otherwise having
 // RTL applied will reverse the order of the flex layout (and invert what's left and right)
-ag-rtl .ag-body { flex-direction: row-reverse; }
-ag-ltr .ag-body { flex-direction: row; }
+.ag-ltr {
+    .ag-body, .ag-floating-top, .ag-floating-bottom, .ag-header, .ag-body-viewport, .ag-body-horizontal-scroll {
+        flex-direction: row;
+    }
+}
 
-.ag-rtl .ag-floating-top { flex-direction: row-reverse; }
-.ag-ltr .ag-floating-top { flex-direction: row; }
-
-// we don't want right and left pinned flipped when doing RTL
-.ag-ltr .ag-header { flex-direction: row; }
-.ag-rtl .ag-header { flex-direction: row-reverse; }
+.ag-rtl  {
+    .ag-body, .ag-floating-top, .ag-floating-bottom, .ag-header, .ag-body-viewport, .ag-body-horizontal-scroll {
+        flex-direction: row-reverse;
+    }
+}
 
 .ag-floating-top {
     box-sizing: border-box;
@@ -424,48 +424,73 @@ ag-ltr .ag-body { flex-direction: row; }
     white-space: nowrap;
 }
 
-.ag-pinned-left-cols-container {
-    display: inline-block;
-    position: relative;
-}
-
 .ag-pinned-right-cols-viewport {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    flex-grow: 1000;
+    min-width: 0px;
+    width: 0px;
+}
+
+.ag-pinned-right-cols-container {
+    display: block;
+    position: relative;
 }
 
 .ag-pinned-left-cols-viewport {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.ag-pinned-right-cols-container {
-    display: inline-block;
+    flex-grow: 1000;
+    overflow: hidden;;
+    min-width: 0px;
+    width: 0px;
     position: relative;
 }
 
-.ag-pinned-left-cols-viewport-wrapper {
-    height: 100%;
-    overflow: hidden;
+.ag-pinned-left-cols-container {
+    position: relative;
 }
 
-.ag-body-viewport-wrapper {
-    height: 100%;
-    width: 0px; // mind width, flex grows the center to fit
-    min-width: 0px; // width didn't do the trick in firefox, so needed min-width also
+.ag-center-cols-clipper {
     flex: 1;
+    min-width: 0;
     overflow: hidden;
 }
 
-.ag-body-viewport {
+.ag-center-cols-viewport {
+    width: 100%;
     overflow-x: auto;
-    overflow-y: auto; // if we are pinning to the right, overflow y will be hidden
+    overflow-y: hidden;
+    position: relative;
 }
 
-.ag-layout-normal .ag-body-viewport {
+.ag-center-cols-container {
+    position: relative;
+}
+
+.ag-body-horizontal-scroll-viewport {
+    min-height: 0;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: 1;
+}
+
+.ag-body-horizontal-scroll-container {
     height: 100%;
+}
+
+.ag-body-horizontal-scroll {
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.ag-horizontal-left-spacer, .ag-horizontal-right-spacer {
+    height: 100%;
+    min-width: 0;
+    flex-grow: 1000;
 }
 
 .ag-full-width-viewport-wrapper {

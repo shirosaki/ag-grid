@@ -420,7 +420,7 @@ export class GridApi {
 
     public refreshHeader() {
         this.headerRootComp.refreshHeader();
-        this.gridPanel.setBodyAndHeaderHeights();
+        this.gridPanel.setHeaderAndFloatingHeights();
     }
 
     public isAnyFilterPresent(): boolean {
@@ -1132,7 +1132,7 @@ export class GridApi {
     }
 
     public checkGridSize(): void {
-        this.gridPanel.setBodyAndHeaderHeights();
+        this.gridPanel.setHeaderAndFloatingHeights();
     }
 
     public getFirstRenderedRow(): number {

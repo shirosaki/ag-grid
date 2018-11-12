@@ -81,6 +81,8 @@ export class RowRenderer extends BeanStub {
 
     private logger: Logger;
 
+    private printLayout: boolean;
+
     public agWire(@Qualifier("loggerFactory") loggerFactory: LoggerFactory) {
         this.logger = loggerFactory.create("RowRenderer");
     }
@@ -94,6 +96,8 @@ export class RowRenderer extends BeanStub {
         this.addDestroyableEventListener(this.eventService, Events.EVENT_DISPLAYED_COLUMNS_CHANGED, this.onDisplayedColumnsChanged.bind(this));
         this.addDestroyableEventListener(this.eventService, Events.EVENT_BODY_SCROLL, this.redrawAfterScroll.bind(this));
         this.addDestroyableEventListener(this.eventService, Events.EVENT_BODY_HEIGHT_CHANGED, this.redrawAfterScroll.bind(this));
+
+        this.printLayout = this.gridOptionsWrapper.getDomLayout() === Constants.DOM_LAYOUT_PRINT;
 
         this.redrawAfterModelUpdate();
     }
@@ -295,6 +299,18 @@ export class RowRenderer extends BeanStub {
     }
 
     private sizeContainerToPageHeight(): void {
+        let containers: RowContainerComponent[] = [
+            this.rowContainers.body,
+            this.rowContainers.fullWidth,
+            this.rowContainers.pinnedLeft,
+            this.rowContainers.pinnedRight
+        ];
+
+        if (this.printLayout) {
+            containers.forEach( container => container.setHeight(null) );
+            return;
+        }
+
         let containerHeight = this.paginationProxy.getCurrentPageHeight();
         // we need at least 1 pixel for the horizontal scroll to work. so if there are now rows,
         // we still want the scroll to be present, otherwise there would be no way to access the columns
@@ -1155,7 +1171,7 @@ export class RowRenderer extends BeanStub {
             // by default, when we click a cell, it gets selected into a range, so to keep keyboard navigation
             // consistent, we set into range here also.
             if (this.rangeController) {
-                let gridCell = new GridCell({ rowIndex: nextCell.rowIndex, floating: nextCell.floating, column: nextCell.column });
+                gridCell = new GridCell({ rowIndex: nextCell.rowIndex, floating: nextCell.floating, column: nextCell.column });
                 this.rangeController.setRangeToCell(gridCell);
             }
 
