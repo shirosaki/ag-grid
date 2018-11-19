@@ -131,14 +131,11 @@ export class GridPanel extends Component {
     @Autowired('columnApi') private columnApi: ColumnApi;
     @Autowired('gridApi') private gridApi: GridApi;
     @Autowired('dragService') private dragService: DragService;
-    @Autowired('selectionController') private selectionController: SelectionController;
-    @Autowired('csvCreator') private csvCreator: CsvCreator;
     @Autowired('mouseEventService') private mouseEventService: MouseEventService;
     @Autowired('focusedCellController') private focusedCellController: FocusedCellController;
     @Autowired('$scope') private $scope: any;
     @Autowired('scrollVisibleService') private scrollVisibleService: ScrollVisibleService;
-    @Autowired('frameworkFactory') private frameworkFactory: IFrameworkFactory;
-    @Autowired('valueService') private  valueService: ValueService;
+    @Autowired('valueService') private valueService: ValueService;
     @Autowired('componentRecipes') private componentRecipes: ComponentRecipes;
     @Autowired('dragAndDropService') private dragAndDropService: DragAndDropService;
     @Autowired('heightScaler') private heightScaler: HeightScaler;
@@ -189,7 +186,6 @@ export class GridPanel extends Component {
 
     private scrollLeft = -1;
     private scrollTop = -1;
-    private verticalRedrawNeeded = false;
 
     private lastHorizontalScrollMillis = 0;
     private horizontalScroller: HTMLElement;
@@ -199,13 +195,10 @@ export class GridPanel extends Component {
     // properties we use a lot, so keep reference
     private enableRtl: boolean;
     private scrollWidth: number;
-    private scrollClipWidth: number;
 
     // used to track if pinned panels are showing, so we can turn them off if not
     private pinningRight: boolean;
     private pinningLeft: boolean;
-
-    private useAnimationFrame: boolean;
 
     private overlayWrapper: IOverlayWrapperComp;
 
@@ -268,12 +261,7 @@ export class GridPanel extends Component {
         // makes code below more readable if we pull 'forPrint' out
         this.scrollWidth = this.gridOptionsWrapper.getScrollbarWidth();
         this.enableRtl = this.gridOptionsWrapper.isEnableRtl();
-        this.useAnimationFrame = !this.gridOptionsWrapper.isSuppressAnimationFrame();
-
-        // if the browser is Windows based, then the scrollbars take up space, and we clip by
-        // the width of the scrollbar. however if the scroll bars do not take up space (iOS)
-        // then they overlay on top of the div, so we clip some extra blank space instead.
-        this.scrollClipWidth = this.scrollWidth > 0 ? this.scrollWidth : 20;
+        this.printLayout = this.gridOptionsWrapper.getDomLayout() === Constants.DOM_LAYOUT_PRINT;
 
         // all of these element have different CSS when layout changes
         // fixme - do we need to add any new containers here
