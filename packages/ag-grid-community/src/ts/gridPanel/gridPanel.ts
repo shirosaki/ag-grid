@@ -75,11 +75,7 @@ const GRID_PANEL_NORMAL_TEMPLATE =
                 </div>
             </div>
             <div class="ag-pinned-right-cols-container" ref="eRightContainer" role="presentation" unselectable="on"></div>
-            <div class="ag-full-width-viewport-wrapper" ref="eFullWidthViewportWrapper" role="presentation" unselectable="on">
-                <div class="ag-full-width-viewport" ref="eFullWidthViewport" role="presentation" unselectable="on">
-                    <div class="ag-full-width-container" ref="eFullWidthContainer" role="presentation" unselectable="on"></div>
-                </div>
-            </div>
+            <div class="ag-full-width-container" ref="eFullWidthContainer" role="presentation" unselectable="on"></div>
         </div>
         <div class="ag-floating-bottom" ref="eBottom" role="presentation">
             <div class="ag-pinned-left-floating-bottom" ref="eLeftBottom" role="presentation"></div>
@@ -168,8 +164,6 @@ export class GridPanel extends Component {
     @RefSelector('eBodyHorizontalScrollViewport') private eBodyHorizontalScrollViewport: HTMLElement;
     @RefSelector('eBodyHorizontalScrollContainer') private eBodyHorizontalScrollContainer: HTMLElement;
 
-    @RefSelector('eFullWidthViewportWrapper') private eFullWidthViewportWrapper: HTMLElement;
-    @RefSelector('eFullWidthViewport') private eFullWidthViewport: HTMLElement;
     @RefSelector('eFullWidthContainer') private eFullWidthContainer: HTMLElement;
 
     @RefSelector('eTop') private eTop: HTMLElement;
@@ -864,8 +858,6 @@ export class GridPanel extends Component {
 
         this.setPinnedLeftWidth();
         this.setPinnedRightWidth();
-        this.hideFullWidthViewportScrollbars();
-
     }
 
     private updateScrollVisibleService(): void {
@@ -899,31 +891,6 @@ export class GridPanel extends Component {
         } else {
             this.eTop.style.paddingRight = margin;
             this.eBottom.style.paddingRight = margin;
-        }
-    }
-
-    private hideFullWidthViewportScrollbars(): void {
-
-        // if browser does not have scrollbars that take up space (eg iOS) then we don't need
-        // to adjust the sizes of the container for scrollbars
-        // if (this.scrollWidth <= 0) { return; }
-
-        let scrollWidthPx = this.scrollClipWidth > 0 ? this.scrollWidth + 'px' : '';
-
-        // if horizontal scroll is showing, we add padding to bottom so
-        // fullWidth container is not spreading over the scroll
-        this.eFullWidthViewportWrapper.style.paddingBottom = this.isHorizontalScrollShowing() ? scrollWidthPx : '';
-
-        // if vertical scroll is showing on full width viewport, then we clip it away, otherwise
-        // it competes with the main vertical scroll. this is done by getting the viewport to be
-        // bigger than the wrapper, the wrapper then ends up clipping the viewport.
-        let takeOutVScroll = this.isVerticalScrollShowing();
-        if (this.enableRtl) {
-            this.eFullWidthViewportWrapper.style.marginLeft = takeOutVScroll ? scrollWidthPx : '';
-            this.eFullWidthViewport.style.marginLeft = takeOutVScroll ? ('-' + scrollWidthPx) : '';
-        } else {
-            this.eFullWidthViewportWrapper.style.width = takeOutVScroll ? `calc(100% - ${scrollWidthPx})` : '';
-            this.eFullWidthViewport.style.width = takeOutVScroll ? `calc(100% + ${scrollWidthPx})` : '';
         }
     }
 
@@ -1062,8 +1029,7 @@ export class GridPanel extends Component {
             }),
             fullWidth: new RowContainerComponent({
                 eContainer: this.eFullWidthContainer,
-                hideWhenNoChildren: true,
-                eViewport: this.eFullWidthViewport
+                hideWhenNoChildren: true
             }),
             pinnedLeft: new RowContainerComponent({eContainer: this.eLeftContainer}),
             pinnedRight: new RowContainerComponent({eContainer: this.eRightContainer}),
@@ -1162,7 +1128,12 @@ export class GridPanel extends Component {
 
     private setMainWrappersMinWidth(): void {
         const scrollWidth = this.isVerticalScrollShowing ? this.scrollWidth : 0;
-        const minWidth = this.eLeftContainer.clientWidth + this.eRightContainer.clientWidth + scrollWidth;
+
+        let minWidth = scrollWidth;
+
+        if (this.pinningLeft) { minWidth += this.eLeftContainer.clientWidth; }
+        if (this.pinningRight) { minWidth += this.eRightContainer.clientWidth; }
+
         const mainWrappers = [this.headerRootComp.getGui(), this.eTop, this.eBodyViewport, this.eBottom];
 
         mainWrappers.forEach(container => container.style.minWidth = `${minWidth}px`);
