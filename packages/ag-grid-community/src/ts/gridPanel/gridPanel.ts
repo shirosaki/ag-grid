@@ -18,14 +18,11 @@ import {BodyHeightChangedEvent, BodyScrollEvent, Events} from "../events";
 import {DragService, DragListenerParams} from "../dragAndDrop/dragService";
 import {IRangeController} from "../interfaces/iRangeController";
 import {Constants} from "../constants";
-import {SelectionController} from "../selectionController";
-import {CsvCreator} from "../csvCreator";
 import {MouseEventService} from "./mouseEventService";
 import {IClipboardService} from "../interfaces/iClipboardService";
 import {FocusedCellController} from "../focusedCellController";
 import {IContextMenuFactory} from "../interfaces/iContextMenuFactory";
-import {SetScrollsVisibleParams, ScrollVisibleService} from "./scrollVisibleService";
-import {IFrameworkFactory} from "../interfaces/iFrameworkFactory";
+import {ScrollVisibleService, SetScrollsVisibleParams} from "./scrollVisibleService";
 import {Column} from "../entities/column";
 import {RowContainerComponent} from "../rendering/rowContainerComponent";
 import {RowNode} from "../entities/rowNode";
@@ -868,13 +865,18 @@ export class GridPanel extends Component {
     }
 
     private setVerticalScrollPaddingVisible(show: boolean): void {
-        let margin = show ? `${this.scrollWidth}px` : `0px`;
+        const scroller = show ? `scroll` : `hidden`;
+        const margin = `${this.scrollWidth}px`;
         if (this.enableRtl) {
-            this.eTop.style.paddingLeft = margin;
-            this.eBottom.style.paddingLeft = margin;
+            this.eTop.style.overflowY = this.eBottom.style.overflowY = scroller;
+            if (!this.pinningLeft) {
+                _.setFixedWidth(this.eHorizontalLeftSpacer, margin);
+            }
         } else {
-            this.eTop.style.paddingRight = margin;
-            this.eBottom.style.paddingRight = margin;
+            this.eTop.style.overflowY = this.eBottom.style.overflowY = scroller;
+            if (!this.pinningRight) {
+                _.setFixedWidth(this.eHorizontalRightSpacer, margin);
+            }
         }
     }
 
@@ -1108,9 +1110,11 @@ export class GridPanel extends Component {
     }
 
     private setPinnedLeftWidth(): void {
-        const widthOfCols = this.columnController.getPinnedLeftContainerWidth();
         const spacer = this.eHorizontalLeftSpacer;
         const oldPinning = this.pinningLeft;
+
+        let widthOfCols = this.columnController.getPinnedLeftContainerWidth();
+
         const newPinning = this.pinningLeft = !this.printLayout && widthOfCols > 0;
         const containers = [this.eLeftContainer, this.eLeftTop, this.eLeftBottom];
 
@@ -1125,29 +1129,24 @@ export class GridPanel extends Component {
             return;
         }
 
-        let widthPx = `${widthOfCols}px`;
-
-        // .width didn't do the trick in firefox, so needed .minWidth also
-        containers[0].style.width = widthPx;
-        containers[0].style.minWidth = widthPx;
-
-        containers[1].style.maxWidth = widthPx;
-        containers[2].style.maxWidth = widthPx;
+        containers.forEach(ct => _.setFixedWidth(ct, widthOfCols));
 
         const spacerPadding = this.gridOptionsWrapper.isEnableRtl() && this.isVerticalScrollShowing();
 
         if (spacerPadding) {
             const scrollWidth = this.gridOptionsWrapper.getScrollbarWidth();
-            widthPx = `${widthOfCols + scrollWidth}px`;
+            widthOfCols += scrollWidth;
         }
 
-        _.setFixedWidth(spacer, widthPx);
+        _.setFixedWidth(spacer, widthOfCols);
     }
 
     private setPinnedRightWidth(): void {
-        const widthOfCols = this.columnController.getPinnedRightContainerWidth();
         const spacer = this.eHorizontalRightSpacer;
         const oldPinning = this.pinningRight;
+
+        let widthOfCols = this.columnController.getPinnedRightContainerWidth();
+
         const newPinning = this.pinningRight = !this.printLayout && widthOfCols > 0;
         const containers = [this.eRightContainer, this.eRightTop, this.eRightBottom];
 
@@ -1155,30 +1154,23 @@ export class GridPanel extends Component {
             this.headerRootComp.setRightVisible(newPinning);
         }
 
-        containers.forEach(e => _.setVisible(e, newPinning));
+        containers.forEach(ct => _.setVisible(ct, newPinning));
 
         if (!newPinning) {
             _.setFixedWidth(spacer, 0);
             return;
         }
 
-        let widthPx = `${widthOfCols}px`;
-
-        // .width didn't do the trick in firefox, so needed .minWidth also
-        containers[0].style.width = widthPx;
-        containers[0].style.minWidth = widthPx;
-
-        containers[1].style.maxWidth = widthPx;
-        containers[2].style.maxWidth = widthPx;
+        containers.forEach(ct => _.setFixedWidth(ct, widthOfCols));
 
         const spacerPadding = !this.gridOptionsWrapper.isEnableRtl() && this.isVerticalScrollShowing();
 
         if (spacerPadding) {
             const scrollWidth = this.gridOptionsWrapper.getScrollbarWidth();
-            widthPx = `${widthOfCols + scrollWidth}px`;
+            widthOfCols += scrollWidth;
         }
 
-        _.setFixedWidth(spacer, widthPx);
+        _.setFixedWidth(spacer, widthOfCols);
     }
 
     private setPinnedContainerSize() {
