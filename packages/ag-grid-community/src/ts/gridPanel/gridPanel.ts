@@ -1088,7 +1088,6 @@ export class GridPanel extends Component {
         this.setCenterWidth();
         this.setPinnedLeftWidth();
         this.setPinnedRightWidth();
-        this.setMainWrappersMinWidth();
     }
 
     private setCenterWidth(): void {
@@ -1106,19 +1105,6 @@ export class GridPanel extends Component {
         this.eTopContainer.style.width = widthPx;
 
         this.eBodyHorizontalScrollContainer.style.width = widthPx;
-    }
-
-    private setMainWrappersMinWidth(): void {
-        const scrollWidth = this.isVerticalScrollShowing ? this.scrollWidth : 0;
-
-        let minWidth = scrollWidth;
-
-        if (this.pinningLeft) { minWidth += this.eLeftContainer.clientWidth; }
-        if (this.pinningRight) { minWidth += this.eRightContainer.clientWidth; }
-
-        const mainWrappers = [this.headerRootComp.getGui(), this.eTop, this.eBodyViewport, this.eBottom];
-
-        mainWrappers.forEach(container => container.style.minWidth = `${minWidth}px`);
     }
 
     private setPinnedLeftWidth(): void {
