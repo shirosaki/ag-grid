@@ -1147,6 +1147,8 @@ export class GridPanel extends Component {
 
     private setFakeHScrollSpacerWidths(): void {
 
+        // we pad the right based on a) if cols are pinned to the right and
+        // b) if v scroll is showing on the right (normal position of scroll)
         let rightSpacing = this.columnController.getPinnedRightContainerWidth();
         const scrollOnRight = !this.enableRtl && this.isVerticalScrollShowing();
         if (scrollOnRight) {
@@ -1154,6 +1156,8 @@ export class GridPanel extends Component {
         }
         _.setFixedWidth(this.eHorizontalRightSpacer, rightSpacing);
 
+        // we pad the left based on a) if cols are pinned to the left and
+        // b) if v scroll is showing on the left (happens in LTR layout only)
         let leftSpacing = this.columnController.getPinnedLeftContainerWidth();
         const scrollOnLeft = this.enableRtl && this.isVerticalScrollShowing();
         if (scrollOnLeft) {
