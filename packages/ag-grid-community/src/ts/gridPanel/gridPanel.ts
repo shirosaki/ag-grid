@@ -826,8 +826,7 @@ export class GridPanel extends Component {
         // check for virtual columns for ColumnController
         this.onHorizontalViewportChanged();
 
-        this.setPinnedLeftWidth();
-        this.setPinnedRightWidth();
+        this.setPinnedContainerSize();
     }
 
     private updateScrollVisibleService(): void {
@@ -866,18 +865,12 @@ export class GridPanel extends Component {
 
     private setVerticalScrollPaddingVisible(show: boolean): void {
         const scroller = show ? `scroll` : `hidden`;
-        const margin = `${this.scrollWidth}px`;
         if (this.enableRtl) {
             this.eTop.style.overflowY = this.eBottom.style.overflowY = scroller;
-            if (!this.pinningLeft) {
-                _.setFixedWidth(this.eHorizontalLeftSpacer, margin);
-            }
         } else {
             this.eTop.style.overflowY = this.eBottom.style.overflowY = scroller;
-            if (!this.pinningRight) {
-                _.setFixedWidth(this.eHorizontalRightSpacer, margin);
-            }
         }
+        this.setFakeHScrollSpacerWidths();
     }
 
     public ensureColumnVisible(key: any): void {
@@ -1088,8 +1081,7 @@ export class GridPanel extends Component {
 
     private setWidthsOfContainers(): void {
         this.setCenterWidth();
-        this.setPinnedLeftWidth();
-        this.setPinnedRightWidth();
+        this.setPinnedContainerSize();
     }
 
     private setCenterWidth(): void {
@@ -1110,7 +1102,6 @@ export class GridPanel extends Component {
     }
 
     private setPinnedLeftWidth(): void {
-        const spacer = this.eHorizontalLeftSpacer;
         const oldPinning = this.pinningLeft;
 
         let widthOfCols = this.columnController.getPinnedLeftContainerWidth();
@@ -1124,27 +1115,12 @@ export class GridPanel extends Component {
 
         containers.forEach(e => _.setVisible(e, this.pinningLeft));
 
-        if (!newPinning) {
-            if (!this.enableRtl) {
-                _.setFixedWidth(spacer , 0);
-            }
-            return;
-        }
+        if (!newPinning) { return; }
 
         containers.forEach(ct => _.setFixedWidth(ct, widthOfCols));
-
-        const spacerPadding = this.gridOptionsWrapper.isEnableRtl() && this.isVerticalScrollShowing();
-
-        if (spacerPadding) {
-            const scrollWidth = this.gridOptionsWrapper.getScrollbarWidth();
-            widthOfCols += scrollWidth;
-        }
-
-        _.setFixedWidth(spacer, widthOfCols);
     }
 
     private setPinnedRightWidth(): void {
-        const spacer = this.eHorizontalRightSpacer;
         const oldPinning = this.pinningRight;
 
         let widthOfCols = this.columnController.getPinnedRightContainerWidth();
@@ -1158,28 +1134,33 @@ export class GridPanel extends Component {
 
         containers.forEach(ct => _.setVisible(ct, newPinning));
 
-        if (!newPinning) {
-            if (this.enableRtl) {
-                _.setFixedWidth(spacer , 0);
-            }
-            return;
-        }
+        if (!newPinning) { return; }
 
         containers.forEach(ct => _.setFixedWidth(ct, widthOfCols));
-
-        const spacerPadding = !this.gridOptionsWrapper.isEnableRtl() && this.isVerticalScrollShowing();
-
-        if (spacerPadding) {
-            const scrollWidth = this.gridOptionsWrapper.getScrollbarWidth();
-            widthOfCols += scrollWidth;
-        }
-
-        _.setFixedWidth(spacer, widthOfCols);
     }
 
     private setPinnedContainerSize() {
         this.setPinnedLeftWidth();
         this.setPinnedRightWidth();
+        this.setFakeHScrollSpacerWidths();
+    }
+
+    private setFakeHScrollSpacerWidths(): void {
+
+        let rightSpacing = this.columnController.getPinnedRightContainerWidth();
+        const scrollOnRight = !this.enableRtl && this.isVerticalScrollShowing();
+        if (scrollOnRight) {
+            rightSpacing += this.scrollWidth;
+        }
+        _.setFixedWidth(this.eHorizontalRightSpacer, rightSpacing);
+
+        let leftSpacing = this.columnController.getPinnedLeftContainerWidth();
+        const scrollOnLeft = this.enableRtl && this.isVerticalScrollShowing();
+        if (scrollOnLeft) {
+            leftSpacing += this.scrollWidth;
+        }
+        _.setFixedWidth(this.eHorizontalLeftSpacer, leftSpacing);
+
     }
 
     private checkBodyHeight(): void {
