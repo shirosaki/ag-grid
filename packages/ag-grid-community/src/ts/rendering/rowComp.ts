@@ -271,12 +271,9 @@ export class RowComp extends Component {
     private createRowContainer(rowContainerComp: RowContainerComponent, cols: Column[],
                                callback: (eRow: HTMLElement) => void): void {
 
-        let cellTemplatesAndComps: {template: string, cellComps: CellComp[]};
-        if (this.useAnimationFrameForCreate) {
-            cellTemplatesAndComps = {cellComps: [], template: ''};
-        } else {
-            cellTemplatesAndComps = this.createCells(cols);
-        }
+        const useAnimationsFrameForCreate = false;//this.useAnimationFrameForCreate;
+        const cellTemplatesAndComps: CellTemplate = useAnimationsFrameForCreate ? {cellComps: [], template: ''} : this.createCells(cols);
+        const rowTemplate = this.createTemplate(cellTemplatesAndComps.template);
 
         // the RowRenderer is probably inserting many rows. rather than inserting each template one
         // at a time, the grid inserts all rows together - so the callback here is called by the
@@ -289,11 +286,11 @@ export class RowComp extends Component {
 
             // console.log(`createRowContainer ${this.getCompId()}`);
 
-            // if (useAnimationsFrameForCreate) {
-            //     this.beans.taskQueue.addP1Task(this.lazyCreateCells.bind(this, cols, eRow), this.rowNode.rowIndex);
-            // } else {
+            if (useAnimationsFrameForCreate) {
+                this.beans.taskQueue.addP1Task(this.lazyCreateCells.bind(this, cols, eRow), this.rowNode.rowIndex);
+            } else {
                 this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
-            // }
+            }
         });
     }
 
