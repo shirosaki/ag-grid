@@ -278,17 +278,22 @@ export class RowComp extends Component {
             cellTemplatesAndComps = this.createCells(cols);
         }
 
-        let rowTemplate = this.createTemplate(cellTemplatesAndComps.template);
+        // the RowRenderer is probably inserting many rows. rather than inserting each template one
+        // at a time, the grid inserts all rows together - so the callback here is called by the
+        // rowRenderer when all RowComps are created, then all the HTML is inserted in one go,
+        // and then all the callbacks are called. this is NOT done in an animation frame.
         rowContainerComp.appendRowTemplate(rowTemplate, ()=> {
             let eRow: HTMLElement = rowContainerComp.getRowElement(this.getCompId());
             this.afterRowAttached(rowContainerComp, eRow);
             callback(eRow);
 
-            if (this.useAnimationFrameForCreate) {
-                this.beans.taskQueue.addP1Task(this.lazyCreateCells.bind(this, cols, eRow), this.rowNode.rowIndex);
-            } else {
+            // console.log(`createRowContainer ${this.getCompId()}`);
+
+            // if (useAnimationsFrameForCreate) {
+            //     this.beans.taskQueue.addP1Task(this.lazyCreateCells.bind(this, cols, eRow), this.rowNode.rowIndex);
+            // } else {
                 this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
-            }
+            // }
         });
     }
 
@@ -569,10 +574,10 @@ export class RowComp extends Component {
         this.insertCellsIntoContainer(this.ePinnedLeftRow, leftCols);
         this.insertCellsIntoContainer(this.ePinnedRightRow, rightCols);
 
-        let colIdsToRemove = Object.keys(this.cellComps);
-        centerCols.forEach( (col: Column) => _.removeFromArray(colIdsToRemove, col.getId()));
-        leftCols.forEach( (col: Column) => _.removeFromArray(colIdsToRemove, col.getId()));
-        rightCols.forEach( (col: Column) => _.removeFromArray(colIdsToRemove, col.getId()));
+        const colIdsToRemove = Object.keys(this.cellComps);
+        centerCols.forEach(col => _.removeFromArray(colIdsToRemove, col.getId()));
+        leftCols.forEach(col => _.removeFromArray(colIdsToRemove, col.getId()));
+        rightCols.forEach(col => _.removeFromArray(colIdsToRemove, col.getId()));
 
         // we never remove editing cells, as this would cause the cells to loose their values while editing
         // as the grid is scrolling horizontally.
@@ -657,12 +662,11 @@ export class RowComp extends Component {
         let newCellComps: CellComp[] = [];
 
         cols.forEach( col => {
+            const colId = col.getId();
+            const existingCell = this.cellComps[colId];
 
-            let colId = col.getId();
-            let oldCell = this.cellComps[colId];
-
-            if (oldCell) {
-                this.ensureCellInCorrectContainer(oldCell);
+            if (existingCell) {
+                this.ensureCellInCorrectContainer(existingCell);
             } else {
                 this.createNewCell(col, eRow, cellTemplates, newCellComps);
             }
