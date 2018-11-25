@@ -98,6 +98,8 @@ export class RowComp extends Component {
     private editingRow: boolean;
     private rowFocused: boolean;
 
+    private rowContainerReadyCount = 0;
+    private refreshNeeded = false;
     private columnRefreshPending = false;
 
     private cellComps: {[key: string]: CellComp} = {};
@@ -260,11 +262,21 @@ export class RowComp extends Component {
         }
     }
 
+    private areAllContainersReady(): boolean {
+        return this.rowContainerReadyCount===3;
+    }
+
     private lazyCreateCells(cols: Column[], eRow: HTMLElement): void {
         if (this.active) {
             let cellTemplatesAndComps = this.createCells(cols);
             eRow.innerHTML = cellTemplatesAndComps.template;
             this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
+
+            this.rowContainerReadyCount++;
+
+            if (this.areAllContainersReady() && this.refreshNeeded) {
+                this.refreshCells();
+            }
         }
     }
 
@@ -290,6 +302,7 @@ export class RowComp extends Component {
                 this.beans.taskQueue.addP1Task(this.lazyCreateCells.bind(this, cols, eRow), this.rowNode.rowIndex);
             } else {
                 this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
+                this.rowContainerReadyCount = 3;
             }
         });
     }
@@ -550,7 +563,15 @@ export class RowComp extends Component {
     }
 
     private refreshCells() {
-        if (this.beans.gridOptionsWrapper.isSuppressAnimationFrame()) {
+        if (!this.areAllContainersReady()) {
+            this.refreshNeeded = true;
+            return;
+        }
+
+        const suppressAnimationFrame = this.beans.gridOptionsWrapper.isSuppressAnimationFrame();
+        const skipAnimationFrame = suppressAnimationFrame || this.printLayout;
+
+        if (skipAnimationFrame) {
             this.refreshCellsInAnimationFrame();
         } else {
             if (this.columnRefreshPending) { return; }
