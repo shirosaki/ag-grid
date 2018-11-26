@@ -218,28 +218,28 @@ export class RowComp extends Component {
     }
 
     public afterFlush(): void {
-        if (!this.initialised) {
-            this.initialised = true;
-            this.executeProcessRowPostCreateFunc();
-        }
+        if (this.initialised) { return; }
+
+        this.initialised = true;
+        this.executeProcessRowPostCreateFunc();
     }
 
     private executeProcessRowPostCreateFunc(): void {
-        let func = this.beans.gridOptionsWrapper.getProcessRowPostCreateFunc();
-        if (func) {
-            let params: ProcessRowParams = {
-                eRow: this.eBodyRow,
-                ePinnedLeftRow: this.ePinnedLeftRow,
-                ePinnedRightRow: this.ePinnedRightRow,
-                node: this.rowNode,
-                api: this.beans.gridOptionsWrapper.getApi(),
-                rowIndex: this.rowNode.rowIndex,
-                addRenderedRowListener: this.addEventListener.bind(this),
-                columnApi: this.beans.gridOptionsWrapper.getColumnApi(),
-                context: this.beans.gridOptionsWrapper.getContext()
-            };
-            func(params);
-        }
+        const func = this.beans.gridOptionsWrapper.getProcessRowPostCreateFunc();
+        if (!func) { return; }
+
+        const params: ProcessRowParams = {
+            eRow: this.eBodyRow,
+            ePinnedLeftRow: this.ePinnedLeftRow,
+            ePinnedRightRow: this.ePinnedRightRow,
+            node: this.rowNode,
+            api: this.beans.gridOptionsWrapper.getApi(),
+            rowIndex: this.rowNode.rowIndex,
+            addRenderedRowListener: this.addEventListener.bind(this),
+            columnApi: this.beans.gridOptionsWrapper.getColumnApi(),
+            context: this.beans.gridOptionsWrapper.getContext()
+        };
+        func(params);
     }
 
     private getInitialRowTopStyle() {
@@ -256,27 +256,27 @@ export class RowComp extends Component {
     }
 
     private getRowBusinessKey(): string {
-        if (typeof this.beans.gridOptionsWrapper.getBusinessKeyForNodeFunc() === 'function') {
-            let businessKey = this.beans.gridOptionsWrapper.getBusinessKeyForNodeFunc()(this.rowNode);
-            return businessKey;
-        }
+        const businessKeyForNodeFunc = this.beans.gridOptionsWrapper.getBusinessKeyForNodeFunc();
+        if (typeof businessKeyForNodeFunc !== 'function') { return ; }
+
+        return businessKeyForNodeFunc(this.rowNode);
     }
 
     private areAllContainersReady(): boolean {
-        return this.rowContainerReadyCount===3;
+        return this.rowContainerReadyCount === 3;
     }
 
     private lazyCreateCells(cols: Column[], eRow: HTMLElement): void {
-        if (this.active) {
-            let cellTemplatesAndComps = this.createCells(cols);
-            eRow.innerHTML = cellTemplatesAndComps.template;
-            this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
+        if (!this.active) { return; }
 
-            this.rowContainerReadyCount++;
+        const cellTemplatesAndComps = this.createCells(cols);
+        eRow.innerHTML = cellTemplatesAndComps.template;
+        this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
 
-            if (this.areAllContainersReady() && this.refreshNeeded) {
-                this.refreshCells();
-            }
+        this.rowContainerReadyCount++;
+
+        if (this.areAllContainersReady() && this.refreshNeeded) {
+            this.refreshCells();
         }
     }
 
@@ -284,15 +284,15 @@ export class RowComp extends Component {
                                callback: (eRow: HTMLElement) => void): void {
 
         const useAnimationsFrameForCreate = false;//this.useAnimationFrameForCreate;
-        const cellTemplatesAndComps: CellTemplate = useAnimationsFrameForCreate ? {cellComps: [], template: ''} : this.createCells(cols);
+        const cellTemplatesAndComps = useAnimationsFrameForCreate ? {cellComps: [], template: ''} : this.createCells(cols);
         const rowTemplate = this.createTemplate(cellTemplatesAndComps.template);
 
         // the RowRenderer is probably inserting many rows. rather than inserting each template one
         // at a time, the grid inserts all rows together - so the callback here is called by the
         // rowRenderer when all RowComps are created, then all the HTML is inserted in one go,
         // and then all the callbacks are called. this is NOT done in an animation frame.
-        rowContainerComp.appendRowTemplate(rowTemplate, ()=> {
-            let eRow: HTMLElement = rowContainerComp.getRowElement(this.getCompId());
+        rowContainerComp.appendRowTemplate(rowTemplate, () => {
+            const eRow: HTMLElement = rowContainerComp.getRowElement(this.getCompId());
             this.afterRowAttached(rowContainerComp, eRow);
             callback(eRow);
 
@@ -510,9 +510,9 @@ export class RowComp extends Component {
     }
 
     private onDisplayedColumnsChanged(): void {
-        if (!this.fullWidthRow) {
-            this.refreshCells();
-        }
+        if (this.fullWidthRow) { return; }
+
+        this.refreshCells();
     }
 
     private destroyFullWidthComponents(): void {
@@ -551,15 +551,15 @@ export class RowComp extends Component {
     }
 
     private onVirtualColumnsChanged(): void {
-        if (!this.fullWidthRow) {
-            this.refreshCells();
-        }
+        if (this.fullWidthRow) { return; }
+
+        this.refreshCells();
     }
 
     private onColumnResized(): void {
-        if (!this.fullWidthRow) {
-            this.refreshCells();
-        }
+        if (this.fullWidthRow) { return; }
+
+        this.refreshCells();
     }
 
     private refreshCells() {
@@ -569,7 +569,7 @@ export class RowComp extends Component {
         }
 
         const suppressAnimationFrame = this.beans.gridOptionsWrapper.isSuppressAnimationFrame();
-        const skipAnimationFrame = suppressAnimationFrame || this.printLayout;
+        const skipAnimationFrame = suppressAnimationFrame;
 
         if (skipAnimationFrame) {
             this.refreshCellsInAnimationFrame();
@@ -592,7 +592,7 @@ export class RowComp extends Component {
         this.insertCellsIntoContainer(this.ePinnedLeftRow, leftCols);
         this.insertCellsIntoContainer(this.ePinnedRightRow, rightCols);
 
-        const colIdsToRemove = Object.keys(this.cellComps);
+        let colIdsToRemove = Object.keys(this.cellComps);
         centerCols.forEach(col => _.removeFromArray(colIdsToRemove, col.getId()));
         leftCols.forEach(col => _.removeFromArray(colIdsToRemove, col.getId()));
         rightCols.forEach(col => _.removeFromArray(colIdsToRemove, col.getId()));
@@ -639,9 +639,10 @@ export class RowComp extends Component {
             let column = renderedCell.getColumn();
             let cellStillDisplayed = displayedColumns.indexOf(column) >= 0;
             return cellStillDisplayed ? KEEP_CELL : REMOVE_CELL;
-        } else {
-            return REMOVE_CELL;
         }
+
+        return REMOVE_CELL;
+
     }
 
     private ensureCellInCorrectContainer(cellComp: CellComp): void {
@@ -847,9 +848,9 @@ export class RowComp extends Component {
     }
 
     private angular1Compile(element: Element): void {
-        if (this.scope) {
-            this.beans.$compile(element)(this.scope);
-        }
+        if (!this.scope) { return ; }
+
+        this.beans.$compile(element)(this.scope);
     }
 
     private createFullWidthParams(eRow: HTMLElement, pinned: string): any {
@@ -887,11 +888,7 @@ export class RowComp extends Component {
             classes.push('ag-opacity-zero');
         }
 
-        if (this.rowIsEven) {
-            classes.push('ag-row-even');
-        } else {
-            classes.push('ag-row-odd');
-        }
+        classes.push(this.rowIsEven ? 'ag-row-even' : 'ag-row-odd');
 
         if (this.rowNode.isSelected()) {
             classes.push('ag-row-selected');
@@ -907,11 +904,7 @@ export class RowComp extends Component {
             }
         } else {
             // if a leaf, and a parent exists, put a level of the parent, else put level of 0 for top level item
-            if (this.rowNode.parent) {
-                classes.push('ag-row-level-' + (this.rowNode.parent.level + 1));
-            } else {
-                classes.push('ag-row-level-0');
-            }
+            classes.push('ag-row-level-' + (this.rowNode.parent ? (this.rowNode.parent.level + 1) : '0'));
         }
 
         if (this.rowNode.stub) {
@@ -971,18 +964,19 @@ export class RowComp extends Component {
         this.forEachCellComp(renderedCell => {
             renderedCell.stopEditing(cancel);
         });
-        if (this.editingRow) {
-            if (!cancel) {
-                let event: RowValueChangedEvent = this.createRowEvent(Events.EVENT_ROW_VALUE_CHANGED);
-                this.beans.eventService.dispatchEvent(event);
-            }
-            this.setEditingRow(false);
+
+        if (!this.editingRow) { return; }
+
+        if (!cancel) {
+            const event: RowValueChangedEvent = this.createRowEvent(Events.EVENT_ROW_VALUE_CHANGED);
+            this.beans.eventService.dispatchEvent(event);
         }
+        this.setEditingRow(false);
     }
 
     private setEditingRow(value: boolean): void {
         this.editingRow = value;
-        this.eAllRowContainers.forEach( (row) => _.addOrRemoveCssClass(row, 'ag-row-editing', value) );
+        this.eAllRowContainers.forEach(row => _.addOrRemoveCssClass(row, 'ag-row-editing', value));
 
         let event: RowEvent = value ?
             <RowEditingStartedEvent> this.createRowEvent(Events.EVENT_ROW_EDITING_STARTED)
@@ -1006,21 +1000,21 @@ export class RowComp extends Component {
         this.setEditingRow(true);
     }
 
-    public forEachCellComp(callback: (renderedCell: CellComp)=>void): void {
-        _.iterateObject(this.cellComps, (key: any, cellComp: CellComp)=> {
-            if (cellComp) {
-                callback(cellComp);
-            }
+    public forEachCellComp(callback: (renderedCell: CellComp) => void): void {
+        _.iterateObject(this.cellComps, (key: any, cellComp: CellComp) => {
+            if (!cellComp) { return; }
+
+            callback(cellComp);
         });
     }
 
     private postProcessClassesFromGridOptions(): void {
-        let cssClasses = this.processClassesFromGridOptions();
-        if (cssClasses) {
-            cssClasses.forEach( (classStr: string) => {
-                this.eAllRowContainers.forEach( row => _.addCssClass(row, classStr));
-            });
-        }
+        const cssClasses = this.processClassesFromGridOptions();
+        if (!cssClasses || !cssClasses.length) { return; }
+
+        cssClasses.forEach(classStr => {
+            this.eAllRowContainers.forEach(row => _.addCssClass(row, classStr));
+        });
     }
 
     private postProcessRowClassRules(): void {
@@ -1095,6 +1089,7 @@ export class RowComp extends Component {
         // part 1 - rowStyleFunc
         let rowStyleFunc = this.beans.gridOptionsWrapper.getRowStyleFunc();
         let rowStyleFuncResult: any;
+
         if (rowStyleFunc) {
             let params = {
                 data: this.rowNode.data,
@@ -1110,16 +1105,19 @@ export class RowComp extends Component {
     }
 
     private createCells(cols: Column[]): {template: string, cellComps: CellComp[]} {
-        let templateParts: string[] = [];
-        let newCellComps: CellComp[] = [];
-        cols.forEach( col => {
-            let newCellComp = new CellComp(this.scope, this.beans, col, this.rowNode, this, false);
-            let cellTemplate = newCellComp.getCreateTemplate();
+        const templateParts: string[] = [];
+        const newCellComps: CellComp[] = [];
+
+        cols.forEach(col => {
+            const newCellComp = new CellComp(this.scope, this.beans, col, this.rowNode, this,
+                false);
+            const cellTemplate = newCellComp.getCreateTemplate();
             templateParts.push(cellTemplate);
             newCellComps.push(newCellComp);
             this.cellComps[col.getId()] = newCellComp;
         });
-        let templateAndComps = {
+
+        const templateAndComps = {
             template: templateParts.join(''),
             cellComps: newCellComps
         };
@@ -1148,13 +1146,13 @@ export class RowComp extends Component {
     }
 
     private afterRowAttached(rowContainerComp: RowContainerComponent, eRow: HTMLElement): void {
-
         this.addDomData(eRow);
 
-        this.removeSecondPassFuncs.push( ()=> {
+        this.removeSecondPassFuncs.push(() => {
             // console.log(eRow);
             rowContainerComp.removeRowElement(eRow);
         });
+
         this.removeFirstPassFuncs.push( ()=> {
             if (_.exists(this.rowNode.rowTop)) {
                 // the row top is updated anyway, however we set it here again
@@ -1180,12 +1178,9 @@ export class RowComp extends Component {
     }
 
     private addHoverFunctionality(eRow: HTMLElement): void {
-
         // because we use animation frames to do this, it's possible the row no longer exists
         // by the time we get to add it
-        if (!this.active) {
-            return;
-        }
+        if (!this.active) { return; }
 
         // because mouseenter and mouseleave do not propagate, we cannot listen on the gridPanel
         // like we do for all the other mouse events.
@@ -1208,6 +1203,7 @@ export class RowComp extends Component {
                 _.addCssClass(eRow, 'ag-row-hover');
             }
         });
+
         this.addDestroyableEventListener(this.rowNode, RowNode.EVENT_MOUSE_LEAVE, ()=> {
             _.removeCssClass(eRow, 'ag-row-hover');
         });
@@ -1237,8 +1233,9 @@ export class RowComp extends Component {
         // it will be null (or undefined) momentarily until the next time the flatten
         // stage is called where the row will then update again with a new height
         if (_.exists(this.rowNode.rowHeight)) {
-            let heightPx = this.rowNode.rowHeight + 'px';
-            this.eAllRowContainers.forEach( row => row.style.height = heightPx);
+            const heightPx = `${this.rowNode.rowHeight}px`;
+
+            this.eAllRowContainers.forEach(row => row.style.height = heightPx);
         }
     }
 
@@ -1301,7 +1298,8 @@ export class RowComp extends Component {
     }
 
     private onCellFocusChanged(): void {
-        let rowFocused = this.beans.focusedCellController.isRowFocused(this.rowNode.rowIndex, this.rowNode.rowPinned);
+        const rowFocused = this.beans.focusedCellController.isRowFocused(this.rowNode.rowIndex, this.rowNode.rowPinned);
+
         if (rowFocused !== this.rowFocused) {
             this.eAllRowContainers.forEach( (row) => _.addOrRemoveCssClass(row, 'ag-row-focus', rowFocused) );
             this.eAllRowContainers.forEach( (row) => _.addOrRemoveCssClass(row, 'ag-row-no-focus', !rowFocused) );
@@ -1334,14 +1332,12 @@ export class RowComp extends Component {
     private applyPaginationOffset(topPx: number, reverse = false): number {
         if (this.rowNode.isRowPinned()) {
             return topPx;
-        } else {
-            let pixelOffset = this.beans.paginationProxy.getPixelOffset();
-            if (reverse) {
-                return topPx + pixelOffset;
-            } else {
-                return topPx - pixelOffset;
-            }
         }
+
+        const pixelOffset = this.beans.paginationProxy.getPixelOffset();
+        const multiplier = reverse ? 1 : -1;
+
+        return topPx + (pixelOffset * multiplier);
     }
 
     private setRowTop(pixels: number): void {
@@ -1390,36 +1386,37 @@ export class RowComp extends Component {
             this.rowIsEven = rowIsEven;
         }
 
-        this.eAllRowContainers.forEach( eRow => {
+        this.eAllRowContainers.forEach(eRow => {
             eRow.setAttribute('row-index', rowIndexStr);
 
-            if (rowIsEvenChanged) {
-                _.addOrRemoveCssClass(eRow, 'ag-row-even', rowIsEven);
-                _.addOrRemoveCssClass(eRow, 'ag-row-odd', !rowIsEven);
-            }
+            if (!rowIsEvenChanged) { return; }
+            _.addOrRemoveCssClass(eRow, 'ag-row-even', rowIsEven);
+            _.addOrRemoveCssClass(eRow, 'ag-row-odd', !rowIsEven);
         });
     }
 
     public ensureDomOrder(): void {
-        let body = this.getBodyRowElement();
-        if (body) {
-            this.bodyContainerComp.ensureDomOrder(body);
-        }
+        const sides = [
+            {
+                el: this.getBodyRowElement(),
+                ct: this.bodyContainerComp
+            },
+            {
+                el: this.getPinnedLeftRowElement(),
+                ct: this.pinnedLeftContainerComp
+            }, {
+                el: this.getPinnedRightRowElement(),
+                ct: this.pinnedRightContainerComp
+            }, {
+                el: this.getFullWidthRowElement(),
+                ct: this.fullWidthContainerComp
+            }
+        ];
 
-        let left = this.getPinnedLeftRowElement();
-        if (left) {
-            this.pinnedLeftContainerComp.ensureDomOrder(left);
-        }
-
-        let right = this.getPinnedRightRowElement();
-        if (right) {
-            this.pinnedRightContainerComp.ensureDomOrder(right);
-        }
-
-        let fullWidth = this.getFullWidthRowElement();
-        if (fullWidth) {
-            this.fullWidthContainerComp.ensureDomOrder(fullWidth);
-        }
+        sides.forEach(side => {
+            if (!side.el) { return; }
+            side.ct.ensureDomOrder(side.el);
+        });
     }
 
     // returns the pinned left container, either the normal one, or the embedded full with one if exists
