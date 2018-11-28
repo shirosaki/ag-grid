@@ -283,7 +283,7 @@ export class RowComp extends Component {
     private createRowContainer(rowContainerComp: RowContainerComponent, cols: Column[],
                                callback: (eRow: HTMLElement) => void): void {
 
-        const useAnimationsFrameForCreate = false;//this.useAnimationFrameForCreate;
+        const useAnimationsFrameForCreate = this.useAnimationFrameForCreate;
         const cellTemplatesAndComps = useAnimationsFrameForCreate ? {cellComps: [], template: ''} : this.createCells(cols);
         const rowTemplate = this.createTemplate(cellTemplatesAndComps.template);
 
@@ -1171,7 +1171,7 @@ export class RowComp extends Component {
         // adding hover functionality adds listener to this row, so we
         // do it lazily in an animation frame
         if (this.useAnimationFrameForCreate) {
-            this.beans.taskQueue.addP1Task(this.addHoverFunctionality.bind(this, eRow), this.rowNode.rowIndex);
+            this.beans.taskQueue.addP2Task(this.addHoverFunctionality.bind(this, eRow));
         } else {
             this.addHoverFunctionality(eRow);
         }
