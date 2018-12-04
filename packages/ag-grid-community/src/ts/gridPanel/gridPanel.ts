@@ -183,8 +183,8 @@ export class GridPanel extends Component {
     private scrollLeft = -1;
     private scrollTop = -1;
 
-    private lastHorizontalScrollMillis = 0;
-    private horizontalScroller: HTMLElement;
+    private lastHorizontalScrollElement: HTMLElement | undefined | null;
+    private readonly resetLastHorizontalScrollElementDebounce: () => void;
 
     private bodyHeight: number;
 
@@ -202,6 +202,7 @@ export class GridPanel extends Component {
 
     constructor() {
         super(GRID_PANEL_NORMAL_TEMPLATE);
+        this.resetLastHorizontalScrollElementDebounce = _.debounce(this.resetLastHorizontalScrollElement.bind(this), 500);
     }
 
     public getVScrollPosition(): { top: number, bottom: number } {
@@ -1274,19 +1275,12 @@ export class GridPanel extends Component {
     }
 
     private isControllingScroll(eDiv: HTMLElement): boolean {
-        const now = new Date().getTime();
-        const diff = now - this.lastHorizontalScrollMillis;
-
-        // if we scrolled the other container < 200ms ago, we skip this event
-        const controlling = (eDiv === this.horizontalScroller) || diff > 200;
-
-        this.lastHorizontalScrollMillis = now;
-
-        if (controlling) {
-            this.horizontalScroller = eDiv;
+        if (!this.lastHorizontalScrollElement) {
+            this.lastHorizontalScrollElement = eDiv;
+            return true;
         }
 
-        return controlling;
+        return eDiv === this.lastHorizontalScrollElement;
     }
 
     private onFakeHorizontalScroll(): void {
@@ -1311,9 +1305,14 @@ export class GridPanel extends Component {
         // as otherwise it was causing the rows and header to flicker.
         const scrollWentPastBounds = scrollLeft < 0 || (scrollLeft + clientWidth > scrollWidth);
 
-        if (scrollWentPastBounds) { return; }
+        if (scrollWentPastBounds || scrollLeft === this.scrollLeft) { return; }
 
         this.doHorizontalScroll(scrollLeft);
+        this.resetLastHorizontalScrollElementDebounce();
+    }
+
+    private resetLastHorizontalScrollElement() {
+        this.lastHorizontalScrollElement = null;
     }
 
     private doHorizontalScroll(scrollLeft: number): void {
@@ -1386,12 +1385,9 @@ export class GridPanel extends Component {
         this.eBottomContainer.style.transform = `translateX(${offset}px)`;
         this.eTopContainer.style.transform = `translateX(${offset}px)`;
 
-        if (this.horizontalScroller !== this.eCenterViewport) {
-            _.setScrollLeft(this.eCenterViewport, scrollLeft, this.enableRtl);
-        }
-        if (this.horizontalScroller !== this.eBodyHorizontalScrollViewport) {
-            _.setScrollLeft(this.eBodyHorizontalScrollViewport, scrollLeft, this.enableRtl);
-        }
+        const partner = this.lastHorizontalScrollElement === this.eCenterViewport ? this.eBodyHorizontalScrollViewport : this.eCenterViewport;
+
+        _.setScrollLeft(partner, scrollLeft, this.enableRtl);
     }
 
     // + rangeController
