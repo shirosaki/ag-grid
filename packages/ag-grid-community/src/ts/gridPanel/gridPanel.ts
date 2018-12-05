@@ -1377,8 +1377,8 @@ export class GridPanel extends Component {
         }
 
         this.headerRootComp.setHorizontalScroll(offset);
-        this.eBottomContainer.style.left = offset + 'px';
-        this.eTopContainer.style.left = offset + 'px';
+        this.eBottomContainer.style.transform = `translateX(${offset}px)`;
+        this.eTopContainer.style.transform = `translateX(${offset}px)`;
 
         if (this.horizontalScroller !== this.eCenterViewport) {
             _.setScrollLeft(this.eCenterViewport, scrollLeft, this.enableRtl);
