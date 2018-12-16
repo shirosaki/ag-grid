@@ -1254,7 +1254,11 @@ export class ColumnController {
         this.setColumnsPinned([key], pinned, source);
     }
 
-    public setColumnsPinned(keys: (string|Column)[], pinned: string|boolean, source: ColumnEventType = "api"): void {
+    public setColumnsPinned(keys: (string | Column)[], pinned: string | boolean | null, source: ColumnEventType = "api"): void {
+        if (this.gridOptionsWrapper.getDomLayout() === 'print') {
+            console.warn(`Changing the column pinning status is not allowed with domLayout='print'`);
+            return;
+        }
         this.columnAnimationService.start();
 
         let actualPinned: string;
@@ -1447,7 +1451,7 @@ export class ColumnController {
         let state: any[] = [];
 
         if (primaryColumns) {
-            primaryColumns.forEach( (column) => {
+            primaryColumns.forEach((column) => {
                 state.push({
                     colId: column.getColId(),
                     aggFunc: column.getColDef().aggFunc,
