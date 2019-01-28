@@ -337,11 +337,13 @@ export class RangeController implements IRangeController {
 
         this.lastMouseEvent = mouseEvent;
 
-        this.autoScrollService.check(mouseEvent);
-
         let cell = this.mouseEventService.getGridCellForEvent(mouseEvent);
         if (Utils.missing(cell)) {
             return;
+        }
+
+        if (!cell.floating) {
+            this.autoScrollService.check(mouseEvent);
         }
 
         let columnChanged = false;
