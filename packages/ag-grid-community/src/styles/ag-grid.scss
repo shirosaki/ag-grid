@@ -88,6 +88,11 @@ ag-grid-aurelia {
     position: fixed;
     top: 0;
     width: 100%;
+    overflow-x: auto;
+}
+
+.ag-body-horizontal-scroll-viewport {
+    overflow-x: scroll;
 }
 
 .ag-header {
