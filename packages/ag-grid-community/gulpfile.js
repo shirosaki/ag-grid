@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const path = require('path');
 const clean = require('gulp-clean');
 const uglify = require('gulp-uglify');
-const foreach = require('gulp-foreach');
 const rename = require("gulp-rename");
 const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
@@ -20,9 +19,9 @@ const pkg = require('./package.json');
 const tsd = require('gulp-tsd');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const replace = require('gulp-replace');
 const del = require('del');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var filter = require('gulp-filter');
 
 const jasmine = require('gulp-jasmine');
@@ -57,6 +56,7 @@ gulp.task('webpack', ['tsc','scss'], webpackTask.bind(null, false, true));
 gulp.task('scss-watch', ['scss-no-clean'], scssWatch);
 gulp.task('scss-no-clean', scssTask);
 
+gulp.task('tsc-no-clean', tscTask);
 gulp.task('tsc', ['tsc-src'], tscExportsTask);
 gulp.task('tsc-src', ['cleanDist'], tscTask);
 gulp.task('tsc-exports', ['cleanExports'], tscExportsTask);
@@ -74,8 +74,14 @@ gulp.task('publishForCI', () => {
 
 });
 
+gulp.task('tsc-watch', ['tsc-no-clean'], tscWatch);
+
 function scssWatch() {
     gulp.watch('./src/styles/!**/!*', ['scss-no-clean']);
+}
+
+function tscWatch() {
+    gulp.watch('./src/ts/**/*', ['tsc-no-clean']);
 }
 
 function cleanDist() {
@@ -129,9 +135,6 @@ function tscExportsTask() {
 function webpackTask(minify, styles) {
 
     const plugins = [];
-    if (minify) {
-        plugins.push(new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
-    }
     const mainFile = styles ? './main-with-styles.js' : './main.js';
 
     let fileName = 'ag-grid';
@@ -141,6 +144,7 @@ function webpackTask(minify, styles) {
 
     return gulp.src('src/entry.js')
         .pipe(webpackStream({
+            mode: minify ? 'production' : 'none',
             entry: {
                 main: mainFile
             },
@@ -152,8 +156,16 @@ function webpackTask(minify, styles) {
             },
             //devtool: 'inline-source-map',
             module: {
-                loaders: [
-                    { test: /\.css$/, loader: "style-loader!css-loader" }
+                rules: [
+                    {
+                        test: /\.css$/,
+                        use: ['style-loader', {
+                            loader: "css-loader",
+                            options: {
+                                minimize: !!minify
+                            }
+                        }]
+                    }
                 ]
             },
             plugins: plugins
@@ -183,19 +195,31 @@ function scssTask() {
     return gulp.src(['src/styles/*.scss', '!src/styles/_*.scss'])
         .pipe(named())
         .pipe(webpackStream({
+            mode: 'none',
             module: {
                 rules: [
                     {
                         test: /\.scss$/,
-                        use: ExtractTextPlugin.extract({
-                            fallback: 'style-loader',
-                            //resolve-url-loader may be chained before sass-loader if necessary
-                            use: [
-                                { loader: 'css-loader', options: { minimize: false } } ,
-                                'sass-loader',
-                                { loader: 'postcss-loader', options: { syntax: 'postcss-scss', plugins: [ autoprefixer() ] } },
-                            ]
-                        })
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            {
+                                loader: 'css-loader', 
+                                options: {
+                                    minimize: false
+                                } 
+                            },
+                            'sass-loader',
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    syntax: 'postcss-scss',
+                                    plugins: [autoprefixer({
+                                        browsers: ["last 2 version"],
+                                        flexbox: true
+                                    })]
+                                }
+                            }
+                        ]
                     }, 
                     {
                         test: /\.(svg)$/,
@@ -224,7 +248,7 @@ function scssTask() {
                 ]
             },
             plugins: [
-                new ExtractTextPlugin('[name].css')
+                new MiniCssExtractPlugin('[name].css')
             ]
         }))
         .pipe(filter("**/*.css"))
