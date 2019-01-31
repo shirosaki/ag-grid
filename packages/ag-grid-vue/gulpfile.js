@@ -21,3 +21,9 @@ gulp.task('exports', () => {
         .pipe(gulp.dest('./'));
 });
 
+gulp.task('watch', ['src'], () => {
+    gulp.watch([
+            './src/*',
+            './node_modules/ag-grid/dist/lib/**/*'],
+        ['src']);
+});
