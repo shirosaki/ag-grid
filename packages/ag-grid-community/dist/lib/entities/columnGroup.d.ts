@@ -36,7 +36,7 @@ export declare class ColumnGroup implements ColumnGroupChild {
     getLeft(): number;
     getOldLeft(): number;
     setLeft(left: number): void;
-    private createAgEvent(type);
+    private createAgEvent;
     addEventListener(eventType: string, listener: Function): void;
     removeEventListener(eventType: string, listener: Function): void;
     getGroupId(): string;
@@ -55,8 +55,8 @@ export declare class ColumnGroup implements ColumnGroupChild {
     isExpandable(): boolean;
     isExpanded(): boolean;
     setExpanded(expanded: boolean): void;
-    private addDisplayedLeafColumns(leafColumns);
-    private addLeafColumns(leafColumns);
+    private addDisplayedLeafColumns;
+    private addLeafColumns;
     getChildren(): ColumnGroupChild[];
     getColumnGroupShow(): string;
     getOriginalColumnGroup(): OriginalColumnGroup;

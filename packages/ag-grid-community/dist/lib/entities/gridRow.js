@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = require("../constants");
 var utils_1 = require("../utils");
 var gridCell_1 = require("./gridCell");
-var GridRow = (function () {
+var GridRow = /** @class */ (function () {
     function GridRow(rowIndex, floating) {
         this.rowIndex = rowIndex;
         this.floating = utils_1.Utils.makeNull(floating);

@@ -10,7 +10,7 @@ export declare class CellRendererFactory {
     private expressionService;
     private eventService;
     private cellRendererMap;
-    private init();
+    private init;
     addCellRenderer(key: string, cellRenderer: {
         new (): ICellRenderer;
     } | ICellRendererFunc): void;

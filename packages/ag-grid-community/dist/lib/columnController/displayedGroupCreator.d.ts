@@ -9,8 +9,8 @@ export declare class DisplayedGroupCreator {
     private columnUtils;
     private context;
     createDisplayedGroups(sortedVisibleColumns: Column[], balancedColumnTree: OriginalColumnGroupChild[], groupInstanceIdCreator: GroupInstanceIdCreator, oldDisplayedGroups?: ColumnGroupChild[]): ColumnGroupChild[];
-    private createColumnGroup(originalGroup, groupInstanceIdCreator, oldColumnsMapped);
-    private mapOldGroupsById(displayedGroups);
-    private setupParentsIntoColumns(columnsOrGroups, parent);
-    private getOriginalPathForColumn(balancedColumnTree, column);
+    private createColumnGroup;
+    private mapOldGroupsById;
+    private setupParentsIntoColumns;
+    private getOriginalPathForColumn;
 }

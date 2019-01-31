@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -19,7 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = require("../../constants");
 var component_1 = require("../../widgets/component");
 var utils_1 = require("../../utils");
-var TextCellEditor = (function (_super) {
+var TextCellEditor = /** @class */ (function (_super) {
     __extends(TextCellEditor, _super);
     function TextCellEditor() {
         return _super.call(this, TextCellEditor.TEMPLATE) || this;

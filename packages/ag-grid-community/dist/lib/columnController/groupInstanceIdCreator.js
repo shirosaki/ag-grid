@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // getInstanceIdForKey('age') => 0
 // getInstanceIdForKey('age') => 1
 // getInstanceIdForKey('country') => 4
-var GroupInstanceIdCreator = (function () {
+var GroupInstanceIdCreator = /** @class */ (function () {
     function GroupInstanceIdCreator() {
         // this map contains keys to numbers, so we remember what the last call was
         this.existingIds = {};

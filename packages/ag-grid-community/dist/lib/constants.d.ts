@@ -45,4 +45,7 @@ export declare class Constants {
     static ONLY_WHEN_GROUPING: string;
     static PINNED_TOP: string;
     static PINNED_BOTTOM: string;
+    static DOM_LAYOUT_NORMAL: string;
+    static DOM_LAYOUT_PRINT: string;
+    static DOM_LAYOUT_AUTO_HEIGHT: string;
 }

@@ -23,6 +23,6 @@ export declare abstract class BaseComponentWrapper<F extends WrapableInterface> 
     abstract createWrapper(OriginalConstructor: {
         new (): any;
     }, componentName?: string): F;
-    private createMethod(wrapper, methodName, mandatory);
-    private createMethodProxy(wrapper, methodName, mandatory);
+    private createMethod;
+    private createMethodProxy;
 }

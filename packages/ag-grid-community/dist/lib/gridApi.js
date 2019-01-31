@@ -38,7 +38,7 @@ var valueCache_1 = require("./valueService/valueCache");
 var alignedGridsService_1 = require("./alignedGridsService");
 var pinnedRowModel_1 = require("./rowModels/pinnedRowModel");
 var animationFrameService_1 = require("./misc/animationFrameService");
-var GridApi = (function () {
+var GridApi = /** @class */ (function () {
     function GridApi() {
         this.detailGridInfoMap = {};
         /*
@@ -310,7 +310,7 @@ var GridApi = (function () {
     };
     GridApi.prototype.refreshHeader = function () {
         this.headerRootComp.refreshHeader();
-        this.gridPanel.setBodyAndHeaderHeights();
+        this.gridPanel.setHeaderAndFloatingHeights();
     };
     GridApi.prototype.isAnyFilterPresent = function () {
         return this.filterManager.isAnyFilterPresent();
@@ -941,7 +941,7 @@ var GridApi = (function () {
         }
     };
     GridApi.prototype.checkGridSize = function () {
-        this.gridPanel.setBodyAndHeaderHeights();
+        this.gridPanel.setHeaderAndFloatingHeights();
     };
     GridApi.prototype.getFirstRenderedRow = function () {
         console.log('in ag-Grid v12, getFirstRenderedRow() was renamed to getFirstDisplayedRow()');

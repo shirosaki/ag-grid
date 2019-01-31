@@ -99,7 +99,7 @@ export declare class Utils {
     static insertTemplateWithDomOrder(eContainer: HTMLElement, htmlTemplate: string, eChildBefore: HTMLElement): HTMLElement;
     static every<T>(items: T[], callback: (item: T) => boolean): boolean;
     static toStringOrNull(value: any): string;
-    static formatWidth(width: number | string): string;
+    static formatSize(size: number | string): string;
     static formatNumberTwoDecimalPlacesAndCommas(value: number): string;
     static formatNumberCommas(value: number): string;
     static prependDC(parent: HTMLElement, documentFragment: DocumentFragment): void;
@@ -120,6 +120,8 @@ export declare class Utils {
     static isKeyPressed(event: KeyboardEvent, keyToCheck: number): boolean;
     static setVisible(element: HTMLElement, visible: boolean): void;
     static setHidden(element: HTMLElement, hidden: boolean): void;
+    static setFixedWidth(element: HTMLElement, width: string | number): void;
+    static setFixedHeight(element: HTMLElement, height: string | number): void;
     static isBrowserIE(): boolean;
     static isBrowserEdge(): boolean;
     static isBrowserSafari(): boolean;
@@ -271,7 +273,7 @@ export declare class Utils {
     static fuzzySuggestions(inputValue: string, validValues: string[], allSuggestions: string[]): string[];
     static get_bigrams(from: string): any[];
     static string_similarity: (str1: string, str2: string) => number;
-    private static isNumpadDelWithNumlockOnForEdgeOrIe(event);
+    private static isNumpadDelWithNumlockOnForEdgeOrIe;
 }
 export declare class NumberSequence {
     private nextValue;
@@ -285,7 +287,7 @@ export declare let _: typeof Utils;
 export declare type ResolveAndRejectCallback<T> = (resolve: (value: T) => void, reject: (params: any) => void) => void;
 export declare enum PromiseStatus {
     IN_PROGRESS = 0,
-    RESOLVED = 1,
+    RESOLVED = 1
 }
 export interface ExternalPromise<T> {
     resolve: (value: T) => void;
@@ -303,6 +305,6 @@ export declare class Promise<T> {
     firstOneOnly(func: (result: any) => void): void;
     map<Z>(adapter: (from: T) => Z): Promise<Z>;
     resolveNow<Z>(ifNotResolvedValue: Z, ifResolved: (current: T) => Z): Z;
-    private onDone(value);
-    private onReject(params);
+    private onDone;
+    private onReject;
 }

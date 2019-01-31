@@ -20,7 +20,7 @@ var beans_1 = require("./beans");
 var cellComp_1 = require("./cellComp");
 var columnController_1 = require("../columnController/columnController");
 var utils_1 = require("../utils");
-var AutoHeightCalculator = (function () {
+var AutoHeightCalculator = /** @class */ (function () {
     function AutoHeightCalculator() {
     }
     AutoHeightCalculator.prototype.registerGridComp = function (gridPanel) {
@@ -36,7 +36,7 @@ var AutoHeightCalculator = (function () {
         }
         // we put the dummy into the body container, so it will inherit all the
         // css styles that the real cells are inheriting
-        var eBodyContainer = this.gridPanel.getBodyContainer();
+        var eBodyContainer = this.gridPanel.getCenterContainer();
         eBodyContainer.appendChild(this.eDummyContainer);
         var cellComps = [];
         var cols = this.columnController.getAllAutoRowHeightCols();

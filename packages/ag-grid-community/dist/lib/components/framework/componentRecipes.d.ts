@@ -35,6 +35,6 @@ export declare class ComponentRecipes {
     newOverlayWrapperComponent(): IOverlayWrapperComp;
     newLoadingOverlayComponent(): Promise<ILoadingOverlayComp>;
     newNoRowsOverlayComponent(): Promise<INoRowsOverlayComp>;
-    private getFilterComponentPrototype<A, B>(colDef);
-    private newEmptyFloatingFilterWrapperComponent(column);
+    private getFilterComponentPrototype;
+    private newEmptyFloatingFilterWrapperComponent;
 }

@@ -16,12 +16,12 @@ export declare type ComponentHolder = GridOptions | ColDef | ColGroupDef | ISetF
 export declare type AgComponentPropertyInput<A extends IComponent<any>> = AgGridRegisteredComponentInput<A> | string;
 export declare enum ComponentType {
     AG_GRID = 0,
-    FRAMEWORK = 1,
+    FRAMEWORK = 1
 }
 export declare enum ComponentSource {
     DEFAULT = 0,
     REGISTERED_BY_NAME = 1,
-    HARDCODED = 2,
+    HARDCODED = 2
 }
 export interface DynamicComponentParams {
     data?: any;
@@ -77,7 +77,7 @@ export declare class ComponentResolver {
      *  @param defaultComponentName: The name of the component to load if there is no component specified
      */
     getComponentToUse<A extends IComponent<any> & B, B>(holder: ComponentHolder, propertyName: string, dynamicComponentParams: DynamicComponentParams, defaultComponentName?: string): ResolvedComponent<A, B>;
-    private resolveByName<A, B>(propertyName, componentNameOpt?);
+    private resolveByName;
     /**
      * Useful to check what would be the resultant params for a given object
      *  @param holder: This is the context for which this component needs to be created, it can be gridOptions
@@ -120,6 +120,6 @@ export declare class ComponentResolver {
     createInternalAgGridComponent<A extends IComponent<any>>(clazz: {
         new (): A;
     }, agGridParams: any, customInitParamsCb?: (params: any, component: A) => any): A;
-    private newAgGridComponent<A, B>(holder, propertyName, dynamicComponentParams, defaultComponentName?, mandatory?);
-    private initialiseComponent<A>(component, agGridParams, customInitParamsCb?);
+    private newAgGridComponent;
+    private initialiseComponent;
 }

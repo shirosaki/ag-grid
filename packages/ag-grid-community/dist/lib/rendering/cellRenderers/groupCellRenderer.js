@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,7 +43,7 @@ var columnController_1 = require("../../columnController/columnController");
 var column_1 = require("../../entities/column");
 var componentAnnotations_1 = require("../../widgets/componentAnnotations");
 var mouseEventService_1 = require("../../gridPanel/mouseEventService");
-var GroupCellRenderer = (function (_super) {
+var GroupCellRenderer = /** @class */ (function (_super) {
     __extends(GroupCellRenderer, _super);
     function GroupCellRenderer() {
         return _super.call(this, GroupCellRenderer.TEMPLATE) || this;
@@ -236,8 +239,11 @@ var GroupCellRenderer = (function (_super) {
     GroupCellRenderer.prototype.addCheckboxIfNeeded = function () {
         var rowNode = this.displayedGroup;
         var checkboxNeeded = this.isUserWantsSelected()
+            // footers cannot be selected
             && !rowNode.footer
+            // pinned rows cannot be selected
             && !rowNode.rowPinned
+            // details cannot be selected
             && !rowNode.detail;
         if (checkboxNeeded) {
             var cbSelectionComponent_1 = new checkboxSelectionComponent_1.CheckboxSelectionComponent();

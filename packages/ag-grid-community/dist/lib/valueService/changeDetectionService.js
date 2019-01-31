@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -33,7 +36,7 @@ var eventService_1 = require("../eventService");
 var constants_1 = require("../constants");
 var beanStub_1 = require("../context/beanStub");
 var events_1 = require("../events");
-var ChangeDetectionService = (function (_super) {
+var ChangeDetectionService = /** @class */ (function (_super) {
     __extends(ChangeDetectionService, _super);
     function ChangeDetectionService() {
         return _super !== null && _super.apply(this, arguments) || this;

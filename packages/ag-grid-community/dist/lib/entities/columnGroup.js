@@ -21,7 +21,7 @@ var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var columnApi_1 = require("../columnController/columnApi");
 var gridApi_1 = require("../gridApi");
-var ColumnGroup = (function () {
+var ColumnGroup = /** @class */ (function () {
     function ColumnGroup(originalColumnGroup, groupId, instanceId) {
         // depends on the open/closed state of the group, only displaying columns are stored here
         this.displayedChildren = [];

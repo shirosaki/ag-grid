@@ -14,14 +14,14 @@ export declare class CheckboxSelectionComponent extends Component {
     private column;
     private isRowSelectableFunc;
     constructor();
-    private createAndAddIcons();
-    private onDataChanged();
-    private onSelectableChanged();
-    private onSelectionChanged();
-    private onCheckedClicked();
-    private onUncheckedClicked(event);
-    private onIndeterminateClicked(event);
+    private createAndAddIcons;
+    private onDataChanged;
+    private onSelectableChanged;
+    private onSelectionChanged;
+    private onCheckedClicked;
+    private onUncheckedClicked;
+    private onIndeterminateClicked;
     init(params: any): void;
-    private showOrHideSelect();
-    private checkboxCallbackExists();
+    private showOrHideSelect;
+    private checkboxCallbackExists;
 }

@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ChangedPath = (function () {
+var ChangedPath = /** @class */ (function () {
     function ChangedPath(keepingColumns) {
         this.active = true;
         this.nodeIdsToBoolean = {};

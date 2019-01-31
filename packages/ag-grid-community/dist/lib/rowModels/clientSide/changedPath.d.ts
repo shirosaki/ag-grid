@@ -15,5 +15,5 @@ export declare class ChangedPath {
     isInPath(rowNode: RowNode): boolean;
     getValueColumnsForNode(rowNode: RowNode, valueColumns: Column[]): Column[];
     getNotValueColumnsForNode(rowNode: RowNode, valueColumns: Column[]): Column[];
-    private validateActive();
+    private validateActive;
 }

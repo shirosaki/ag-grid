@@ -11,7 +11,7 @@ var FUNCTION_STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 var FUNCTION_ARGUMENT_NAMES = /([^\s,]+)/g;
 var AG_GRID_STOP_PROPAGATION = '__ag_Grid_Stop_Propagation';
 // util class, only used when debugging, for printing time to console
-var Timer = (function () {
+var Timer = /** @class */ (function () {
     function Timer() {
         this.timestamp = new Date().getTime();
     }
@@ -32,7 +32,7 @@ var HTML_ESCAPES = {
     "'": '&#39;'
 };
 var reUnescapedHtml = /[&<>"']/g;
-var Utils = (function () {
+var Utils = /** @class */ (function () {
     function Utils() {
     }
     // if the key was passed before, then doesn't execute the func
@@ -357,7 +357,7 @@ var Utils = (function () {
     //Returns true if it is a DOM element
     //taken from: http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
     Utils.isElement = function (o) {
-        return (typeof HTMLElement === "function" ? o instanceof HTMLElement :
+        return (typeof HTMLElement === "function" ? o instanceof HTMLElement : //DOM2
             o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string");
     };
     Utils.isNodeOrElement = function (o) {
@@ -804,12 +804,12 @@ var Utils = (function () {
             return null;
         }
     };
-    Utils.formatWidth = function (width) {
-        if (typeof width === "number") {
-            return width + "px";
+    Utils.formatSize = function (size) {
+        if (typeof size === "number") {
+            return size + "px";
         }
         else {
-            return width;
+            return size;
         }
     };
     Utils.formatNumberTwoDecimalPlacesAndCommas = function (value) {
@@ -959,9 +959,21 @@ var Utils = (function () {
     Utils.setHidden = function (element, hidden) {
         this.addOrRemoveCssClass(element, 'ag-visibility-hidden', hidden);
     };
+    Utils.setFixedWidth = function (element, width) {
+        width = this.formatSize(width);
+        element.style.width = width;
+        element.style.maxWidth = width;
+        element.style.minWidth = width;
+    };
+    Utils.setFixedHeight = function (element, height) {
+        height = this.formatSize(height);
+        element.style.height = height;
+        element.style.maxHeight = height;
+        element.style.minHeight = height;
+    };
     Utils.isBrowserIE = function () {
         if (this.isIE === undefined) {
-            this.isIE = false || !!document.documentMode; // At least IE6
+            this.isIE = /*@cc_on!@*/ false || !!document.documentMode; // At least IE6
         }
         return this.isIE;
     };
@@ -977,7 +989,7 @@ var Utils = (function () {
             // taken from https://github.com/ag-grid/ag-grid/issues/550
             this.isSafari = Object.prototype.toString.call(anyWindow.HTMLElement).indexOf('Constructor') > 0
                 || (function (p) {
-                    return p.toString() === "[object SafariRemoteNotification]";
+                    return p ? p.toString() === "[object SafariRemoteNotification]" : false;
                 })(!anyWindow.safari || anyWindow.safari.pushNotification);
         }
         return this.isSafari;
@@ -1036,9 +1048,9 @@ var Utils = (function () {
         // https://stackoverflow.com/questions/39245488/event-path-undefined-with-firefox-and-vue-js
         // https://developer.mozilla.org/en-US/docs/Web/API/Event
         var eventNoType = event;
-        if (event.deepPath) {
+        if (eventNoType.deepPath) {
             // IE supports deep path
-            return event.deepPath();
+            return eventNoType.deepPath();
         }
         else if (eventNoType.path) {
             // Chrome supports path
@@ -1296,11 +1308,11 @@ var Utils = (function () {
             pX = event.deltaX;
         }
         if ((pX || pY) && event.deltaMode) {
-            if (event.deltaMode == 1) {
+            if (event.deltaMode == 1) { // delta in LINE units
                 pX *= LINE_HEIGHT;
                 pY *= LINE_HEIGHT;
             }
-            else {
+            else { // delta in PAGE units
                 pX *= PAGE_HEIGHT;
                 pY *= PAGE_HEIGHT;
             }
@@ -1575,16 +1587,19 @@ var Utils = (function () {
     };
     Utils.passiveEvents = ['touchstart', 'touchend', 'touchmove', 'touchcancel'];
     Utils.string_similarity = function (str1, str2) {
-        var hit_count, j, k, len, len1, pairs1, pairs2, union, x, y;
         if (str1.length > 0 && str2.length > 0) {
-            pairs1 = Utils.get_bigrams(str1);
-            pairs2 = Utils.get_bigrams(str2);
-            union = pairs1.length + pairs2.length;
-            hit_count = 0;
+            var pairs1 = Utils.get_bigrams(str1);
+            var pairs2 = Utils.get_bigrams(str2);
+            var union = pairs1.length + pairs2.length;
+            var hit_count = 0;
+            var j = void 0;
+            var len = void 0;
             for (j = 0, len = pairs1.length; j < len; j++) {
-                x = pairs1[j];
+                var x = pairs1[j];
+                var k = void 0;
+                var len1 = void 0;
                 for (k = 0, len1 = pairs2.length; k < len1; k++) {
-                    y = pairs2[k];
+                    var y = pairs2[k];
                     if (x === y) {
                         hit_count++;
                     }
@@ -1599,7 +1614,7 @@ var Utils = (function () {
     return Utils;
 }());
 exports.Utils = Utils;
-var NumberSequence = (function () {
+var NumberSequence = /** @class */ (function () {
     function NumberSequence(initValue, step) {
         if (initValue === void 0) { initValue = 0; }
         if (step === void 0) { step = 1; }
@@ -1626,7 +1641,7 @@ var PromiseStatus;
     PromiseStatus[PromiseStatus["IN_PROGRESS"] = 0] = "IN_PROGRESS";
     PromiseStatus[PromiseStatus["RESOLVED"] = 1] = "RESOLVED";
 })(PromiseStatus = exports.PromiseStatus || (exports.PromiseStatus = {}));
-var Promise = (function () {
+var Promise = /** @class */ (function () {
     function Promise(callback) {
         this.status = PromiseStatus.IN_PROGRESS;
         this.resolution = null;

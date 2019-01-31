@@ -7,7 +7,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("../utils");
-var Context = (function () {
+var Context = /** @class */ (function () {
     function Context(params, logger) {
         this.beans = {};
         this.componentsMappedByName = {};

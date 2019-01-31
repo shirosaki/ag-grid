@@ -27,10 +27,10 @@ export declare class HeaderGroupComp extends Component implements IHeaderGroupCo
     private eCloseIcon;
     constructor();
     init(params: IHeaderGroupParams): void;
-    private setupExpandIcons();
-    private addTouchAndClickListeners(eElement, action);
-    private updateIconVisibility();
-    private addInIcon(iconName, refName);
-    private addGroupExpandIcon();
-    private setupLabel();
+    private setupExpandIcons;
+    private addTouchAndClickListeners;
+    private updateIconVisibility;
+    private addInIcon;
+    private addGroupExpandIcon;
+    private setupLabel;
 }

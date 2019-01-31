@@ -17,14 +17,14 @@ export declare class SelectAllFeature extends BeanStub {
     private filteredOnly;
     private cbSelectAll;
     constructor(cbSelectAll: AgCheckbox, column: Column);
-    private postConstruct();
-    private showOrHideSelectAll();
-    private onModelChanged();
-    private onSelectionChanged();
-    private getNextCheckboxState(selectionCount);
-    private updateStateOfCheckbox();
-    private getSelectionCount();
-    private checkRightRowModelType();
-    private onCbSelectAll();
-    private isCheckboxSelection();
+    private postConstruct;
+    private showOrHideSelectAll;
+    private onModelChanged;
+    private onSelectionChanged;
+    private getNextCheckboxState;
+    private updateStateOfCheckbox;
+    private getSelectionCount;
+    private checkRightRowModelType;
+    private onCbSelectAll;
+    private isCheckboxSelection;
 }

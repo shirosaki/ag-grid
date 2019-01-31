@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var LinkedList = (function () {
+var LinkedList = /** @class */ (function () {
     function LinkedList() {
         this.first = null;
         this.last = null;
@@ -40,7 +40,7 @@ var LinkedList = (function () {
     return LinkedList;
 }());
 exports.LinkedList = LinkedList;
-var LinkedListItem = (function () {
+var LinkedListItem = /** @class */ (function () {
     function LinkedListItem() {
     }
     return LinkedListItem;

@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // eg, if the col field is 'name', it will try ids: {name, name_1, name_2...}
 // if no field or id provided in the col, it will try the ids of natural numbers
 var utils_1 = require("../utils");
-var ColumnKeyCreator = (function () {
+var ColumnKeyCreator = /** @class */ (function () {
     function ColumnKeyCreator() {
         this.existingKeys = [];
     }

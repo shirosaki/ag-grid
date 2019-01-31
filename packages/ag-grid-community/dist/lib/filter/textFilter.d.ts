@@ -37,13 +37,13 @@ export declare class TextFilter extends ComparableBaseFilter<string, ITextFilter
     getApplicableFilterTypes(): string[];
     bodyTemplate(type: FilterConditionType): string;
     initialiseFilterBodyUi(type: FilterConditionType): void;
-    private addFilterChangedListener(type);
+    private addFilterChangedListener;
     refreshFilterBodyUi(type: FilterConditionType): void;
     afterGuiAttached(): void;
     filterValues(type: FilterConditionType): string;
     individualFilterPasses(params: IDoesFilterPassParams, type: FilterConditionType): boolean;
-    private checkIndividualFilter(params, filterType, filterText);
-    private onFilterTextFieldChanged(type);
+    private checkIndividualFilter;
+    private onFilterTextFieldChanged;
     setFilter(filter: string, type: FilterConditionType): void;
     getFilter(): string;
     resetState(): void;

@@ -12,7 +12,7 @@ export declare class SelectionController {
     private logger;
     private lastSelectedNode;
     private groupSelectsChildren;
-    private setBeans(loggerFactory);
+    private setBeans;
     init(): void;
     setLastSelectedNode(rowNode: RowNode): void;
     getLastSelectedNode(): RowNode;
@@ -22,10 +22,10 @@ export declare class SelectionController {
     updateGroupsFromChildrenSelections(): void;
     getNodeForIdIfSelected(id: number): RowNode;
     clearOtherNodes(rowNodeToKeepSelected: RowNode): number;
-    private onRowSelected(event);
+    private onRowSelected;
     syncInRowNode(rowNode: RowNode, oldNode: RowNode): void;
-    private syncInOldRowNode(rowNode, oldNode);
-    private syncInNewRowNode(rowNode);
+    private syncInOldRowNode;
+    private syncInNewRowNode;
     reset(): void;
     getBestCostNodeSelection(): any;
     setRowModel(rowModel: any): void;

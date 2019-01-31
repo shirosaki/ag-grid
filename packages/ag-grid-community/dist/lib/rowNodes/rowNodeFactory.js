@@ -21,7 +21,7 @@ var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var eventService_1 = require("../eventService");
 var context_1 = require("../context/context");
 var columnController_1 = require("../columnController/columnController");
-var RowNodeFactory = (function () {
+var RowNodeFactory = /** @class */ (function () {
     function RowNodeFactory() {
     }
     RowNodeFactory.prototype.create = function (data) {

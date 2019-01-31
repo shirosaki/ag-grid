@@ -25,6 +25,7 @@ export interface GridOptions {
     /****************************************************************
      * Don't forget to update ComponentUtil if changing this class. PLEASE!*
      ****************************************************************/
+    suppressBrowserResizeObserver?: boolean;
     rowDragManaged?: boolean;
     suppressRowDrag?: boolean;
     ensureDomOrder?: boolean;
@@ -173,6 +174,7 @@ export interface GridOptions {
     groupSuppressBlankHeader?: boolean;
     groupColumnDef?: ColDef;
     autoGroupColumnDef?: ColDef;
+    autoGroupColumnIndex?: number;
     forPrint?: boolean;
     enableOldSetFilterModel?: boolean;
     /****************************************************************
@@ -250,7 +252,7 @@ export interface GridOptions {
     getRowStyle?: Function;
     getRowClass?: (params: any) => (string | string[]);
     rowClassRules?: {
-        [cssClassName: string]: (Function | string);
+        [cssClassName: string]: (((params: any) => boolean) | string);
     };
     getRowHeight?: Function;
     sendToClipboard?: (params: any) => void;

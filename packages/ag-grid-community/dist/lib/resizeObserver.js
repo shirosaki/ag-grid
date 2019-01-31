@@ -137,7 +137,7 @@ function createReadOnlyRect(ref) {
 function createRectInit(x, y, width, height) {
     return { x: x, y: y, width: width, height: height };
 }
-var ResizeObserverController = (function () {
+var ResizeObserverController = /** @class */ (function () {
     function ResizeObserverController() {
         this.connected_ = false;
         this.mutationEventsAdded_ = false;
@@ -236,7 +236,7 @@ var defineConfigurable = function (target, props) {
     }
     return target;
 };
-var ResizeObservation = (function () {
+var ResizeObservation = /** @class */ (function () {
     function ResizeObservation(target) {
         this.target = target;
         this.broadcastWidth = 0;
@@ -257,7 +257,7 @@ var ResizeObservation = (function () {
     };
     return ResizeObservation;
 }());
-var ResizeObserverSPI = (function () {
+var ResizeObserverSPI = /** @class */ (function () {
     function ResizeObserverSPI(callback, controller, callbackCtx) {
         this.observation = null;
         this.callback_ = null;
@@ -296,7 +296,7 @@ var ResizeObserverSPI = (function () {
     };
     return ResizeObserverSPI;
 }());
-var ResizeObserverFallback = (function () {
+var ResizeObserverFallback = /** @class */ (function () {
     function ResizeObserverFallback(callback) {
         var controller = ResizeObserverController.getInstance();
         var observer = new ResizeObserverSPI(callback, controller, this);

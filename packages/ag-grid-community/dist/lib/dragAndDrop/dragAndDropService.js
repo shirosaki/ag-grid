@@ -41,7 +41,7 @@ var HDirection;
     HDirection[HDirection["Left"] = 0] = "Left";
     HDirection[HDirection["Right"] = 1] = "Right";
 })(HDirection = exports.HDirection || (exports.HDirection = {}));
-var DragAndDropService = (function () {
+var DragAndDropService = /** @class */ (function () {
     function DragAndDropService() {
         this.dragSourceAndParamsList = [];
         this.dropTargets = [];
@@ -338,6 +338,7 @@ var DragAndDropService = (function () {
         this.eGhostIcon.appendChild(eIcon);
         utils_1.Utils.addOrRemoveCssClass(this.eGhostIcon, 'ag-shake-left-to-right', shake);
     };
+    var DragAndDropService_1;
     DragAndDropService.ICON_PINNED = 'pinned';
     DragAndDropService.ICON_ADD = 'add';
     DragAndDropService.ICON_MOVE = 'move';
@@ -390,6 +391,5 @@ var DragAndDropService = (function () {
         context_1.Bean('dragAndDropService')
     ], DragAndDropService);
     return DragAndDropService;
-    var DragAndDropService_1;
 }());
 exports.DragAndDropService = DragAndDropService;

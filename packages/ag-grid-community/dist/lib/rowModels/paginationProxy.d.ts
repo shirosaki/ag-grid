@@ -11,10 +11,10 @@ export declare class PaginationAutoPageSizeService extends BeanStub {
     private scrollVisibleService;
     private gridPanel;
     registerGridComp(gridPanel: GridPanel): void;
-    private notActive();
-    private onScrollVisibilityChanged();
-    private onBodyHeightChanged();
-    private checkPageSize();
+    private notActive;
+    private onScrollVisibilityChanged;
+    private onBodyHeightChanged;
+    private checkPageSize;
 }
 export declare class PaginationProxy extends BeanStub implements IRowModel {
     private rowModel;
@@ -32,9 +32,9 @@ export declare class PaginationProxy extends BeanStub implements IRowModel {
     private pixelOffset;
     private topRowBounds;
     private bottomRowBounds;
-    private postConstruct();
+    private postConstruct;
     isLastRowFound(): boolean;
-    private onModelUpdated(modelUpdatedEvent?);
+    private onModelUpdated;
     goToPage(page: number): void;
     getPixelOffset(): number;
     getRow(index: number): RowNode;
@@ -64,6 +64,6 @@ export declare class PaginationProxy extends BeanStub implements IRowModel {
     goToLastPage(): void;
     getPageSize(): number;
     getTotalPages(): number;
-    private setPageSize();
-    private setIndexesAndBounds();
+    private setPageSize;
+    private setIndexesAndBounds;
 }

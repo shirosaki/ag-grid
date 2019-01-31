@@ -33,12 +33,12 @@ export declare class ClientSideNodeManager {
     updateRowData(rowDataTran: RowDataTransaction, rowNodeOrder: {
         [id: string]: number;
     }): RowNodeTransaction;
-    private addRowNode(data, index?);
-    private updatedRowNode(data, update);
-    private recursiveFunction(rowData, parent, level);
-    private createNode(dataItem, parent, level);
-    private isExpanded(level);
-    private setLeafChildren(node);
+    private addRowNode;
+    private updatedRowNode;
+    private recursiveFunction;
+    private createNode;
+    private isExpanded;
+    private setLeafChildren;
     insertItemsAtIndex(index: number, rowData: any[]): RowNode[];
     addItems(items: any): RowNode[];
     isLegacyTreeData(): boolean;

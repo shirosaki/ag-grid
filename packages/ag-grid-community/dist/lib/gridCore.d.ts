@@ -34,9 +34,9 @@ export declare class GridCore extends Component {
     private logger;
     constructor();
     init(): void;
-    private addLayoutClass();
+    private addLayoutClass;
     getPreferredWidth(): number;
-    private addRtlSupport();
+    private addRtlSupport;
     getRootGui(): HTMLElement;
     showToolPanel(show: any): void;
     isToolPanelShowing(): boolean;

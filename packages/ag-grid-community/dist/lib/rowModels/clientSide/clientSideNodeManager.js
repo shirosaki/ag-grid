@@ -8,7 +8,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var rowNode_1 = require("../../entities/rowNode");
 var utils_1 = require("../../utils");
-var ClientSideNodeManager = (function () {
+var ClientSideNodeManager = /** @class */ (function () {
     function ClientSideNodeManager(rootNode, gridOptionsWrapper, context, eventService, columnController) {
         this.nextId = 0;
         // when user is provide the id's, we also keep a map of ids to row nodes for convenience

@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ColDefUtil = (function () {
+var ColDefUtil = /** @class */ (function () {
     function ColDefUtil() {
     }
     ColDefUtil.STRING_PROPERTIES = [
@@ -101,7 +101,8 @@ var ColDefUtil = (function () {
         'suppressNavigable',
         'enableCellChangeFlash',
         'rowDrag',
-        'autoHeight'
+        'autoHeight',
+        'groupRemoveSingleChildren'
     ];
     ColDefUtil.FUNCTION_PROPERTIES = [
         'valueGetter',

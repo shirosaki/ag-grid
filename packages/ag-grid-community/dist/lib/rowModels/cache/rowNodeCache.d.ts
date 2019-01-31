@@ -43,7 +43,7 @@ export declare abstract class RowNodeCache<T extends RowNodeBlock, P extends Row
     hack_setVirtualRowCount(virtualRowCount: number): void;
     isMaxRowFound(): boolean;
     protected onPageLoaded(event: any): void;
-    private purgeBlocksIfNeeded(blockToExclude);
+    private purgeBlocksIfNeeded;
     protected postCreateBlock(newBlock: T): void;
     protected removeBlockFromCache(blockToRemove: T): void;
     protected checkBlockToLoad(): void;
@@ -52,7 +52,7 @@ export declare abstract class RowNodeCache<T extends RowNodeBlock, P extends Row
     forEachNodeDeep(callback: (rowNode: RowNode, index: number) => void, sequence: NumberSequence): void;
     forEachBlockInOrder(callback: (block: T, id: number) => void): void;
     protected forEachBlockInReverseOrder(callback: (block: T, id: number) => void): void;
-    private forEachBlockId(ids, callback);
+    private forEachBlockId;
     protected getBlockIdsSorted(): number[];
     protected getBlock(blockId: string | number): T;
     protected setBlock(id: number, block: T): void;

@@ -10,6 +10,6 @@ export declare class AutoGroupColService {
     private columnController;
     private balancedColumnTreeBuilder;
     createAutoGroupColumns(rowGroupColumns: Column[]): Column[];
-    private createOneAutoGroupColumn(rowGroupCol?, index?);
-    private generateDefaultColDef(rowGroupCol?);
+    private createOneAutoGroupColumn;
+    private generateDefaultColDef;
 }

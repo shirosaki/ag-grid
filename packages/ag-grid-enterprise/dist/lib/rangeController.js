@@ -252,10 +252,12 @@ var RangeController = (function () {
             return;
         }
         this.lastMouseEvent = mouseEvent;
-        this.autoScrollService.check(mouseEvent);
         var cell = this.mouseEventService.getGridCellForEvent(mouseEvent);
         if (main_1.Utils.missing(cell)) {
             return;
+        }
+        if (!cell.floating) {
+            this.autoScrollService.check(mouseEvent);
         }
         var columnChanged = false;
         if (cell.column !== this.activeRange.end.column) {

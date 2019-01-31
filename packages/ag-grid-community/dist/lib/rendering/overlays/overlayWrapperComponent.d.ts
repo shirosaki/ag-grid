@@ -22,5 +22,5 @@ export declare class OverlayWrapperComponent extends Component implements IOverl
     showLoadingOverlay(eOverlayWrapper: HTMLElement): void;
     showNoRowsOverlay(eOverlayWrapper: HTMLElement): void;
     hideOverlay(eOverlayWrapper: HTMLElement): void;
-    private showOverlay(eOverlayWrapper, overlay);
+    private showOverlay;
 }

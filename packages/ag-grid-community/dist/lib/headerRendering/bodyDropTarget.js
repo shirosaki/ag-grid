@@ -26,7 +26,7 @@ var DropType;
     DropType[DropType["ColumnMove"] = 0] = "ColumnMove";
     DropType[DropType["Pivot"] = 1] = "Pivot";
 })(DropType || (DropType = {}));
-var BodyDropTarget = (function () {
+var BodyDropTarget = /** @class */ (function () {
     function BodyDropTarget(pinned, eContainer) {
         this.dropListeners = {};
         this.pinned = pinned;

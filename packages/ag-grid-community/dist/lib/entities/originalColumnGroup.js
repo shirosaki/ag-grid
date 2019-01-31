@@ -21,7 +21,7 @@ var eventService_1 = require("../eventService");
 var context_1 = require("../context/context");
 var columnApi_1 = require("../columnController/columnApi");
 var gridApi_1 = require("../gridApi");
-var OriginalColumnGroup = (function () {
+var OriginalColumnGroup = /** @class */ (function () {
     function OriginalColumnGroup(colGroupDef, groupId, padding, level) {
         this.localEventService = new eventService_1.EventService();
         this.expandable = false;

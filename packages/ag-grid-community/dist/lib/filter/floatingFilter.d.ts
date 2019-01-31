@@ -55,7 +55,7 @@ export declare class DateFloatingFilterComp extends Component implements IFloati
     currentParentModel: () => SerializedDateFilter;
     lastKnownModel: SerializedDateFilter;
     init(params: IFloatingFilterParams<SerializedDateFilter, BaseFloatingFilterChange<SerializedDateFilter>>): void;
-    private onDateChanged();
+    private onDateChanged;
     equalModels(left: SerializedDateFilter, right: SerializedDateFilter): boolean;
     asParentModel(): SerializedDateFilter;
     onParentModelChanged(parentModel: SerializedDateFilter): void;
@@ -64,7 +64,7 @@ export declare class NumberFloatingFilterComp extends InputTextFloatingFilterCom
     asFloatingFilterText(toParse: SerializedNumberFilter): string;
     parseAsText(model: SerializedNumberFilter): string;
     asParentModel(): SerializedNumberFilter;
-    private asNumber(value);
+    private asNumber;
 }
 export declare class SetFloatingFilterComp extends InputTextFloatingFilterComp<SerializedSetFilter, IFloatingFilterParams<SerializedSetFilter, BaseFloatingFilterChange<SerializedSetFilter>>> {
     init(params: IFloatingFilterParams<SerializedSetFilter, BaseFloatingFilterChange<SerializedSetFilter>>): void;

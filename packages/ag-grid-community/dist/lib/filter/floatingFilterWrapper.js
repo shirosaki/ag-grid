@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37,7 +40,7 @@ var hoverFeature_1 = require("../headerRendering/hoverFeature");
 var events_1 = require("../events");
 var eventService_1 = require("../eventService");
 var columnHoverService_1 = require("../rendering/columnHoverService");
-var BaseFilterWrapperComp = (function (_super) {
+var BaseFilterWrapperComp = /** @class */ (function (_super) {
     __extends(BaseFilterWrapperComp, _super);
     function BaseFilterWrapperComp() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -88,7 +91,7 @@ var BaseFilterWrapperComp = (function (_super) {
     return BaseFilterWrapperComp;
 }(component_1.Component));
 exports.BaseFilterWrapperComp = BaseFilterWrapperComp;
-var FloatingFilterWrapperComp = (function (_super) {
+var FloatingFilterWrapperComp = /** @class */ (function (_super) {
     __extends(FloatingFilterWrapperComp, _super);
     function FloatingFilterWrapperComp() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -159,7 +162,7 @@ var FloatingFilterWrapperComp = (function (_super) {
     return FloatingFilterWrapperComp;
 }(BaseFilterWrapperComp));
 exports.FloatingFilterWrapperComp = FloatingFilterWrapperComp;
-var EmptyFloatingFilterWrapperComp = (function (_super) {
+var EmptyFloatingFilterWrapperComp = /** @class */ (function (_super) {
     __extends(EmptyFloatingFilterWrapperComp, _super);
     function EmptyFloatingFilterWrapperComp() {
         return _super !== null && _super.apply(this, arguments) || this;

@@ -19,7 +19,7 @@ var rowRenderer_1 = require("./rowRenderer");
 var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var headerWrapperComp_1 = require("../headerRendering/header/headerWrapperComp");
-var AutoWidthCalculator = (function () {
+var AutoWidthCalculator = /** @class */ (function () {
     function AutoWidthCalculator() {
     }
     AutoWidthCalculator.prototype.registerGridComp = function (gridPanel) {
@@ -43,7 +43,7 @@ var AutoWidthCalculator = (function () {
         eDummyContainer.style.position = 'fixed';
         // we put the dummy into the body container, so it will inherit all the
         // css styles that the real cells are inheriting
-        var eBodyContainer = this.gridPanel.getBodyContainer();
+        var eBodyContainer = this.gridPanel.getCenterContainer();
         eBodyContainer.appendChild(eDummyContainer);
         // get all the cells that are currently displayed (this only brings back
         // rendered cells, rows not rendered due to row visualisation will not be here)

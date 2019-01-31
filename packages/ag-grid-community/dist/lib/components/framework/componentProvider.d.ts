@@ -5,7 +5,7 @@ import { IComponent } from "../../interfaces/iComponent";
 import { ComponentType } from "./componentResolver";
 export declare enum RegisteredComponentSource {
     DEFAULT = 0,
-    REGISTERED = 1,
+    REGISTERED = 1
 }
 /**
  * B the business interface (ie IHeader)
@@ -33,7 +33,7 @@ export declare class ComponentProvider {
     private agDeprecatedNames;
     private jsComponents;
     private frameworkComponents;
-    private init();
+    private init;
     registerDefaultComponent<A extends IComponent<any>>(rawName: string, component: AgGridRegisteredComponentInput<A>, overridable?: boolean): void;
     registerComponent<A extends IComponent<any>>(rawName: string, component: AgGridRegisteredComponentInput<A>): void;
     /**
@@ -48,5 +48,5 @@ export declare class ComponentProvider {
      * A the agGridComponent interface (ie IHeaderComp). The final object acceptable by ag-grid
      */
     retrieve<A extends IComponent<any> & B, B>(rawName: string): RegisteredComponent<A, B>;
-    private translateIfDeprecated(raw);
+    private translateIfDeprecated;
 }

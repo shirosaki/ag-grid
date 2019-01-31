@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var logger_1 = require("../logger");
 var context_1 = require("../context/context");
 var context_2 = require("../context/context");
-var ExpressionService = (function () {
+var ExpressionService = /** @class */ (function () {
     function ExpressionService() {
         this.expressionToFunctionCache = {};
     }

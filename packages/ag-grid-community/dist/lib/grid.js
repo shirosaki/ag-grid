@@ -80,7 +80,8 @@ var heightScaler_1 = require("./rendering/heightScaler");
 var selectableService_1 = require("./rowNodes/selectableService");
 var autoHeightCalculator_1 = require("./rendering/autoHeightCalculator");
 var paginationComp_1 = require("./rowModels/pagination/paginationComp");
-var Grid = (function () {
+var resizeObserverService_1 = require("./misc/resizeObserverService");
+var Grid = /** @class */ (function () {
     function Grid(eGridDiv, gridOptions, params) {
         if (!eGridDiv) {
             console.error('ag-Grid: no div element provided to the grid');
@@ -139,7 +140,7 @@ var Grid = (function () {
                 cellNavigationService_1.CellNavigationService, filterStage_1.FilterStage, sortStage_1.SortStage, flattenStage_1.FlattenStage, filterService_1.FilterService, rowNodeFactory_1.RowNodeFactory,
                 cellEditorFactory_1.CellEditorFactory, cellRendererService_1.CellRendererService, valueFormatterService_1.ValueFormatterService, stylingService_1.StylingService, scrollVisibleService_1.ScrollVisibleService,
                 columnHoverService_1.ColumnHoverService, columnAnimationService_1.ColumnAnimationService, sortService_1.SortService, selectableService_1.SelectableService, autoGroupColService_1.AutoGroupColService, immutableService_1.ImmutableService,
-                changeDetectionService_1.ChangeDetectionService, environment_1.Environment, animationFrameService_1.AnimationFrameService, sortController_1.SortController],
+                changeDetectionService_1.ChangeDetectionService, environment_1.Environment, animationFrameService_1.AnimationFrameService, sortController_1.SortController, resizeObserverService_1.ResizeObserverService],
             components: components,
             debug: !!gridOptions.debug
         };

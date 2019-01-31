@@ -23,13 +23,16 @@ var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
  * eg body, pinned left, fullWidth. The component differs from others in that it's given the
  * elements, there is no template. All of the elements are part of the GridPanel.
  */
-var RowContainerComponent = (function () {
+var RowContainerComponent = /** @class */ (function () {
     function RowContainerComponent(params) {
         this.childCount = 0;
         this.rowTemplatesToAdd = [];
         this.afterGuiAttachedCallbacks = [];
         this.eContainer = params.eContainer;
         this.eViewport = params.eViewport;
+        if (params.eWrapper) {
+            this.eWrapper = params.eWrapper;
+        }
         this.hideWhenNoChildren = params.hideWhenNoChildren;
     }
     RowContainerComponent.prototype.setVerticalScrollPosition = function (verticalScrollPosition) {
@@ -43,7 +46,15 @@ var RowContainerComponent = (function () {
         return this.eContainer.querySelector("[comp-id=\"" + compId + "\"]");
     };
     RowContainerComponent.prototype.setHeight = function (height) {
+        if (height == null) {
+            this.eContainer.style.height = '';
+            return;
+        }
         this.eContainer.style.height = height + "px";
+        if (this.eWrapper) {
+            this.eWrapper.style.height = height + "px";
+            this.eWrapper.style.minHeight = '100%';
+        }
     };
     RowContainerComponent.prototype.flushRowTemplates = function () {
         // if doing dom order, then rowTemplates will be empty,

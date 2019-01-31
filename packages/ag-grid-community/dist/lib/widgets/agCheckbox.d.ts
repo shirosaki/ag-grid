@@ -19,10 +19,10 @@ export declare class AgCheckbox extends Component {
     private passive;
     private props;
     constructor();
-    private preConstruct();
-    private postConstruct();
-    private loadIcons();
-    private onClick(event);
+    private preConstruct;
+    private postConstruct;
+    private loadIcons;
+    private onClick;
     getNextValue(): boolean;
     setPassive(passive: boolean): void;
     setReadOnly(readOnly: boolean): void;
@@ -30,5 +30,5 @@ export declare class AgCheckbox extends Component {
     isSelected(): boolean;
     toggle(): void;
     setSelected(selected: boolean): void;
-    private updateIcons();
+    private updateIcons;
 }

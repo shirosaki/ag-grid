@@ -42,6 +42,7 @@ export { HeaderRowComp } from "./dist/lib/headerRendering/headerRowComp";
 export { HorizontalResizeService } from "./dist/lib/headerRendering/horizontalResizeService";
 export { MoveColumnController } from "./dist/lib/headerRendering/moveColumnController";
 export { StandardMenuFactory } from "./dist/lib/headerRendering/standardMenu";
+export { HeaderComp } from "./dist/lib/headerRendering/header/headerComp";
 export { TabbedLayout } from "./dist/lib/layout/tabbedLayout";
 export { VerticalStack } from "./dist/lib/layout/verticalStack";
 export { TabbedItem } from "./dist/lib/layout/tabbedLayout";

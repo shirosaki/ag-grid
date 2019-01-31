@@ -22,7 +22,7 @@ var column_1 = require("../entities/column");
 var utils_1 = require("../utils");
 var dragAndDropService_1 = require("../dragAndDrop/dragAndDropService");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var MoveColumnController = (function () {
+var MoveColumnController = /** @class */ (function () {
     function MoveColumnController(pinned, eContainer) {
         this.needToMoveLeft = false;
         this.needToMoveRight = false;
@@ -95,7 +95,7 @@ var MoveColumnController = (function () {
         // adjust for scroll only if centre container (the pinned containers dont scroll)
         var adjustForScroll = this.centerContainer;
         if (adjustForScroll) {
-            x += this.gridPanel.getBodyViewportScrollLeft();
+            x += this.gridPanel.getCenterViewportScrollLeft();
         }
         return x;
     };
@@ -103,7 +103,7 @@ var MoveColumnController = (function () {
         if (this.centerContainer) {
             // scroll if the mouse has gone outside the grid (or just outside the scrollable part if pinning)
             // putting in 50 buffer, so even if user gets to edge of grid, a scroll will happen
-            var firstVisiblePixel = this.gridPanel.getBodyViewportScrollLeft();
+            var firstVisiblePixel = this.gridPanel.getCenterViewportScrollLeft();
             var lastVisiblePixel = firstVisiblePixel + this.gridPanel.getCenterWidth();
             if (this.gridOptionsWrapper.isEnableRtl()) {
                 this.needToMoveRight = xAdjustedForScroll < (firstVisiblePixel + 50);

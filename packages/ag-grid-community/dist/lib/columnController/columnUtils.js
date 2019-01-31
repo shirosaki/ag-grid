@@ -21,7 +21,7 @@ var originalColumnGroup_1 = require("../entities/originalColumnGroup");
 var context_1 = require("../context/context");
 var context_2 = require("../context/context");
 // takes in a list of columns, as specified by the column definitions, and returns column groups
-var ColumnUtils = (function () {
+var ColumnUtils = /** @class */ (function () {
     function ColumnUtils() {
     }
     ColumnUtils.prototype.calculateColInitialWidth = function (colDef) {

@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -34,7 +37,7 @@ var events_1 = require("../events");
 var context_1 = require("../context/context");
 var component_1 = require("../widgets/component");
 var componentAnnotations_1 = require("../widgets/componentAnnotations");
-var LoadingCellRenderer = (function (_super) {
+var LoadingCellRenderer = /** @class */ (function (_super) {
     __extends(LoadingCellRenderer, _super);
     function LoadingCellRenderer() {
         return _super.call(this, LoadingCellRenderer.TEMPLATE) || this;
@@ -64,12 +67,14 @@ var LoadingCellRenderer = (function (_super) {
     return LoadingCellRenderer;
 }(component_1.Component));
 exports.LoadingCellRenderer = LoadingCellRenderer;
-var RowComp = (function (_super) {
+var RowComp = /** @class */ (function (_super) {
     __extends(RowComp, _super);
     function RowComp(parentScope, bodyContainerComp, pinnedLeftContainerComp, pinnedRightContainerComp, fullWidthContainerComp, rowNode, beans, animateIn, useAnimationFrameForCreate) {
         var _this = _super.call(this) || this;
         _this.eAllRowContainers = [];
         _this.active = true;
+        _this.rowContainerReadyCount = 0;
+        _this.refreshNeeded = false;
         _this.columnRefreshPending = false;
         _this.cellComps = {};
         // for animations, there are bits we want done in the next VM turn, to all DOM to update first.
@@ -147,27 +152,29 @@ var RowComp = (function (_super) {
         }
     };
     RowComp.prototype.afterFlush = function () {
-        if (!this.initialised) {
-            this.initialised = true;
-            this.executeProcessRowPostCreateFunc();
+        if (this.initialised) {
+            return;
         }
+        this.initialised = true;
+        this.executeProcessRowPostCreateFunc();
     };
     RowComp.prototype.executeProcessRowPostCreateFunc = function () {
         var func = this.beans.gridOptionsWrapper.getProcessRowPostCreateFunc();
-        if (func) {
-            var params = {
-                eRow: this.eBodyRow,
-                ePinnedLeftRow: this.ePinnedLeftRow,
-                ePinnedRightRow: this.ePinnedRightRow,
-                node: this.rowNode,
-                api: this.beans.gridOptionsWrapper.getApi(),
-                rowIndex: this.rowNode.rowIndex,
-                addRenderedRowListener: this.addEventListener.bind(this),
-                columnApi: this.beans.gridOptionsWrapper.getColumnApi(),
-                context: this.beans.gridOptionsWrapper.getContext()
-            };
-            func(params);
+        if (!func) {
+            return;
         }
+        var params = {
+            eRow: this.eBodyRow,
+            ePinnedLeftRow: this.ePinnedLeftRow,
+            ePinnedRightRow: this.ePinnedRightRow,
+            node: this.rowNode,
+            api: this.beans.gridOptionsWrapper.getApi(),
+            rowIndex: this.rowNode.rowIndex,
+            addRenderedRowListener: this.addEventListener.bind(this),
+            columnApi: this.beans.gridOptionsWrapper.getColumnApi(),
+            context: this.beans.gridOptionsWrapper.getContext()
+        };
+        func(params);
     };
     RowComp.prototype.getInitialRowTopStyle = function () {
         // if sliding in, we take the old row top. otherwise we just set the current row top.
@@ -182,37 +189,47 @@ var RowComp = (function (_super) {
         }
     };
     RowComp.prototype.getRowBusinessKey = function () {
-        if (typeof this.beans.gridOptionsWrapper.getBusinessKeyForNodeFunc() === 'function') {
-            var businessKey = this.beans.gridOptionsWrapper.getBusinessKeyForNodeFunc()(this.rowNode);
-            return businessKey;
+        var businessKeyForNodeFunc = this.beans.gridOptionsWrapper.getBusinessKeyForNodeFunc();
+        if (typeof businessKeyForNodeFunc !== 'function') {
+            return;
         }
+        return businessKeyForNodeFunc(this.rowNode);
+    };
+    RowComp.prototype.areAllContainersReady = function () {
+        return this.rowContainerReadyCount === 3;
     };
     RowComp.prototype.lazyCreateCells = function (cols, eRow) {
-        if (this.active) {
-            var cellTemplatesAndComps = this.createCells(cols);
-            eRow.innerHTML = cellTemplatesAndComps.template;
-            this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
+        if (!this.active) {
+            return;
+        }
+        var cellTemplatesAndComps = this.createCells(cols);
+        eRow.innerHTML = cellTemplatesAndComps.template;
+        this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
+        this.rowContainerReadyCount++;
+        if (this.areAllContainersReady() && this.refreshNeeded) {
+            this.refreshCells();
         }
     };
     RowComp.prototype.createRowContainer = function (rowContainerComp, cols, callback) {
         var _this = this;
-        var cellTemplatesAndComps;
-        if (this.useAnimationFrameForCreate) {
-            cellTemplatesAndComps = { cellComps: [], template: '' };
-        }
-        else {
-            cellTemplatesAndComps = this.createCells(cols);
-        }
+        var useAnimationsFrameForCreate = this.useAnimationFrameForCreate;
+        var cellTemplatesAndComps = useAnimationsFrameForCreate ? { cellComps: [], template: '' } : this.createCells(cols);
         var rowTemplate = this.createTemplate(cellTemplatesAndComps.template);
+        // the RowRenderer is probably inserting many rows. rather than inserting each template one
+        // at a time, the grid inserts all rows together - so the callback here is called by the
+        // rowRenderer when all RowComps are created, then all the HTML is inserted in one go,
+        // and then all the callbacks are called. this is NOT done in an animation frame.
         rowContainerComp.appendRowTemplate(rowTemplate, function () {
             var eRow = rowContainerComp.getRowElement(_this.getCompId());
             _this.afterRowAttached(rowContainerComp, eRow);
             callback(eRow);
-            if (_this.useAnimationFrameForCreate) {
-                _this.beans.taskQueue.addP1Task(_this.lazyCreateCells.bind(_this, cols, eRow));
+            // console.log(`createRowContainer ${this.getCompId()}`);
+            if (useAnimationsFrameForCreate) {
+                _this.beans.taskQueue.addP1Task(_this.lazyCreateCells.bind(_this, cols, eRow), _this.rowNode.rowIndex);
             }
             else {
                 _this.callAfterRowAttachedOnCells(cellTemplatesAndComps.cellComps, eRow);
+                _this.rowContainerReadyCount = 3;
             }
         });
     };
@@ -385,9 +402,10 @@ var RowComp = (function (_super) {
         }
     };
     RowComp.prototype.onDisplayedColumnsChanged = function () {
-        if (!this.fullWidthRow) {
-            this.refreshCells();
+        if (this.fullWidthRow) {
+            return;
         }
+        this.refreshCells();
     };
     RowComp.prototype.destroyFullWidthComponents = function () {
         if (this.fullWidthRowComponent) {
@@ -423,24 +441,32 @@ var RowComp = (function (_super) {
         }
     };
     RowComp.prototype.onVirtualColumnsChanged = function () {
-        if (!this.fullWidthRow) {
-            this.refreshCells();
+        if (this.fullWidthRow) {
+            return;
         }
+        this.refreshCells();
     };
     RowComp.prototype.onColumnResized = function () {
-        if (!this.fullWidthRow) {
-            this.refreshCells();
+        if (this.fullWidthRow) {
+            return;
         }
+        this.refreshCells();
     };
     RowComp.prototype.refreshCells = function () {
-        if (this.beans.gridOptionsWrapper.isSuppressAnimationFrame()) {
+        if (!this.areAllContainersReady()) {
+            this.refreshNeeded = true;
+            return;
+        }
+        var suppressAnimationFrame = this.beans.gridOptionsWrapper.isSuppressAnimationFrame();
+        var skipAnimationFrame = suppressAnimationFrame;
+        if (skipAnimationFrame) {
             this.refreshCellsInAnimationFrame();
         }
         else {
             if (this.columnRefreshPending) {
                 return;
             }
-            this.beans.taskQueue.addP1Task(this.refreshCellsInAnimationFrame.bind(this));
+            this.beans.taskQueue.addP1Task(this.refreshCellsInAnimationFrame.bind(this), this.rowNode.rowIndex);
         }
     };
     RowComp.prototype.refreshCellsInAnimationFrame = function () {
@@ -498,9 +524,7 @@ var RowComp = (function (_super) {
             var cellStillDisplayed = displayedColumns.indexOf(column) >= 0;
             return cellStillDisplayed ? KEEP_CELL : REMOVE_CELL;
         }
-        else {
-            return REMOVE_CELL;
-        }
+        return REMOVE_CELL;
     };
     RowComp.prototype.ensureCellInCorrectContainer = function (cellComp) {
         var element = cellComp.getGui();
@@ -535,9 +559,9 @@ var RowComp = (function (_super) {
         var newCellComps = [];
         cols.forEach(function (col) {
             var colId = col.getId();
-            var oldCell = _this.cellComps[colId];
-            if (oldCell) {
-                _this.ensureCellInCorrectContainer(oldCell);
+            var existingCell = _this.cellComps[colId];
+            if (existingCell) {
+                _this.ensureCellInCorrectContainer(existingCell);
             }
             else {
                 _this.createNewCell(col, eRow, cellTemplates, newCellComps);
@@ -677,9 +701,10 @@ var RowComp = (function (_super) {
         });
     };
     RowComp.prototype.angular1Compile = function (element) {
-        if (this.scope) {
-            this.beans.$compile(element)(this.scope);
+        if (!this.scope) {
+            return;
         }
+        this.beans.$compile(element)(this.scope);
     };
     RowComp.prototype.createFullWidthParams = function (eRow, pinned) {
         var params = {
@@ -710,12 +735,7 @@ var RowComp = (function (_super) {
         if (this.fadeRowIn) {
             classes.push('ag-opacity-zero');
         }
-        if (this.rowIsEven) {
-            classes.push('ag-row-even');
-        }
-        else {
-            classes.push('ag-row-odd');
-        }
+        classes.push(this.rowIsEven ? 'ag-row-even' : 'ag-row-odd');
         if (this.rowNode.isSelected()) {
             classes.push('ag-row-selected');
         }
@@ -729,12 +749,7 @@ var RowComp = (function (_super) {
         }
         else {
             // if a leaf, and a parent exists, put a level of the parent, else put level of 0 for top level item
-            if (this.rowNode.parent) {
-                classes.push('ag-row-level-' + (this.rowNode.parent.level + 1));
-            }
-            else {
-                classes.push('ag-row-level-0');
-            }
+            classes.push('ag-row-level-' + (this.rowNode.parent ? (this.rowNode.parent.level + 1) : '0'));
         }
         if (this.rowNode.stub) {
             classes.push('ag-row-stub');
@@ -779,13 +794,14 @@ var RowComp = (function (_super) {
         this.forEachCellComp(function (renderedCell) {
             renderedCell.stopEditing(cancel);
         });
-        if (this.editingRow) {
-            if (!cancel) {
-                var event_1 = this.createRowEvent(events_1.Events.EVENT_ROW_VALUE_CHANGED);
-                this.beans.eventService.dispatchEvent(event_1);
-            }
-            this.setEditingRow(false);
+        if (!this.editingRow) {
+            return;
         }
+        if (!cancel) {
+            var event_1 = this.createRowEvent(events_1.Events.EVENT_ROW_VALUE_CHANGED);
+            this.beans.eventService.dispatchEvent(event_1);
+        }
+        this.setEditingRow(false);
     };
     RowComp.prototype.setEditingRow = function (value) {
         this.editingRow = value;
@@ -816,19 +832,21 @@ var RowComp = (function (_super) {
     };
     RowComp.prototype.forEachCellComp = function (callback) {
         utils_1._.iterateObject(this.cellComps, function (key, cellComp) {
-            if (cellComp) {
-                callback(cellComp);
+            if (!cellComp) {
+                return;
             }
+            callback(cellComp);
         });
     };
     RowComp.prototype.postProcessClassesFromGridOptions = function () {
         var _this = this;
         var cssClasses = this.processClassesFromGridOptions();
-        if (cssClasses) {
-            cssClasses.forEach(function (classStr) {
-                _this.eAllRowContainers.forEach(function (row) { return utils_1._.addCssClass(row, classStr); });
-            });
+        if (!cssClasses || !cssClasses.length) {
+            return;
         }
+        cssClasses.forEach(function (classStr) {
+            _this.eAllRowContainers.forEach(function (row) { return utils_1._.addCssClass(row, classStr); });
+        });
     };
     RowComp.prototype.postProcessRowClassRules = function () {
         var _this = this;
@@ -962,7 +980,7 @@ var RowComp = (function (_super) {
         // adding hover functionality adds listener to this row, so we
         // do it lazily in an animation frame
         if (this.useAnimationFrameForCreate) {
-            this.beans.taskQueue.addP1Task(this.addHoverFunctionality.bind(this, eRow));
+            this.beans.taskQueue.addP2Task(this.addHoverFunctionality.bind(this, eRow));
         }
         else {
             this.addHoverFunctionality(eRow);
@@ -1020,7 +1038,7 @@ var RowComp = (function (_super) {
         // it will be null (or undefined) momentarily until the next time the flatten
         // stage is called where the row will then update again with a new height
         if (utils_1._.exists(this.rowNode.rowHeight)) {
-            var heightPx_1 = this.rowNode.rowHeight + 'px';
+            var heightPx_1 = this.rowNode.rowHeight + "px";
             this.eAllRowContainers.forEach(function (row) { return row.style.height = heightPx_1; });
         }
     };
@@ -1102,15 +1120,9 @@ var RowComp = (function (_super) {
         if (this.rowNode.isRowPinned()) {
             return topPx;
         }
-        else {
-            var pixelOffset = this.beans.paginationProxy.getPixelOffset();
-            if (reverse) {
-                return topPx + pixelOffset;
-            }
-            else {
-                return topPx - pixelOffset;
-            }
-        }
+        var pixelOffset = this.beans.paginationProxy.getPixelOffset();
+        var multiplier = reverse ? 1 : -1;
+        return topPx + (pixelOffset * multiplier);
     };
     RowComp.prototype.setRowTop = function (pixels) {
         // need to make sure rowTop is not null, as this can happen if the node was once
@@ -1152,29 +1164,36 @@ var RowComp = (function (_super) {
         }
         this.eAllRowContainers.forEach(function (eRow) {
             eRow.setAttribute('row-index', rowIndexStr);
-            if (rowIsEvenChanged) {
-                utils_1._.addOrRemoveCssClass(eRow, 'ag-row-even', rowIsEven);
-                utils_1._.addOrRemoveCssClass(eRow, 'ag-row-odd', !rowIsEven);
+            if (!rowIsEvenChanged) {
+                return;
             }
+            utils_1._.addOrRemoveCssClass(eRow, 'ag-row-even', rowIsEven);
+            utils_1._.addOrRemoveCssClass(eRow, 'ag-row-odd', !rowIsEven);
         });
     };
     RowComp.prototype.ensureDomOrder = function () {
-        var body = this.getBodyRowElement();
-        if (body) {
-            this.bodyContainerComp.ensureDomOrder(body);
-        }
-        var left = this.getPinnedLeftRowElement();
-        if (left) {
-            this.pinnedLeftContainerComp.ensureDomOrder(left);
-        }
-        var right = this.getPinnedRightRowElement();
-        if (right) {
-            this.pinnedRightContainerComp.ensureDomOrder(right);
-        }
-        var fullWidth = this.getFullWidthRowElement();
-        if (fullWidth) {
-            this.fullWidthContainerComp.ensureDomOrder(fullWidth);
-        }
+        var sides = [
+            {
+                el: this.getBodyRowElement(),
+                ct: this.bodyContainerComp
+            },
+            {
+                el: this.getPinnedLeftRowElement(),
+                ct: this.pinnedLeftContainerComp
+            }, {
+                el: this.getPinnedRightRowElement(),
+                ct: this.pinnedRightContainerComp
+            }, {
+                el: this.getFullWidthRowElement(),
+                ct: this.fullWidthContainerComp
+            }
+        ];
+        sides.forEach(function (side) {
+            if (!side.el) {
+                return;
+            }
+            side.ct.ensureDomOrder(side.el);
+        });
     };
     // returns the pinned left container, either the normal one, or the embedded full with one if exists
     RowComp.prototype.getPinnedLeftRowElement = function () {

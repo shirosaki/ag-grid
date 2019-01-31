@@ -15,9 +15,9 @@ export declare class TabbedLayout {
     setAfterAttachedParams(params: any): void;
     getMinWidth(): number;
     showFirstItem(): void;
-    private addItem(item);
+    private addItem;
     showItem(tabbedItem: TabbedItem): void;
-    private showItemWrapper(wrapper);
+    private showItemWrapper;
     getGui(): HTMLElement;
 }
 export interface TabbedLayoutParams {

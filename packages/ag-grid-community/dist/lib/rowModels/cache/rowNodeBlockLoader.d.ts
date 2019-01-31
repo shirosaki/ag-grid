@@ -9,12 +9,12 @@ export declare class RowNodeBlockLoader {
     private logger;
     private active;
     constructor(maxConcurrentRequests: number);
-    private setBeans(loggerFactory);
+    private setBeans;
     addBlock(block: RowNodeBlock): void;
     removeBlock(block: RowNodeBlock): void;
     destroy(): void;
     loadComplete(): void;
     checkBlockToLoad(): void;
     getBlockState(): any;
-    private printCacheStatus();
+    private printCacheStatus;
 }

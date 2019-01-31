@@ -32,7 +32,7 @@ var ComponentSource;
     ComponentSource[ComponentSource["REGISTERED_BY_NAME"] = 1] = "REGISTERED_BY_NAME";
     ComponentSource[ComponentSource["HARDCODED"] = 2] = "HARDCODED";
 })(ComponentSource = exports.ComponentSource || (exports.ComponentSource = {}));
-var ComponentResolver = (function () {
+var ComponentResolver = /** @class */ (function () {
     function ComponentResolver() {
     }
     /**

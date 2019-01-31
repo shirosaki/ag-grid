@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var expressionService_1 = require("../valueService/expressionService");
-var ValueFormatterService = (function () {
+var ValueFormatterService = /** @class */ (function () {
     function ValueFormatterService() {
     }
     ValueFormatterService.prototype.formatValue = function (column, rowNode, $scope, value) {

@@ -13,7 +13,6 @@ export declare class HeaderRootComp extends Component {
     private columnController;
     private context;
     private eventService;
-    private scrollVisibleService;
     private gridApi;
     private autoWidthCalculator;
     private pinnedLeftContainer;
@@ -23,14 +22,15 @@ export declare class HeaderRootComp extends Component {
     private gridPanel;
     constructor();
     registerGridComp(gridPanel: GridPanel): void;
-    private postConstruct();
+    private postConstruct;
     setHorizontalScroll(offset: number): void;
     forEachHeaderElement(callback: (renderedHeaderElement: Component) => void): void;
     destroy(): void;
     refreshHeader(): void;
-    private onPivotModeChanged();
+    private onPivotModeChanged;
     setHeight(height: number): void;
-    private addPreventHeaderScroll();
+    private addPreventHeaderScroll;
     setLeftVisible(visible: boolean): void;
     setRightVisible(visible: boolean): void;
+    setHeaderContainerWidth(width: number): void;
 }

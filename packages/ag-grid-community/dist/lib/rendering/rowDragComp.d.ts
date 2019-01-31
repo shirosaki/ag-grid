@@ -11,7 +11,7 @@ export declare class RowDragComp extends Component {
     private readonly column;
     private readonly cellValue;
     constructor(rowNode: RowNode, column: Column, cellValue: string, beans: Beans);
-    private postConstruct();
-    private checkCompatibility();
-    private addDragSource();
+    private postConstruct;
+    private checkCompatibility;
+    private addDragSource;
 }

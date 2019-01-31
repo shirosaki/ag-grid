@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../../context/context");
 var agComponentUtils_1 = require("./agComponentUtils");
-var ComponentMetadataProvider = (function () {
+var ComponentMetadataProvider = /** @class */ (function () {
     function ComponentMetadataProvider() {
     }
     ComponentMetadataProvider.prototype.postConstruct = function () {

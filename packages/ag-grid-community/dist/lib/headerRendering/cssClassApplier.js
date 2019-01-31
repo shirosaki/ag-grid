@@ -7,7 +7,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("../utils");
-var CssClassApplier = (function () {
+var CssClassApplier = /** @class */ (function () {
     function CssClassApplier() {
     }
     CssClassApplier.addHeaderClassesFromColDef = function (abstractColDef, eHeaderCell, gridOptionsWrapper, column, columnGroup) {

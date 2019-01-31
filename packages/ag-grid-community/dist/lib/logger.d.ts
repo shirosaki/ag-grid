@@ -3,7 +3,7 @@
 // Definitions by: Niall Crosby <https://github.com/ag-grid/>
 export declare class LoggerFactory {
     private logging;
-    private setBeans(gridOptionsWrapper);
+    private setBeans;
     create(name: string): Logger;
     isLogging(): boolean;
 }

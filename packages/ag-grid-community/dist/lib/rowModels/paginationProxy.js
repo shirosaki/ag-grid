@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -35,7 +38,7 @@ var scrollVisibleService_1 = require("../gridPanel/scrollVisibleService");
 var selectionController_1 = require("../selectionController");
 var columnApi_1 = require("../columnController/columnApi");
 var gridApi_1 = require("../gridApi");
-var PaginationAutoPageSizeService = (function (_super) {
+var PaginationAutoPageSizeService = /** @class */ (function (_super) {
     __extends(PaginationAutoPageSizeService, _super);
     function PaginationAutoPageSizeService() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -61,7 +64,7 @@ var PaginationAutoPageSizeService = (function (_super) {
         }
         var rowHeight = this.gridOptionsWrapper.getRowHeightAsNumber();
         var bodyHeight = this.gridPanel.getBodyHeight();
-        if (this.scrollVisibleService.isBodyHorizontalScrollShowing()) {
+        if (this.scrollVisibleService.isHorizontalScrollShowing()) {
             bodyHeight = bodyHeight - this.gridOptionsWrapper.getScrollbarWidth();
         }
         if (bodyHeight > 0) {
@@ -87,7 +90,7 @@ var PaginationAutoPageSizeService = (function (_super) {
     return PaginationAutoPageSizeService;
 }(beanStub_1.BeanStub));
 exports.PaginationAutoPageSizeService = PaginationAutoPageSizeService;
-var PaginationProxy = (function (_super) {
+var PaginationProxy = /** @class */ (function (_super) {
     __extends(PaginationProxy, _super);
     function PaginationProxy() {
         var _this = _super !== null && _super.apply(this, arguments) || this;

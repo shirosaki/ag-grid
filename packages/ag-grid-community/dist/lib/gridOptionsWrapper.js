@@ -63,10 +63,11 @@ function oneOrGreater(value, defaultValue) {
         return defaultValue;
     }
 }
-var GridOptionsWrapper = (function () {
+var GridOptionsWrapper = /** @class */ (function () {
     function GridOptionsWrapper() {
         this.propertyEventService = new eventService_1.EventService();
         this.domDataKey = '__AG_' + Math.random().toString();
+        this.layoutElements = [];
     }
     GridOptionsWrapper_1 = GridOptionsWrapper;
     GridOptionsWrapper.prototype.agWire = function (gridApi, columnApi) {
@@ -171,6 +172,9 @@ var GridOptionsWrapper = (function () {
     };
     GridOptionsWrapper.prototype.isFullRowEdit = function () { return this.gridOptions.editType === 'fullRow'; };
     GridOptionsWrapper.prototype.isSuppressFocusAfterRefresh = function () { return isTrue(this.gridOptions.suppressFocusAfterRefresh); };
+    GridOptionsWrapper.prototype.isSuppressBrowserResizeObserver = function () {
+        return isTrue(this.gridOptions.suppressBrowserResizeObserver);
+    };
     GridOptionsWrapper.prototype.isShowToolPanel = function () { return isTrue(this.gridOptions.showToolPanel); };
     GridOptionsWrapper.prototype.isToolPanelSuppressValues = function () { return isTrue(this.gridOptions.toolPanelSuppressValues); };
     GridOptionsWrapper.prototype.isToolPanelSuppressPivots = function () {
@@ -220,6 +224,23 @@ var GridOptionsWrapper = (function () {
     GridOptionsWrapper.prototype.isSuppressScrollOnNewData = function () { return isTrue(this.gridOptions.suppressScrollOnNewData); };
     GridOptionsWrapper.prototype.isRowDragManaged = function () { return isTrue(this.gridOptions.rowDragManaged); };
     GridOptionsWrapper.prototype.isSuppressRowDrag = function () { return isTrue(this.gridOptions.suppressRowDrag); };
+    // returns either 'print', 'autoHeight' or 'normal' (normal is the default)
+    GridOptionsWrapper.prototype.getDomLayout = function () {
+        var _this = this;
+        var domLayout = this.gridOptions.domLayout;
+        if (domLayout === constants_1.Constants.DOM_LAYOUT_PRINT
+            || domLayout === constants_1.Constants.DOM_LAYOUT_AUTO_HEIGHT
+            || domLayout === constants_1.Constants.DOM_LAYOUT_NORMAL) {
+            return domLayout;
+        }
+        else if (domLayout === null || domLayout === undefined) {
+            return constants_1.Constants.DOM_LAYOUT_NORMAL;
+        }
+        else {
+            utils_1.Utils.doOnce(function () { return console.warn("ag-Grid: " + _this.gridOptions.domLayout + " is not valid for DOM Layout, valid values are " + constants_1.Constants.DOM_LAYOUT_NORMAL + ", " + constants_1.Constants.DOM_LAYOUT_AUTO_HEIGHT + " and " + constants_1.Constants.DOM_LAYOUT_PRINT); }, 'warn about dom layout values');
+            return constants_1.Constants.DOM_LAYOUT_NORMAL;
+        }
+    };
     GridOptionsWrapper.prototype.isGridAutoHeight = function () { return isTrue(this.gridOptions.gridAutoHeight); };
     GridOptionsWrapper.prototype.isSuppressHorizontalScroll = function () { return isTrue(this.gridOptions.suppressHorizontalScroll); };
     GridOptionsWrapper.prototype.isSuppressLoadingOverlay = function () { return isTrue(this.gridOptions.suppressLoadingOverlay); };
@@ -273,6 +294,7 @@ var GridOptionsWrapper = (function () {
     GridOptionsWrapper.prototype.isGroupUseEntireRow = function () { return isTrue(this.gridOptions.groupUseEntireRow); };
     GridOptionsWrapper.prototype.isEnableRtl = function () { return isTrue(this.gridOptions.enableRtl); };
     GridOptionsWrapper.prototype.getAutoGroupColumnDef = function () { return this.gridOptions.autoGroupColumnDef; };
+    GridOptionsWrapper.prototype.getAutoGroupColumnIndex = function () { return this.gridOptions.autoGroupColumnIndex; };
     GridOptionsWrapper.prototype.isGroupSuppressRow = function () { return isTrue(this.gridOptions.groupSuppressRow); };
     GridOptionsWrapper.prototype.getRowGroupPanelShow = function () { return this.gridOptions.rowGroupPanelShow; };
     GridOptionsWrapper.prototype.getPivotPanelShow = function () { return this.gridOptions.pivotPanelShow; };
@@ -394,6 +416,23 @@ var GridOptionsWrapper = (function () {
             };
             this.propertyEventService.dispatchEvent(event_1);
         }
+    };
+    // this logic is repeated in lots of places. any element that had different CSS
+    // dependent on the layout needs to have the layout class added ot it.
+    GridOptionsWrapper.prototype.addLayoutElement = function (element) {
+        this.layoutElements.push(element);
+        this.updateLayoutClasses();
+    };
+    GridOptionsWrapper.prototype.updateLayoutClasses = function () {
+        var domLayout = this.getDomLayout();
+        var domLayoutAutoHeight = domLayout === constants_1.Constants.DOM_LAYOUT_AUTO_HEIGHT;
+        var domLayoutPrint = domLayout === constants_1.Constants.DOM_LAYOUT_PRINT;
+        var domLayoutNormal = domLayout === constants_1.Constants.DOM_LAYOUT_NORMAL;
+        this.layoutElements.forEach(function (e) {
+            utils_1.Utils.addOrRemoveCssClass(e, 'ag-layout-auto-height', domLayoutAutoHeight);
+            utils_1.Utils.addOrRemoveCssClass(e, 'ag-layout-normal', domLayoutNormal);
+            utils_1.Utils.addOrRemoveCssClass(e, 'ag-layout-print', domLayoutPrint);
+        });
     };
     GridOptionsWrapper.prototype.addEventListener = function (key, listener) {
         GridOptionsWrapper_1.checkEventDeprecation(key);
@@ -748,6 +787,7 @@ var GridOptionsWrapper = (function () {
     GridOptionsWrapper.prototype.getDefaultRowHeight = function () {
         return this.specialForNewMaterial(DEFAULT_ROW_HEIGHT, 'rowHeight');
     };
+    var GridOptionsWrapper_1;
     GridOptionsWrapper.MIN_COL_WIDTH = 10;
     GridOptionsWrapper.PROP_HEADER_HEIGHT = 'headerHeight';
     GridOptionsWrapper.PROP_GROUP_REMOVE_SINGLE_CHILDREN = 'groupRemoveSingleChildren';
@@ -760,6 +800,7 @@ var GridOptionsWrapper = (function () {
     GridOptionsWrapper.PROP_SUPPRESS_ROW_DRAG = 'suppressRowDrag';
     GridOptionsWrapper.PROP_POPUP_PARENT = 'popupParent';
     GridOptionsWrapper.PROP_GRID_AUTO_HEIGHT = 'gridAutoHeight';
+    GridOptionsWrapper.PROP_DOM_LAYOUT = 'domLayout';
     __decorate([
         context_1.Autowired('gridOptions'),
         __metadata("design:type", Object)
@@ -818,6 +859,5 @@ var GridOptionsWrapper = (function () {
         context_1.Bean('gridOptionsWrapper')
     ], GridOptionsWrapper);
     return GridOptionsWrapper;
-    var GridOptionsWrapper_1;
 }());
 exports.GridOptionsWrapper = GridOptionsWrapper;

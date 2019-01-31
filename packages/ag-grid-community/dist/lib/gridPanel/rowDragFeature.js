@@ -21,7 +21,7 @@ var focusedCellController_1 = require("../focusedCellController");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var eventService_1 = require("../eventService");
 var eventKeys_1 = require("../eventKeys");
-var RowDragFeature = (function () {
+var RowDragFeature = /** @class */ (function () {
     function RowDragFeature(eContainer, gridPanel) {
         this.eContainer = eContainer;
         this.gridPanel = gridPanel;

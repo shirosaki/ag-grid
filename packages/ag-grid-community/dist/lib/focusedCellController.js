@@ -25,7 +25,7 @@ var utils_1 = require("./utils");
 var gridCell_1 = require("./entities/gridCell");
 var gridApi_1 = require("./gridApi");
 var cellComp_1 = require("./rendering/cellComp");
-var FocusedCellController = (function () {
+var FocusedCellController = /** @class */ (function () {
     function FocusedCellController() {
     }
     FocusedCellController.prototype.init = function () {

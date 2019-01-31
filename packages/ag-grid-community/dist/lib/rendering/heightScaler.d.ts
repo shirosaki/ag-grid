@@ -20,17 +20,17 @@ export declare class HeightScaler extends BeanStub {
     private uiBodyHeight;
     private maxScrollY;
     private scrollBarWidth;
-    private postConstruct();
+    private postConstruct;
     registerGridComp(gridPanel: GridPanel): void;
     isScaling(): boolean;
     getOffset(): number;
     update(): void;
-    private calculateOffset();
-    private clearOffset();
-    private setOffset(newOffset);
+    private calculateOffset;
+    private clearOffset;
+    private setOffset;
     setModelHeight(modelHeight: number): void;
     getUiContainerHeight(): number;
     getRealPixelPosition(modelPixel: number): number;
-    private getUiBodyHeight();
+    private getUiBodyHeight;
     getScrollPositionForPixel(rowTop: number): number;
 }

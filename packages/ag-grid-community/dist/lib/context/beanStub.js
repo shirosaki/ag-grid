@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var eventService_1 = require("../eventService");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var utils_1 = require("../utils");
-var BeanStub = (function () {
+var BeanStub = /** @class */ (function () {
     function BeanStub() {
         this.destroyFunctions = [];
         this.destroyed = false;

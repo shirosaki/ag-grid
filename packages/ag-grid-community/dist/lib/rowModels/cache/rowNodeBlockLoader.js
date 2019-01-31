@@ -22,7 +22,7 @@ var rowNodeBlock_1 = require("./rowNodeBlock");
 var logger_1 = require("../../logger");
 var context_1 = require("../../context/context");
 var utils_1 = require("../../utils");
-var RowNodeBlockLoader = (function () {
+var RowNodeBlockLoader = /** @class */ (function () {
     function RowNodeBlockLoader(maxConcurrentRequests) {
         this.activeBlockLoadsCount = 0;
         this.blocks = [];

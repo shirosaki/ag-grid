@@ -40,7 +40,7 @@ var RegisteredComponentSource;
     RegisteredComponentSource[RegisteredComponentSource["DEFAULT"] = 0] = "DEFAULT";
     RegisteredComponentSource[RegisteredComponentSource["REGISTERED"] = 1] = "REGISTERED";
 })(RegisteredComponentSource = exports.RegisteredComponentSource || (exports.RegisteredComponentSource = {}));
-var ComponentProvider = (function () {
+var ComponentProvider = /** @class */ (function () {
     function ComponentProvider() {
         this.agGridDefaults = {
             //date

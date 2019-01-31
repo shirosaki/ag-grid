@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../context/context");
 var utils_1 = require("../utils");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var SelectableService = (function () {
+var SelectableService = /** @class */ (function () {
     function SelectableService() {
     }
     SelectableService.prototype.init = function () {

@@ -12,7 +12,7 @@ export declare class AutoWidthCalculator {
     registerGridComp(gridPanel: GridPanel): void;
     registerHeaderRootComp(headerRootComp: HeaderRootComp): void;
     getPreferredWidthForColumn(column: Column): number;
-    private getHeaderCellForColumn(column);
-    private putRowCellsIntoDummyContainer(column, eDummyContainer);
-    private cloneItemIntoDummy(eCell, eDummyContainer);
+    private getHeaderCellForColumn;
+    private putRowCellsIntoDummyContainer;
+    private cloneItemIntoDummy;
 }

@@ -23,7 +23,7 @@ var gridRow_1 = require("./entities/gridRow");
 var gridCell_1 = require("./entities/gridCell");
 var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
 var pinnedRowModel_1 = require("./rowModels/pinnedRowModel");
-var CellNavigationService = (function () {
+var CellNavigationService = /** @class */ (function () {
     function CellNavigationService() {
     }
     // returns null if no cell to focus on, ie at the end of the grid

@@ -22,18 +22,18 @@ var context_1 = require("../context/context");
 var utils_1 = require("../utils");
 var context_2 = require("../context/context");
 // takes in a list of columns, as specified by the column definitions, and returns column groups
-var DisplayedGroupCreator = (function () {
+var DisplayedGroupCreator = /** @class */ (function () {
     function DisplayedGroupCreator() {
     }
     DisplayedGroupCreator.prototype.createDisplayedGroups = function (
-        // all displayed columns sorted - this is the columns the grid should show
-        sortedVisibleColumns, 
-        // the tree of columns, as provided by the users, used to know what groups columns roll up into
-        balancedColumnTree, 
-        // create's unique id's for the group
-        groupInstanceIdCreator, 
-        // we try to reuse old groups if we can, to allow gui to do animation
-        oldDisplayedGroups) {
+    // all displayed columns sorted - this is the columns the grid should show
+    sortedVisibleColumns, 
+    // the tree of columns, as provided by the users, used to know what groups columns roll up into
+    balancedColumnTree, 
+    // create's unique id's for the group
+    groupInstanceIdCreator, 
+    // we try to reuse old groups if we can, to allow gui to do animation
+    oldDisplayedGroups) {
         var _this = this;
         var result = [];
         var previousRealPath;

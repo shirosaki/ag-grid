@@ -16,7 +16,7 @@ export declare class PinnedRowModel {
     getRowAtPixel(pixel: number, floating: string): number;
     setPinnedTopRowData(rowData: any[]): void;
     setPinnedBottomRowData(rowData: any[]): void;
-    private createNodesFromData(allData, isTop);
+    private createNodesFromData;
     getPinnedTopRowData(): RowNode[];
     getPinnedBottomRowData(): RowNode[];
     getPinnedTopTotalHeight(): number;
@@ -27,5 +27,5 @@ export declare class PinnedRowModel {
     forEachPinnedTopRow(callback: (rowNode: RowNode, index: number) => void): void;
     forEachPinnedBottomRow(callback: (rowNode: RowNode, index: number) => void): void;
     getPinnedBottomTotalHeight(): number;
-    private getTotalHeight(rowNodes);
+    private getTotalHeight;
 }

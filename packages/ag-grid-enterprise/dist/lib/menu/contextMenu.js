@@ -31,17 +31,17 @@ var ContextMenuFactory = (function () {
     ContextMenuFactory.prototype.init = function () {
     };
     ContextMenuFactory.prototype.hideActiveMenu = function () {
-        if (this.activeMenu) {
-            this.activeMenu.destroy();
+        if (!this.activeMenu) {
+            return;
         }
+        this.activeMenu.destroy();
     };
     ContextMenuFactory.prototype.getMenuItems = function (node, column, value) {
-        var defaultMenuOptions;
-        if (ag_grid_1.Utils.exists(node)) {
-            defaultMenuOptions = [];
+        var defaultMenuOptions = [];
+        if (ag_grid_1._.exists(node)) {
             if (column) {
                 // only makes sense if column exists, could have originated from a row
-                defaultMenuOptions = ['copy', 'copyWithHeaders', 'paste', 'separator'];
+                defaultMenuOptions.push('copy', 'copyWithHeaders', 'paste', 'separator');
             }
             defaultMenuOptions.push('toolPanel');
             // if user clicks a cell
@@ -55,7 +55,7 @@ var ContextMenuFactory = (function () {
         }
         else {
             // if user clicks outside of a cell (eg below the rows, or not rows present)
-            defaultMenuOptions = ['toolPanel'];
+            defaultMenuOptions.push('toolPanel');
         }
         if (this.gridOptionsWrapper.getContextMenuItemsFunc()) {
             var userFunc = this.gridOptionsWrapper.getContextMenuItemsFunc();
@@ -63,22 +63,19 @@ var ContextMenuFactory = (function () {
                 node: node,
                 column: column,
                 value: value,
-                defaultItems: defaultMenuOptions,
+                defaultItems: defaultMenuOptions.length ? defaultMenuOptions : undefined,
                 api: this.gridOptionsWrapper.getApi(),
                 columnApi: this.gridOptionsWrapper.getColumnApi(),
                 context: this.gridOptionsWrapper.getContext()
             };
-            var menuItemsFromUser = userFunc(params);
-            return menuItemsFromUser;
+            return userFunc ? userFunc(params) : undefined;
         }
-        else {
-            return defaultMenuOptions;
-        }
+        return defaultMenuOptions;
     };
     ContextMenuFactory.prototype.showMenu = function (node, column, value, mouseEvent) {
         var _this = this;
         var menuItems = this.getMenuItems(node, column, value);
-        if (ag_grid_1.Utils.missingOrEmpty(menuItems)) {
+        if (menuItems === undefined || ag_grid_1._.missingOrEmpty(menuItems)) {
             return;
         }
         var menu = new ContextMenu(menuItems);

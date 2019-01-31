@@ -30,7 +30,7 @@ var ComponentType;
     ComponentType[ComponentType["AG_GRID"] = 0] = "AG_GRID";
     ComponentType[ComponentType["FRAMEWORK"] = 1] = "FRAMEWORK";
 })(ComponentType || (ComponentType = {}));
-var ComponentRecipes = (function () {
+var ComponentRecipes = /** @class */ (function () {
     function ComponentRecipes() {
     }
     ComponentRecipes_1 = ComponentRecipes;
@@ -134,6 +134,7 @@ var ComponentRecipes = (function () {
         };
         return this.componentResolver.createInternalAgGridComponent(floatingFilterWrapper_1.EmptyFloatingFilterWrapperComp, floatingFilterWrapperComponentParams);
     };
+    var ComponentRecipes_1;
     ComponentRecipes.filterToFloatingFilterNames = {
         set: 'agSetColumnFloatingFilter',
         agSetColumnFilter: 'agSetColumnFloatingFilter',
@@ -172,6 +173,5 @@ var ComponentRecipes = (function () {
         context_1.Bean('componentRecipes')
     ], ComponentRecipes);
     return ComponentRecipes;
-    var ComponentRecipes_1;
 }());
 exports.ComponentRecipes = ComponentRecipes;

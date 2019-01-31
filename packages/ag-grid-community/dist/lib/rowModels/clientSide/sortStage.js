@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../../context/context");
 var gridOptionsWrapper_1 = require("../../gridOptionsWrapper");
 var sortService_1 = require("../../rowNodes/sortService");
-var SortStage = (function () {
+var SortStage = /** @class */ (function () {
     function SortStage() {
     }
     SortStage.prototype.execute = function (params) {

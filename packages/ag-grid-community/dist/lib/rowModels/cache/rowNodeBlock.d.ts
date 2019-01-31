@@ -38,8 +38,8 @@ export declare abstract class RowNodeBlock extends BeanStub {
     abstract getNodeIdPrefix(): string;
     protected constructor(blockNumber: number, rowNodeCacheParams: RowNodeCacheParams);
     isAnyNodeOpen(rowCount: number): boolean;
-    private forEachNodeCallback(callback, rowCount);
-    private forEachNode(callback, sequence, rowCount, deep);
+    private forEachNodeCallback;
+    private forEachNode;
     forEachNodeDeep(callback: (rowNode: RowNode, index: number) => void, sequence: NumberSequence, rowCount: number): void;
     forEachNodeShallow(callback: (rowNode: RowNode, index: number) => void, sequence: NumberSequence, rowCount: number): void;
     getVersion(): number;
@@ -59,7 +59,7 @@ export declare abstract class RowNodeBlock extends BeanStub {
     protected createRowNodes(): void;
     load(): void;
     protected pageLoadFailed(): void;
-    private populateWithRowData(rows);
+    private populateWithRowData;
     destroy(): void;
     protected pageLoaded(version: number, rows: any[], lastRow: number): void;
 }

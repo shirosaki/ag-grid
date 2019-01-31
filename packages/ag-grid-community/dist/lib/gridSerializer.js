@@ -26,7 +26,7 @@ var balancedColumnTreeBuilder_1 = require("./columnController/balancedColumnTree
 var groupInstanceIdCreator_1 = require("./columnController/groupInstanceIdCreator");
 var columnGroup_1 = require("./entities/columnGroup");
 var pinnedRowModel_1 = require("./rowModels/pinnedRowModel");
-var BaseGridSerializingSession = (function () {
+var BaseGridSerializingSession = /** @class */ (function () {
     function BaseGridSerializingSession(columnController, valueService, gridOptionsWrapper, processCellCallback, processHeaderCallback, cellAndHeaderEscaper) {
         this.columnController = columnController;
         this.valueService = valueService;
@@ -97,7 +97,7 @@ var BaseGridSerializingSession = (function () {
     return BaseGridSerializingSession;
 }());
 exports.BaseGridSerializingSession = BaseGridSerializingSession;
-var GridSerializer = (function () {
+var GridSerializer = /** @class */ (function () {
     function GridSerializer() {
     }
     GridSerializer.prototype.serialize = function (gridSerializingSession, params) {

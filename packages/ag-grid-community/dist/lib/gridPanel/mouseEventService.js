@@ -20,7 +20,7 @@ var context_2 = require("../context/context");
 var utils_1 = require("../utils");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var cellComp_1 = require("../rendering/cellComp");
-var MouseEventService = (function () {
+var MouseEventService = /** @class */ (function () {
     function MouseEventService() {
         this.gridInstanceId = MouseEventService_1.gridInstanceSequence.next();
     }
@@ -64,6 +64,7 @@ var MouseEventService = (function () {
         var cellComp = this.getRenderedCellForEvent(event);
         return cellComp ? cellComp.getGridCell() : null;
     };
+    var MouseEventService_1;
     MouseEventService.gridInstanceSequence = new utils_1.NumberSequence();
     MouseEventService.GRID_DOM_KEY = '__ag_grid_instance';
     __decorate([
@@ -84,6 +85,5 @@ var MouseEventService = (function () {
         context_1.Bean('mouseEventService')
     ], MouseEventService);
     return MouseEventService;
-    var MouseEventService_1;
 }());
 exports.MouseEventService = MouseEventService;

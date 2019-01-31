@@ -18,13 +18,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var context_1 = require("../context/context");
 var dragService_1 = require("../dragAndDrop/dragService");
-var HorizontalResizeService = (function () {
+var HorizontalResizeService = /** @class */ (function () {
     function HorizontalResizeService() {
     }
     HorizontalResizeService.prototype.addResizeBar = function (params) {
         var _this = this;
         var dragSource = {
-            dragStartPixels: 0,
+            dragStartPixels: params.dragStartPixels || 0,
             eElement: params.eResizeBar,
             onDragStart: this.onDragStart.bind(this, params),
             onDragStop: this.onDragStop.bind(this, params),

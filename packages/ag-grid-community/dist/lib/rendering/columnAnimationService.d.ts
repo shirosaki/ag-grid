@@ -15,6 +15,6 @@ export declare class ColumnAnimationService {
     finish(): void;
     executeNextVMTurn(func: Function): void;
     executeLaterVMTurn(func: Function): void;
-    private ensureAnimationCssClassPresent();
+    private ensureAnimationCssClassPresent;
     flush(): void;
 }

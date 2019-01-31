@@ -8,7 +8,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var eventService_1 = require("../eventService");
 var utils_1 = require("../utils");
-var TouchListener = (function () {
+var TouchListener = /** @class */ (function () {
     function TouchListener(eElement, preventMouseClick) {
         if (preventMouseClick === void 0) { preventMouseClick = false; }
         var _this = this;

@@ -24,12 +24,12 @@ export declare class TouchListener implements IEventEmitter {
     private eventService;
     private preventMouseClick;
     constructor(eElement: HTMLElement, preventMouseClick?: boolean);
-    private getActiveTouch(touchList);
+    private getActiveTouch;
     addEventListener(eventType: string, listener: Function): void;
     removeEventListener(eventType: string, listener: Function): void;
-    private onTouchStart(touchEvent);
-    private onTouchMove(touchEvent);
-    private onTouchEnd(touchEvent);
-    private checkForDoubleTap();
+    private onTouchStart;
+    private onTouchMove;
+    private onTouchEnd;
+    private checkForDoubleTap;
     destroy(): void;
 }

@@ -23,8 +23,8 @@ export declare class Grid {
     static setEnterpriseComponents(components: any[]): void;
     static setFrameworkBeans(frameworkBeans: any[]): void;
     constructor(eGridDiv: HTMLElement, gridOptions: GridOptions, params?: GridParams);
-    private setColumnsAndData();
-    private dispatchGridReadyEvent(gridOptions);
-    private getRowModelClass(gridOptions);
+    private setColumnsAndData;
+    private dispatchGridReadyEvent;
+    private getRowModelClass;
     destroy(): void;
 }

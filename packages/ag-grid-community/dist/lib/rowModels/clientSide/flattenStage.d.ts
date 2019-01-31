@@ -10,9 +10,9 @@ export declare class FlattenStage implements IRowNodeStage {
     private context;
     private columnController;
     execute(params: StageExecuteParams): RowNode[];
-    private resetRowTops(rowNode);
-    private recursivelyAddToRowsToDisplay(rowsToFlatten, result, nextRowTop, skipLeafNodes, uiLevel);
-    private addRowNodeToRowsToDisplay(rowNode, result, nextRowTop, uiLevel);
-    private ensureFooterNodeExists(groupNode);
-    private createDetailNode(masterNode);
+    private resetRowTops;
+    private recursivelyAddToRowsToDisplay;
+    private addRowNodeToRowsToDisplay;
+    private ensureFooterNodeExists;
+    private createDetailNode;
 }

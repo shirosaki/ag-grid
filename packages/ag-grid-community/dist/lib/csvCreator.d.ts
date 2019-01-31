@@ -18,12 +18,12 @@ export declare class CsvSerializingSession extends BaseGridSerializingSession<st
     addCustomHeader(customHeader: string): void;
     addCustomFooter(customFooter: string): void;
     onNewHeaderGroupingRow(): RowSpanningAccumulator;
-    private onNewHeaderGroupingRowColumn(header, index, span);
+    private onNewHeaderGroupingRowColumn;
     onNewHeaderRow(): RowAccumulator;
-    private onNewHeaderRowColumn(column, index, node?);
+    private onNewHeaderRowColumn;
     onNewBodyRow(): RowAccumulator;
-    private onNewBodyRowColumn(column, index, node?);
-    private putInQuotes(value, suppressQuotes);
+    private onNewBodyRowColumn;
+    private putInQuotes;
     parse(): string;
 }
 export interface BaseCreatorBeans {
@@ -36,8 +36,8 @@ export declare abstract class BaseCreator<T, S extends GridSerializingSession<T>
     protected setBeans(beans: BaseCreatorBeans): void;
     export(userParams?: P): string;
     getData(params: P): string;
-    private getMergedParamsAndData(userParams);
-    private mergeDefaultParams(userParams);
+    private getMergedParamsAndData;
+    private mergeDefaultParams;
     abstract createSerializingSession(params?: P): S;
     abstract getMimeType(): string;
     abstract getDefaultFileName(): string;

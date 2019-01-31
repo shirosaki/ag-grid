@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,7 +43,7 @@ var focusedCellController_1 = require("./focusedCellController");
 var component_1 = require("./widgets/component");
 var gridApi_1 = require("./gridApi");
 var componentAnnotations_1 = require("./widgets/componentAnnotations");
-var GridCore = (function (_super) {
+var GridCore = /** @class */ (function (_super) {
     __extends(GridCore, _super);
     function GridCore() {
         return _super.call(this) || this;
@@ -147,6 +150,7 @@ var GridCore = (function (_super) {
             this.gridPanel.ensureIndexVisible(indexToSelect, position);
         }
     };
+    var GridCore_1;
     GridCore.TEMPLATE_NORMAL = "<div class=\"ag-root-wrapper\">\n            <div class=\"ag-root-wrapper-body\">\n                <ag-grid-comp ref=\"gridPanel\"></ag-grid-comp>\n            </div>\n            <ag-pagination></ag-pagination>\n        </div>";
     GridCore.TEMPLATE_ENTERPRISE = "<div class=\"ag-root-wrapper\">\n            <ag-header-column-drop></ag-header-column-drop>\n            <div class=\"ag-root-wrapper-body\">\n                <ag-grid-comp ref=\"gridPanel\"></ag-grid-comp>\n                <ag-tool-panel ref=\"toolPanel\"></ag-tool-panel>\n            </div>\n            <ag-status-bar ref=\"statusBar\"></ag-status-bar>\n            <ag-pagination></ag-pagination>\n        </div>";
     __decorate([
@@ -258,6 +262,5 @@ var GridCore = (function (_super) {
         __metadata("design:paramtypes", [])
     ], GridCore);
     return GridCore;
-    var GridCore_1;
 }(component_1.Component));
 exports.GridCore = GridCore;

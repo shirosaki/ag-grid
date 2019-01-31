@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -19,7 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = require("../../widgets/component");
 var constants_1 = require("../../constants");
 var utils_1 = require("../../utils");
-var LargeTextCellEditor = (function (_super) {
+var LargeTextCellEditor = /** @class */ (function (_super) {
     __extends(LargeTextCellEditor, _super);
     function LargeTextCellEditor() {
         return _super.call(this, LargeTextCellEditor.TEMPLATE) || this;
@@ -43,7 +46,7 @@ var LargeTextCellEditor = (function (_super) {
             key == constants_1.Constants.KEY_UP ||
             key == constants_1.Constants.KEY_RIGHT ||
             key == constants_1.Constants.KEY_DOWN ||
-            (event.shiftKey && key == constants_1.Constants.KEY_ENTER)) {
+            (event.shiftKey && key == constants_1.Constants.KEY_ENTER)) { // shift+enter allows for newlines
             event.stopPropagation();
         }
     };

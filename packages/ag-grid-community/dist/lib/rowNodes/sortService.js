@@ -21,7 +21,7 @@ var utils_1 = require("../utils");
 var valueService_1 = require("../valueService/valueService");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var columnController_1 = require("../columnController/columnController");
-var SortService = (function () {
+var SortService = /** @class */ (function () {
     function SortService() {
     }
     SortService.prototype.init = function () {

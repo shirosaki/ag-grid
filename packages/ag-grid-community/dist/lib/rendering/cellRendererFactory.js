@@ -23,7 +23,7 @@ var expressionService_1 = require("../valueService/expressionService");
 var animateSlideCellRenderer_1 = require("./cellRenderers/animateSlideCellRenderer");
 var animateShowChangeCellRenderer_1 = require("./cellRenderers/animateShowChangeCellRenderer");
 var groupCellRenderer_1 = require("./cellRenderers/groupCellRenderer");
-var CellRendererFactory = (function () {
+var CellRendererFactory = /** @class */ (function () {
     function CellRendererFactory() {
         this.cellRendererMap = {};
     }
@@ -51,6 +51,7 @@ var CellRendererFactory = (function () {
         }
         return result;
     };
+    var CellRendererFactory_1;
     CellRendererFactory.ANIMATE_SLIDE = 'animateSlide';
     CellRendererFactory.ANIMATE_SHOW_CHANGE = 'animateShowChange';
     CellRendererFactory.GROUP = 'group';
@@ -76,6 +77,5 @@ var CellRendererFactory = (function () {
         context_1.Bean('cellRendererFactory')
     ], CellRendererFactory);
     return CellRendererFactory;
-    var CellRendererFactory_1;
 }());
 exports.CellRendererFactory = CellRendererFactory;

@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,7 +43,7 @@ var rowNodeCache_1 = require("../cache/rowNodeCache");
 var rowNodeBlockLoader_1 = require("../cache/rowNodeBlockLoader");
 var gridApi_1 = require("../../gridApi");
 var columnApi_1 = require("../../columnController/columnApi");
-var InfiniteRowModel = (function (_super) {
+var InfiniteRowModel = /** @class */ (function (_super) {
     __extends(InfiniteRowModel, _super);
     function InfiniteRowModel() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -246,7 +249,7 @@ var InfiniteRowModel = (function (_super) {
         return this.getRowCount() * this.rowHeight;
     };
     InfiniteRowModel.prototype.getRowIndexAtPixel = function (pixel) {
-        if (this.rowHeight !== 0) {
+        if (this.rowHeight !== 0) { // avoid divide by zero error
             var rowIndexForPixel = Math.floor(pixel / this.rowHeight);
             if (rowIndexForPixel > this.getPageLastRow()) {
                 return this.getPageLastRow();

@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("./context/context");
 var context_2 = require("./context/context");
-var TemplateService = (function () {
+var TemplateService = /** @class */ (function () {
     function TemplateService() {
         this.templateCache = {};
         this.waitingCallbacks = {};

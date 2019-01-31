@@ -190,6 +190,8 @@ export interface ColDef extends AbstractColDef {
     suppressKeyboardEvent?: (params: SuppressKeyboardEventParams) => boolean;
     /** If true, GUI will allow adding this columns as a row group */
     enableRowGroup?: boolean;
+    /** If true, this col groups which only have one child is removed */
+    groupRemoveSingleChildren?: boolean;
     /** If true, GUI will allow adding this columns as a pivot */
     enablePivot?: boolean;
     /** If true, GUI will allow adding this columns as a value */

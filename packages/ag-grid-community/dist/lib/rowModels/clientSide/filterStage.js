@@ -19,7 +19,7 @@ var context_1 = require("../../context/context");
 var gridOptionsWrapper_1 = require("../../gridOptionsWrapper");
 var filterService_1 = require("../../rowNodes/filterService");
 var selectableService_1 = require("../../rowNodes/selectableService");
-var FilterStage = (function () {
+var FilterStage = /** @class */ (function () {
     function FilterStage() {
     }
     FilterStage.prototype.execute = function (params) {

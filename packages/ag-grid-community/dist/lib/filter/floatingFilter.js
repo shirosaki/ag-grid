@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -32,7 +35,7 @@ var utils_1 = require("../utils");
 var componentRecipes_1 = require("../components/framework/componentRecipes");
 var component_1 = require("../widgets/component");
 var constants_1 = require("../constants");
-var InputTextFloatingFilterComp = (function (_super) {
+var InputTextFloatingFilterComp = /** @class */ (function (_super) {
     __extends(InputTextFloatingFilterComp, _super);
     function InputTextFloatingFilterComp() {
         var _this = _super.call(this, "<div><input  ref=\"eColumnFloatingFilter\" class=\"ag-floating-filter-input\"></div>") || this;
@@ -123,7 +126,7 @@ var InputTextFloatingFilterComp = (function (_super) {
     return InputTextFloatingFilterComp;
 }(component_1.Component));
 exports.InputTextFloatingFilterComp = InputTextFloatingFilterComp;
-var TextFloatingFilterComp = (function (_super) {
+var TextFloatingFilterComp = /** @class */ (function (_super) {
     __extends(TextFloatingFilterComp, _super);
     function TextFloatingFilterComp() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -148,7 +151,7 @@ var TextFloatingFilterComp = (function (_super) {
     return TextFloatingFilterComp;
 }(InputTextFloatingFilterComp));
 exports.TextFloatingFilterComp = TextFloatingFilterComp;
-var DateFloatingFilterComp = (function (_super) {
+var DateFloatingFilterComp = /** @class */ (function (_super) {
     __extends(DateFloatingFilterComp, _super);
     function DateFloatingFilterComp() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -226,7 +229,7 @@ var DateFloatingFilterComp = (function (_super) {
     return DateFloatingFilterComp;
 }(component_1.Component));
 exports.DateFloatingFilterComp = DateFloatingFilterComp;
-var NumberFloatingFilterComp = (function (_super) {
+var NumberFloatingFilterComp = /** @class */ (function (_super) {
     __extends(NumberFloatingFilterComp, _super);
     function NumberFloatingFilterComp() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -293,7 +296,7 @@ var NumberFloatingFilterComp = (function (_super) {
     return NumberFloatingFilterComp;
 }(InputTextFloatingFilterComp));
 exports.NumberFloatingFilterComp = NumberFloatingFilterComp;
-var SetFloatingFilterComp = (function (_super) {
+var SetFloatingFilterComp = /** @class */ (function (_super) {
     __extends(SetFloatingFilterComp, _super);
     function SetFloatingFilterComp() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -335,7 +338,7 @@ var SetFloatingFilterComp = (function (_super) {
     return SetFloatingFilterComp;
 }(InputTextFloatingFilterComp));
 exports.SetFloatingFilterComp = SetFloatingFilterComp;
-var ReadModelAsStringFloatingFilterComp = (function (_super) {
+var ReadModelAsStringFloatingFilterComp = /** @class */ (function (_super) {
     __extends(ReadModelAsStringFloatingFilterComp, _super);
     function ReadModelAsStringFloatingFilterComp() {
         return _super !== null && _super.apply(this, arguments) || this;

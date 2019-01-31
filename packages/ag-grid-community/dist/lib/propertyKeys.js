@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var PropertyKeys = (function () {
+var PropertyKeys = /** @class */ (function () {
     function PropertyKeys() {
     }
     PropertyKeys.STRING_PROPERTIES = [
@@ -20,7 +20,7 @@ var PropertyKeys = (function () {
         'icons', 'datasource', 'serverSideDatasource', 'viewportDatasource', 'groupRowRendererParams', 'aggFuncs',
         'fullWidthCellRendererParams', 'defaultColGroupDef', 'defaultColDef', 'defaultExportParams', 'columnTypes',
         'rowClassRules', 'detailGridOptions', 'detailCellRendererParams', 'loadingOverlayComponentParams',
-        'noRowsOverlayComponentParams', 'popupParent'
+        'noRowsOverlayComponentParams', 'popupParent', 'autoGroupColumnIndex'
         //,'cellRenderers','cellEditors'
     ];
     PropertyKeys.ARRAY_PROPERTIES = [

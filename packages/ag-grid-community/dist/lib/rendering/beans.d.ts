@@ -69,5 +69,5 @@ export declare class Beans {
     doingMasterDetail: boolean;
     gridPanel: GridPanel;
     registerGridComp(gridPanel: GridPanel): void;
-    private postConstruct();
+    private postConstruct;
 }

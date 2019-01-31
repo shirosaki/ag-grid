@@ -26,9 +26,9 @@ export declare class BodyDropTarget implements DropTarget {
     isInterestedIn(type: DragSourceType): boolean;
     getSecondaryContainers(): HTMLElement[];
     getContainer(): HTMLElement;
-    private init();
+    private init;
     getIconName(): string;
-    private getDropType(draggingEvent);
+    private getDropType;
     onDragEnter(draggingEvent: DraggingEvent): void;
     onDragLeave(params: DraggingEvent): void;
     onDragging(params: DraggingEvent): void;

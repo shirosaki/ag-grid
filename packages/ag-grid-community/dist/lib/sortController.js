@@ -25,7 +25,7 @@ var events_1 = require("./events");
 var context_2 = require("./context/context");
 var utils_1 = require("./utils");
 var gridApi_1 = require("./gridApi");
-var SortController = (function () {
+var SortController = /** @class */ (function () {
     function SortController() {
     }
     SortController_1 = SortController;
@@ -177,6 +177,7 @@ var SortController = (function () {
             };
         });
     };
+    var SortController_1;
     SortController.DEFAULT_SORTING_ORDER = [column_1.Column.SORT_ASC, column_1.Column.SORT_DESC, null];
     __decorate([
         context_1.Autowired('gridOptionsWrapper'),
@@ -202,6 +203,5 @@ var SortController = (function () {
         context_2.Bean('sortController')
     ], SortController);
     return SortController;
-    var SortController_1;
 }());
 exports.SortController = SortController;

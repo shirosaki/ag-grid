@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -32,7 +35,7 @@ var dragAndDropService_1 = require("../dragAndDrop/dragAndDropService");
 var eventKeys_1 = require("../eventKeys");
 var utils_1 = require("../utils");
 var beanStub_1 = require("../context/beanStub");
-var RowDragComp = (function (_super) {
+var RowDragComp = /** @class */ (function (_super) {
     __extends(RowDragComp, _super);
     function RowDragComp(rowNode, column, cellValue, beans) {
         var _this = _super.call(this, "<span class=\"ag-row-drag\"></span>") || this;
@@ -87,7 +90,7 @@ var RowDragComp = (function (_super) {
 }(component_1.Component));
 exports.RowDragComp = RowDragComp;
 // when non managed, the visibility depends on suppressRowDrag property only
-var NonManagedVisibilityStrategy = (function (_super) {
+var NonManagedVisibilityStrategy = /** @class */ (function (_super) {
     __extends(NonManagedVisibilityStrategy, _super);
     function NonManagedVisibilityStrategy(parent, beans, rowNode, column) {
         var _this = _super.call(this) || this;
@@ -127,7 +130,7 @@ var NonManagedVisibilityStrategy = (function (_super) {
     return NonManagedVisibilityStrategy;
 }(beanStub_1.BeanStub));
 // when managed, the visibility depends on sort, filter and row group, as well as suppressRowDrag property
-var ManagedVisibilityStrategy = (function (_super) {
+var ManagedVisibilityStrategy = /** @class */ (function (_super) {
     __extends(ManagedVisibilityStrategy, _super);
     function ManagedVisibilityStrategy(parent, beans, rowNode, column) {
         var _this = _super.call(this) || this;

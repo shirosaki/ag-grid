@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
 var context_1 = require("./context/context");
 var context_2 = require("./context/context");
-var LoggerFactory = (function () {
+var LoggerFactory = /** @class */ (function () {
     function LoggerFactory() {
     }
     LoggerFactory.prototype.setBeans = function (gridOptionsWrapper) {
@@ -45,7 +45,7 @@ var LoggerFactory = (function () {
     return LoggerFactory;
 }());
 exports.LoggerFactory = LoggerFactory;
-var Logger = (function () {
+var Logger = /** @class */ (function () {
     function Logger(name, isLoggingFunc) {
         this.name = name;
         this.isLoggingFunc = isLoggingFunc;

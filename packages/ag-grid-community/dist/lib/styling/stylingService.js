@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../context/context");
 var expressionService_1 = require("../valueService/expressionService");
-var StylingService = (function () {
+var StylingService = /** @class */ (function () {
     function StylingService() {
     }
     StylingService.prototype.processAllCellClasses = function (colDef, params, onApplicableClass, onNotApplicableClass) {

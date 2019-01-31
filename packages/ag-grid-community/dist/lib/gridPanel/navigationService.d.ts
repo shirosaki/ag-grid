@@ -12,13 +12,13 @@ export declare class NavigationService {
     private gridOptionsWrapper;
     private scrollWidth;
     private gridPanel;
-    private init();
+    private init;
     registerGridComp(gridPanel: GridPanel): void;
     handlePageScrollingKey(event: KeyboardEvent): boolean;
-    private onPageDown(gridCell);
-    private onPageUp(gridCell);
-    private navigateTo(scrollIndex, scrollType, scrollColumn, focusIndex, focusColumn);
-    private onCtrlUpOrDown(key, gridCell);
-    private onCtrlLeftOrRight(key, gridCell);
-    private onHomeOrEndKey(key);
+    private onPageDown;
+    private onPageUp;
+    private navigateTo;
+    private onCtrlUpOrDown;
+    private onCtrlLeftOrRight;
+    private onHomeOrEndKey;
 }

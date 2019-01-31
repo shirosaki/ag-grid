@@ -29,6 +29,7 @@ export declare class GridOptionsWrapper {
     static PROP_SUPPRESS_ROW_DRAG: string;
     static PROP_POPUP_PARENT: string;
     static PROP_GRID_AUTO_HEIGHT: string;
+    static PROP_DOM_LAYOUT: string;
     private gridOptions;
     private columnController;
     private eventService;
@@ -40,12 +41,13 @@ export declare class GridOptionsWrapper {
     private autoHeightCalculator;
     private propertyEventService;
     private domDataKey;
-    private agWire(gridApi, columnApi);
-    private destroy();
+    private layoutElements;
+    private agWire;
+    private destroy;
     init(): void;
-    private checkColumnDefProperties();
-    private checkGridOptionsProperties();
-    private checkProperties(userProperties, validPropertiesAndExceptions, validProperties, containerName, docsUrl);
+    private checkColumnDefProperties;
+    private checkGridOptionsProperties;
+    private checkProperties;
     getDomData(element: Node, key: string): any;
     setDomData(element: Element, key: string, value: any): any;
     isEnterprise(): boolean;
@@ -64,6 +66,7 @@ export declare class GridOptionsWrapper {
     isRowModelDefault(): boolean;
     isFullRowEdit(): boolean;
     isSuppressFocusAfterRefresh(): boolean;
+    isSuppressBrowserResizeObserver(): boolean;
     isShowToolPanel(): boolean;
     isToolPanelSuppressValues(): boolean;
     isToolPanelSuppressPivots(): boolean;
@@ -97,6 +100,7 @@ export declare class GridOptionsWrapper {
     isSuppressScrollOnNewData(): boolean;
     isRowDragManaged(): boolean;
     isSuppressRowDrag(): boolean;
+    getDomLayout(): string;
     isGridAutoHeight(): boolean;
     isSuppressHorizontalScroll(): boolean;
     isSuppressLoadingOverlay(): boolean;
@@ -119,7 +123,7 @@ export declare class GridOptionsWrapper {
     getRowStyleFunc(): Function;
     getRowClassFunc(): (params: any) => string | string[];
     rowClassRules(): {
-        [cssClassName: string]: string | Function;
+        [cssClassName: string]: string | ((params: any) => boolean);
     };
     getPopupParent(): HTMLElement;
     getPostProcessPopupFunc(): (params: PostProcessPopupParams) => void;
@@ -152,6 +156,7 @@ export declare class GridOptionsWrapper {
     isGroupUseEntireRow(): boolean;
     isEnableRtl(): boolean;
     getAutoGroupColumnDef(): ColDef;
+    getAutoGroupColumnIndex(): number;
     isGroupSuppressRow(): boolean;
     getRowGroupPanelShow(): string;
     getPivotPanelShow(): string;
@@ -242,6 +247,8 @@ export declare class GridOptionsWrapper {
     getPostSortFunc(): (rowNodes: RowNode[]) => void;
     getClipboardDeliminator(): string;
     setProperty(key: string, value: any): void;
+    addLayoutElement(element: HTMLElement): void;
+    private updateLayoutClasses;
     addEventListener(key: string, listener: Function): void;
     static checkEventDeprecation(eventName: string): void;
     removeEventListener(key: string, listener: Function): void;
@@ -260,14 +267,14 @@ export declare class GridOptionsWrapper {
     getColWidth(): number;
     getRowBuffer(): number;
     getScrollbarWidth(): number;
-    private checkForDeprecated();
+    private checkForDeprecated;
     getLocaleTextFunc(): Function;
     globalEventHandler(eventName: string, event?: any): void;
     getRowHeightAsNumber(): number;
     getRowHeightForNode(rowNode: RowNode): number;
     isDynamicRowHeight(): boolean;
     getVirtualItemHeight(): number;
-    private isNumeric(value);
-    private specialForNewMaterial(defaultValue, sassVariableName);
-    private getDefaultRowHeight();
+    private isNumeric;
+    private specialForNewMaterial;
+    private getDefaultRowHeight;
 }

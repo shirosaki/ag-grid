@@ -13,7 +13,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("./context/context");
-var Downloader = (function () {
+var Downloader = /** @class */ (function () {
     function Downloader() {
     }
     Downloader.prototype.download = function (fileName, content, mimeType) {

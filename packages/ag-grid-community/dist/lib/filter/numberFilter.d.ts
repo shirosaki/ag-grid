@@ -25,13 +25,13 @@ export declare class NumberFilter extends ScalarBaseFilter<number, INumberFilter
     getApplicableFilterTypes(): string[];
     bodyTemplate(type: FilterConditionType): string;
     initialiseFilterBodyUi(type: FilterConditionType): void;
-    private addFilterChangedEventListeners(type, filterElement, filterToElement);
+    private addFilterChangedEventListeners;
     afterGuiAttached(): void;
     comparator(): Comparator<number>;
-    private onTextFieldsChanged(type, filterElement, filterToElement);
+    private onTextFieldsChanged;
     filterValues(type: FilterConditionType): number | number[];
-    private asNumber(value);
-    private stringToFloat(value);
+    private asNumber;
+    private stringToFloat;
     setFilter(filter: any, type: FilterConditionType): void;
     setFilterTo(filter: any, type: FilterConditionType): void;
     getFilter(type: FilterConditionType): any;

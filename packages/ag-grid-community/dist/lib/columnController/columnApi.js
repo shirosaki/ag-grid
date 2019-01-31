@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var columnController_1 = require("./columnController");
 var context_1 = require("../context/context");
-var ColumnApi = (function () {
+var ColumnApi = /** @class */ (function () {
     function ColumnApi() {
     }
     ColumnApi.prototype.sizeColumnsToFit = function (gridWidth) { this.columnController.sizeColumnsToFit(gridWidth, 'api'); };

@@ -17,6 +17,6 @@ export declare class InfiniteBlock extends RowNodeBlock implements IEventEmitter
     protected init(): void;
     getNodeIdPrefix(): string;
     getRow(displayIndex: number): RowNode;
-    private setIndexAndTopOnRowNode(rowNode, rowIndex);
+    private setIndexAndTopOnRowNode;
     protected loadFromDatasource(): void;
 }

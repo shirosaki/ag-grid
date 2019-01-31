@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -28,7 +31,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var beanStub_1 = require("../context/beanStub");
 var context_1 = require("../context/context");
 var columnHoverService_1 = require("../rendering/columnHoverService");
-var HoverFeature = (function (_super) {
+var HoverFeature = /** @class */ (function (_super) {
     __extends(HoverFeature, _super);
     function HoverFeature(columns, element) {
         var _this = _super.call(this) || this;

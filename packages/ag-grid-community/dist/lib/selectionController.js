@@ -30,7 +30,7 @@ var context_4 = require("./context/context");
 var constants_1 = require("./constants");
 var columnApi_1 = require("./columnController/columnApi");
 var gridApi_1 = require("./gridApi");
-var SelectionController = (function () {
+var SelectionController = /** @class */ (function () {
     function SelectionController() {
     }
     SelectionController.prototype.setBeans = function (loggerFactory) {

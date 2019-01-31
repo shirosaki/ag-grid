@@ -27,7 +27,7 @@ var constants_1 = require("../constants");
 var utils_1 = require("../utils");
 var valueCache_1 = require("../valueService/valueCache");
 var gridApi_1 = require("../gridApi");
-var RowNode = (function () {
+var RowNode = /** @class */ (function () {
     function RowNode() {
         /** Children mapped by the pivot columns */
         this.childrenMapped = {};

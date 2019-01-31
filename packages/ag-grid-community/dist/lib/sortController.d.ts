@@ -13,15 +13,15 @@ export declare class SortController {
     progressSort(column: Column, multiSort: boolean, source?: ColumnEventType): void;
     setSortForColumn(column: Column, sort: string, multiSort: boolean, source?: ColumnEventType): void;
     onSortChanged(): void;
-    private dispatchSortChangedEvents();
-    private clearSortBarThisColumn(columnToSkip, source);
-    private getNextSortDirection(column);
+    private dispatchSortChangedEvents;
+    private clearSortBarThisColumn;
+    private getNextSortDirection;
     getSortModel(): {
         colId: string;
         sort: string;
     }[];
     setSortModel(sortModel: any, source?: ColumnEventType): void;
-    private compareColIds(sortModelEntry, column);
+    private compareColIds;
     getColumnsWithSortingOrdered(): Column[];
     getSortForRowController(): any[];
 }

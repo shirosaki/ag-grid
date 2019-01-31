@@ -15,14 +15,14 @@ export declare class EventService implements IEventEmitter {
     private scheduled;
     private static PRIORITY;
     setBeans(loggerFactory: LoggerFactory, gridOptionsWrapper: GridOptionsWrapper, globalEventListener?: Function): void;
-    private getListenerList(eventType, async);
+    private getListenerList;
     addEventListener(eventType: string, listener: Function, async?: boolean): void;
     addModalPriorityEventListener(eventType: string, listener: Function, async?: boolean): void;
     addGlobalListener(listener: Function, async?: boolean): void;
     removeEventListener(eventType: string, listener: Function, async?: boolean): void;
     removeGlobalListener(listener: Function, async?: boolean): void;
     dispatchEvent(event: AgEvent): void;
-    private dispatchToListeners(event, async);
-    private dispatchAsync(func);
-    private flushAsyncQueue();
+    private dispatchToListeners;
+    private dispatchAsync;
+    private flushAsyncQueue;
 }

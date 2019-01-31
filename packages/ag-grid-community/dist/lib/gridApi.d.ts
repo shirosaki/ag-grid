@@ -86,7 +86,7 @@ export declare class GridApi {
     private detailGridInfoMap;
     registerGridComp(gridPanel: GridPanel): void;
     registerHeaderRootComp(headerRootComp: HeaderRootComp): void;
-    private init();
+    private init;
     /** Used internally by grid. Not intended to be used by the client. Interface may change between releases. */
     __getAlignedGridService(): AlignedGridsService;
     addDetailGridInfo(id: string, gridInfo: DetailGridInfo): void;

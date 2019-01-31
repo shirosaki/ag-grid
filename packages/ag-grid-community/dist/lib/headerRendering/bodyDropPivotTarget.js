@@ -19,7 +19,7 @@ var dragAndDropService_1 = require("../dragAndDrop/dragAndDropService");
 var columnController_1 = require("../columnController/columnController");
 var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var BodyDropPivotTarget = (function () {
+var BodyDropPivotTarget = /** @class */ (function () {
     function BodyDropPivotTarget(pinned) {
         this.columnsToAggregate = [];
         this.columnsToGroup = [];

@@ -7,7 +7,7 @@ import { IComponent } from "../interfaces/iComponent";
 export declare enum HeaderRowType {
     COLUMN_GROUP = 0,
     COLUMN = 1,
-    FLOATING_FILTER = 2,
+    FLOATING_FILTER = 2
 }
 export declare class HeaderRowComp extends Component {
     private gridOptionsWrapper;
@@ -25,16 +25,16 @@ export declare class HeaderRowComp extends Component {
     constructor(dept: number, type: HeaderRowType, pinned: string, dropTarget: DropTarget);
     forEachHeaderElement(callback: (comp: IComponent<any>) => void): void;
     destroy(): void;
-    private removeAndDestroyChildComponents(idsToDestroy);
-    private onRowHeightChanged();
-    private init();
-    private onColumnResized();
-    private setWidth();
-    private onGridColumnsChanged();
-    private removeAndDestroyAllChildComponents();
-    private onDisplayedColumnsChanged();
-    private onVirtualColumnsChanged();
-    private createHeaderComp(columnGroupChild);
-    private createFloatingFilterWrapper(column);
-    private createFloatingFilterParams<M, F>(column);
+    private removeAndDestroyChildComponents;
+    private onRowHeightChanged;
+    private init;
+    private onColumnResized;
+    private setWidth;
+    private onGridColumnsChanged;
+    private removeAndDestroyAllChildComponents;
+    private onDisplayedColumnsChanged;
+    private onVirtualColumnsChanged;
+    private createHeaderComp;
+    private createFloatingFilterWrapper;
+    private createFloatingFilterParams;
 }

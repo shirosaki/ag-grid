@@ -31,11 +31,11 @@ export declare class OriginalColumnGroup implements OriginalColumnGroupChild, IE
     getChildren(): OriginalColumnGroupChild[];
     getColGroupDef(): ColGroupDef;
     getLeafColumns(): Column[];
-    private addLeafColumns(leafColumns);
+    private addLeafColumns;
     getColumnGroupShow(): string;
     setupExpandable(): void;
     setExpandable(): void;
-    private onColumnVisibilityChanged();
+    private onColumnVisibilityChanged;
     addEventListener(eventType: string, listener: Function): void;
     removeEventListener(eventType: string, listener: Function): void;
 }

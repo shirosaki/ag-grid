@@ -46,7 +46,7 @@ var heightScaler_1 = require("./heightScaler");
  * and cellComp. So for performance reasons, RowComp and CellComp do not get autowired
  * with the IoC. Instead they get passed this object which is all the beans the RowComp
  * and CellComp need. Not autowiring all the cells gives performance improvement. */
-var Beans = (function () {
+var Beans = /** @class */ (function () {
     function Beans() {
     }
     Beans.prototype.registerGridComp = function (gridPanel) {

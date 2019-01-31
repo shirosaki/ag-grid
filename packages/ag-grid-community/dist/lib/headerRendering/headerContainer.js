@@ -26,7 +26,7 @@ var headerRowComp_1 = require("./headerRowComp");
 var bodyDropTarget_1 = require("./bodyDropTarget");
 var column_1 = require("../entities/column");
 var scrollVisibleService_1 = require("../gridPanel/scrollVisibleService");
-var HeaderContainer = (function () {
+var HeaderContainer = /** @class */ (function () {
     function HeaderContainer(eContainer, eViewport, pinned) {
         this.headerRowComps = [];
         this.eContainer = eContainer;
@@ -71,21 +71,19 @@ var HeaderContainer = (function () {
     HeaderContainer.prototype.setWidthOfPinnedContainer = function () {
         var pinningLeft = this.pinned === column_1.Column.PINNED_LEFT;
         var pinningRight = this.pinned === column_1.Column.PINNED_RIGHT;
+        var controller = this.columnController;
+        var isRtl = this.gridOptionsWrapper.isEnableRtl();
         if (pinningLeft || pinningRight) {
             // size to fit all columns
-            var width = pinningLeft ?
-                this.columnController.getPinnedLeftContainerWidth()
-                : this.columnController.getPinnedRightContainerWidth();
+            var width = controller[pinningLeft ? 'getPinnedLeftContainerWidth' : 'getPinnedRightContainerWidth']();
             // if there is a scroll showing (and taking up space, so Windows, and not iOS)
             // in the body, then we add extra space to keep header aligned with the body,
             // as body width fits the cols and the scrollbar
-            var addPaddingForScrollbar = pinningLeft ?
-                this.scrollVisibleService.isLeftVerticalScrollShowing()
-                : this.scrollVisibleService.isRightVerticalScrollShowing();
+            var addPaddingForScrollbar = this.scrollVisibleService.isVerticalScrollShowing() && ((isRtl && pinningLeft) || (!isRtl && pinningRight));
             if (addPaddingForScrollbar) {
                 width += this.scrollWidth;
             }
-            this.eContainer.style.width = width + 'px';
+            utils_1.Utils.setFixedWidth(this.eContainer, width);
         }
     };
     HeaderContainer.prototype.destroy = function () {

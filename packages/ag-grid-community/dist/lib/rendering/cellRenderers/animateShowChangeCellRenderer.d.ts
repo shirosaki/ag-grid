@@ -11,8 +11,8 @@ export declare class AnimateShowChangeCellRenderer extends Component implements 
     private refreshCount;
     constructor();
     init(params: any): void;
-    private showDelta(params, delta);
-    private setTimerToRemoveDelta();
-    private hideDeltaValue();
+    private showDelta;
+    private setTimerToRemoveDelta;
+    private hideDeltaValue;
     refresh(params: any): boolean;
 }

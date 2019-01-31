@@ -112,6 +112,8 @@ var moveColumnController_1 = require("./dist/lib/headerRendering/moveColumnContr
 exports.MoveColumnController = moveColumnController_1.MoveColumnController;
 var standardMenu_1 = require("./dist/lib/headerRendering/standardMenu");
 exports.StandardMenuFactory = standardMenu_1.StandardMenuFactory;
+var headerComp_1 = require("./dist/lib/headerRendering/header/headerComp");
+exports.HeaderComp = headerComp_1.HeaderComp;
 // layout
 var tabbedLayout_1 = require("./dist/lib/layout/tabbedLayout");
 exports.TabbedLayout = tabbedLayout_1.TabbedLayout;

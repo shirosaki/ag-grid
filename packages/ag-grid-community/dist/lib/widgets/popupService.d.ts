@@ -8,7 +8,7 @@ export declare class PopupService {
     private gridOptionsWrapper;
     private environment;
     private activePopupElements;
-    private getPopupParent();
+    private getPopupParent;
     positionPopupForMenu(params: {
         eventSource: any;
         ePopup: HTMLElement;
@@ -31,7 +31,7 @@ export declare class PopupService {
         nudgeY?: number;
         keepWithinBounds?: boolean;
     }): void;
-    private callPostProcessPopup(ePopup, eventSource, mouseEvent, type, column, rowNode);
+    private callPostProcessPopup;
     positionPopupOverComponent(params: {
         type: string;
         eventSource: HTMLElement;
@@ -43,10 +43,10 @@ export declare class PopupService {
         nudgeY?: number;
         keepWithinBounds?: boolean;
     }): void;
-    private positionPopup(params);
-    private keepYWithinBounds(params, y);
-    private keepXWithinBounds(params, x);
+    private positionPopup;
+    private keepYWithinBounds;
+    private keepXWithinBounds;
     addAsModalPopup(eChild: any, closeOnEsc: boolean, closedCallback?: () => void, click?: MouseEvent | Touch): (event?: any) => void;
-    private isEventFromCurrentPopup(mouseEvent, touchEvent, eChild);
-    private isEventSameChainAsOriginalEvent(originalClick, mouseEvent, touchEvent);
+    private isEventFromCurrentPopup;
+    private isEventSameChainAsOriginalEvent;
 }

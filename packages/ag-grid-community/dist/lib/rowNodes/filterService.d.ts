@@ -6,10 +6,10 @@ export declare class FilterService {
     private filterManager;
     private gridOptionsWrapper;
     private doingTreeData;
-    private postConstruct();
+    private postConstruct;
     filterAccordingToColumnState(rowNode: RowNode): void;
     filter(rowNode: RowNode, filterActive: boolean): void;
-    private setAllChildrenCountTreeData(rowNode);
-    private setAllChildrenCountGridGrouping(rowNode);
-    private setAllChildrenCount(rowNode);
+    private setAllChildrenCountTreeData;
+    private setAllChildrenCountGridGrouping;
+    private setAllChildrenCount;
 }

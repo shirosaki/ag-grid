@@ -23,7 +23,7 @@ var utils_1 = require("./utils");
 var context_1 = require("./context/context");
 var context_2 = require("./context/context");
 var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
-var EventService = (function () {
+var EventService = /** @class */ (function () {
     function EventService() {
         this.allSyncListeners = {};
         this.allAsyncListeners = {};
@@ -166,6 +166,7 @@ var EventService = (function () {
         // execute the queue
         queueCopy.forEach(function (func) { return func(); });
     };
+    var EventService_1;
     // this is an old idea niall had, should really take it out, was to do with ordering who gets to process
     // events first, to give model and service objects preference over the view
     EventService.PRIORITY = '-P1';
@@ -183,6 +184,5 @@ var EventService = (function () {
         context_1.Bean('eventService')
     ], EventService);
     return EventService;
-    var EventService_1;
 }());
 exports.EventService = EventService;

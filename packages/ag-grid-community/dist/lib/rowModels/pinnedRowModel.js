@@ -26,7 +26,7 @@ var constants_1 = require("../constants");
 var utils_1 = require("../utils");
 var columnApi_1 = require("../columnController/columnApi");
 var gridApi_1 = require("../gridApi");
-var PinnedRowModel = (function () {
+var PinnedRowModel = /** @class */ (function () {
     function PinnedRowModel() {
     }
     PinnedRowModel.prototype.init = function () {

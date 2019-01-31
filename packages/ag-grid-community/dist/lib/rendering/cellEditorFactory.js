@@ -19,7 +19,7 @@ var context_1 = require("../context/context");
 var popupEditorWrapper_1 = require("./cellEditors/popupEditorWrapper");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var componentResolver_1 = require("../components/framework/componentResolver");
-var CellEditorFactory = (function () {
+var CellEditorFactory = /** @class */ (function () {
     function CellEditorFactory() {
     }
     CellEditorFactory.prototype.init = function () {

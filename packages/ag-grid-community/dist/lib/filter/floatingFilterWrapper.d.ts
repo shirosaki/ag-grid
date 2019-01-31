@@ -24,12 +24,12 @@ export declare abstract class BaseFilterWrapperComp<M, F extends FloatingFilterC
     private beans;
     column: Column;
     init(params: P): void | Promise<void>;
-    private addColumnHoverListener();
-    private onColumnHover();
+    private addColumnHoverListener;
+    private onColumnHover;
     abstract onParentModelChanged(parentModel: M): void;
     abstract enrichBody(body: HTMLElement): void;
-    private setupWidth();
-    private onColumnWidthChanged();
+    private setupWidth;
+    private onColumnWidthChanged;
 }
 export declare class FloatingFilterWrapperComp<M, F extends FloatingFilterChange, PC extends IFloatingFilterParams<M, F>, P extends IFloatingFilterWrapperParams<M, F, PC>> extends BaseFilterWrapperComp<M, F, PC, P> {
     eButtonShowMainFilter: HTMLInputElement;
@@ -38,10 +38,10 @@ export declare class FloatingFilterWrapperComp<M, F extends FloatingFilterChange
     floatingFilterCompPromise: Promise<IFloatingFilterComp<M, F, PC>>;
     suppressFilterButton: boolean;
     init(params: P): void;
-    private addEventListeners();
+    private addEventListeners;
     enrichBody(body: HTMLElement): void;
     onParentModelChanged(parentModel: M | CombinedFilter<M>): void;
-    private showParentFilter();
+    private showParentFilter;
 }
 export declare class EmptyFloatingFilterWrapperComp extends BaseFilterWrapperComp<any, any, any, any> {
     enrichBody(body: HTMLElement): void;

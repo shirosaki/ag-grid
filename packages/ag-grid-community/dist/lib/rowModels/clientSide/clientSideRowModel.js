@@ -39,7 +39,7 @@ var RecursionType;
     RecursionType[RecursionType["PivotNodes"] = 3] = "PivotNodes";
 })(RecursionType || (RecursionType = {}));
 ;
-var ClientSideRowModel = (function () {
+var ClientSideRowModel = /** @class */ (function () {
     function ClientSideRowModel() {
     }
     ClientSideRowModel.prototype.init = function () {
@@ -166,7 +166,7 @@ var ClientSideRowModel = (function () {
             // console.log('filter = ' + (new Date().getTime() - start));
             case constants_1.Constants.STEP_PIVOT:
                 this.doPivot(changedPath);
-            case constants_1.Constants.STEP_AGGREGATE:// depends on agg fields
+            case constants_1.Constants.STEP_AGGREGATE: // depends on agg fields
                 // start = new Date().getTime();
                 this.doAggregate(changedPath);
             // console.log('aggregation = ' + (new Date().getTime() - start));
@@ -177,6 +177,7 @@ var ClientSideRowModel = (function () {
             case constants_1.Constants.STEP_MAP:
                 // start = new Date().getTime();
                 this.doRowsToDisplay();
+            // console.log('rowsToDisplay = ' + (new Date().getTime() - start));
         }
         var event = {
             type: events_1.Events.EVENT_MODEL_UPDATED,

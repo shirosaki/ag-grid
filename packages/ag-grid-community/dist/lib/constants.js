@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Constants = (function () {
+var Constants = /** @class */ (function () {
     function Constants() {
     }
     Constants.STEP_EVERYTHING = 0;
@@ -52,6 +52,9 @@ var Constants = (function () {
     Constants.ONLY_WHEN_GROUPING = 'onlyWhenGrouping';
     Constants.PINNED_TOP = 'top';
     Constants.PINNED_BOTTOM = 'bottom';
+    Constants.DOM_LAYOUT_NORMAL = 'normal';
+    Constants.DOM_LAYOUT_PRINT = 'print';
+    Constants.DOM_LAYOUT_AUTO_HEIGHT = 'autoHeight';
     return Constants;
 }());
 exports.Constants = Constants;

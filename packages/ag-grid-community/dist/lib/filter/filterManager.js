@@ -26,7 +26,7 @@ var eventService_1 = require("../eventService");
 var events_1 = require("../events");
 var gridApi_1 = require("../gridApi");
 var componentResolver_1 = require("../components/framework/componentResolver");
-var FilterManager = (function () {
+var FilterManager = /** @class */ (function () {
     function FilterManager() {
         this.allFilters = {};
         this.quickFilter = null;
@@ -138,7 +138,7 @@ var FilterManager = (function () {
     FilterManager.prototype.doesFilterPass = function (node, filterToSkip) {
         var data = node.data;
         var colKeys = Object.keys(this.allFilters);
-        for (var i = 0, l = colKeys.length; i < l; i++) {
+        for (var i = 0, l = colKeys.length; i < l; i++) { // critical code, don't use functional programming
             var colId = colKeys[i];
             var filterWrapper = this.allFilters[colId];
             // if no filter, always pass
@@ -157,7 +157,7 @@ var FilterManager = (function () {
             if (!filter.isFilterActive()) {
                 continue;
             }
-            if (!filter.doesFilterPass) {
+            if (!filter.doesFilterPass) { // because users can do custom filters, give nice error message
                 console.error('Filter is missing method doesFilterPass');
             }
             var params = {
@@ -455,6 +455,7 @@ var FilterManager = (function () {
             _this.disposeFilterWrapper(filterWrapper, "filterDestroyed");
         });
     };
+    var FilterManager_1;
     FilterManager.QUICK_FILTER_SEPARATOR = '\n';
     __decorate([
         context_1.Autowired('$compile'),
@@ -528,6 +529,5 @@ var FilterManager = (function () {
         context_1.Bean('filterManager')
     ], FilterManager);
     return FilterManager;
-    var FilterManager_1;
 }());
 exports.FilterManager = FilterManager;

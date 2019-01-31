@@ -20,8 +20,8 @@ export declare class SortService {
     init(): void;
     sortAccordingToColumnsState(rowNode: RowNode): void;
     sort(rowNode: RowNode, sortOptions: SortOption[]): void;
-    private compareRowNodes(sortOptions, sortedNodeA, sortedNodeB);
-    private getValue(nodeA, column);
-    private updateChildIndexes(rowNode);
-    private pullDownDataForHideOpenParents(rowNode, clearOperation);
+    private compareRowNodes;
+    private getValue;
+    private updateChildIndexes;
+    private pullDownDataForHideOpenParents;
 }

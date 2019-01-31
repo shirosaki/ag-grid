@@ -2,9 +2,8 @@
 // Project: http://www.ag-grid.com/
 // Definitions by: Niall Crosby <https://github.com/ag-grid/>
 export interface SetScrollsVisibleParams {
-    bodyHorizontalScrollShowing: boolean;
-    leftVerticalScrollShowing: boolean;
-    rightVerticalScrollShowing: boolean;
+    horizontalScrollShowing: boolean;
+    verticalScrollShowing: boolean;
 }
 export declare class ScrollVisibleService {
     private eventService;
@@ -12,11 +11,9 @@ export declare class ScrollVisibleService {
     private columnApi;
     private gridApi;
     private gridOptionsWrapper;
-    private bodyHorizontalScrollShowing;
-    private leftVerticalScrollShowing;
-    private rightVerticalScrollShowing;
+    private horizontalScrollShowing;
+    private verticalScrollShowing;
     setScrollsVisible(params: SetScrollsVisibleParams): void;
-    isBodyHorizontalScrollShowing(): boolean;
-    isLeftVerticalScrollShowing(): boolean;
-    isRightVerticalScrollShowing(): boolean;
+    isHorizontalScrollShowing(): boolean;
+    isVerticalScrollShowing(): boolean;
 }

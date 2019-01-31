@@ -8,7 +8,7 @@ export declare class CellEditorFactory {
     private context;
     private componentResolver;
     private gridOptionsWrapper;
-    private init();
+    private init;
     addCellEditor(key: string, cellEditor: {
         new (): ICellEditorComp;
     }): void;

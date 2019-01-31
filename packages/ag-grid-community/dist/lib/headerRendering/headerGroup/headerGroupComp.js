@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -33,7 +36,7 @@ var context_1 = require("../../context/context");
 var touchListener_1 = require("../../widgets/touchListener");
 var componentAnnotations_1 = require("../../widgets/componentAnnotations");
 var originalColumnGroup_1 = require("../../entities/originalColumnGroup");
-var HeaderGroupComp = (function (_super) {
+var HeaderGroupComp = /** @class */ (function (_super) {
     __extends(HeaderGroupComp, _super);
     function HeaderGroupComp() {
         return _super.call(this, HeaderGroupComp.TEMPLATE) || this;

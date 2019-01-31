@@ -21,7 +21,7 @@ var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var utils_1 = require("../utils");
 var columnController_1 = require("./columnController");
 var balancedColumnTreeBuilder_1 = require("./balancedColumnTreeBuilder");
-var AutoGroupColService = (function () {
+var AutoGroupColService = /** @class */ (function () {
     function AutoGroupColService() {
     }
     AutoGroupColService_1 = AutoGroupColService;
@@ -109,6 +109,7 @@ var AutoGroupColService = (function () {
         }
         return defaultAutoColDef;
     };
+    var AutoGroupColService_1;
     AutoGroupColService.GROUP_AUTO_COLUMN_ID = 'ag-Grid-AutoColumn';
     AutoGroupColService.GROUP_AUTO_COLUMN_BUNDLE_ID = AutoGroupColService_1.GROUP_AUTO_COLUMN_ID;
     __decorate([
@@ -131,6 +132,5 @@ var AutoGroupColService = (function () {
         context_1.Bean('autoGroupColService')
     ], AutoGroupColService);
     return AutoGroupColService;
-    var AutoGroupColService_1;
 }());
 exports.AutoGroupColService = AutoGroupColService;

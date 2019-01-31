@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../context/context");
 var filterManager_1 = require("../filter/filterManager");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var FilterService = (function () {
+var FilterService = /** @class */ (function () {
     function FilterService() {
     }
     FilterService.prototype.postConstruct = function () {

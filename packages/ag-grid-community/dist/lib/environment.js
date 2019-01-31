@@ -39,7 +39,7 @@ var HARD_CODED_SIZES = {
         rowHeight: balhamGridSize * 7
     }
 };
-var Environment = (function () {
+var Environment = /** @class */ (function () {
     function Environment() {
         this.sassVariables = {};
     }

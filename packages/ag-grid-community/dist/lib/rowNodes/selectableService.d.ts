@@ -9,5 +9,5 @@ export declare class SelectableService {
     init(): void;
     updateSelectableAfterGrouping(rowNode: RowNode): void;
     updateSelectableAfterFiltering(rowNode: RowNode): void;
-    private recurseDown(children, nextChildrenFunc);
+    private recurseDown;
 }

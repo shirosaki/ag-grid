@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Events = (function () {
+var Events = /** @class */ (function () {
     function Events() {
     }
     /** Everything has changed with the columns. Either complete new set of columns set, or user called setState()*/

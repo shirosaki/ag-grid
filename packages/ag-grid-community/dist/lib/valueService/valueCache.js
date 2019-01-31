@@ -17,7 +17,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../context/context");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var ValueCache = (function () {
+var ValueCache = /** @class */ (function () {
     function ValueCache() {
         this.cacheVersion = 0;
     }

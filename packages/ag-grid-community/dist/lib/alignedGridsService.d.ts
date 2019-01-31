@@ -11,17 +11,17 @@ export declare class AlignedGridsService {
     private logger;
     private gridPanel;
     private consuming;
-    private setBeans(loggerFactory);
+    private setBeans;
     registerGridComp(gridPanel: GridPanel): void;
     init(): void;
-    private fireEvent(callback);
-    private onEvent(callback);
-    private fireColumnEvent(event);
-    private fireScrollEvent(event);
-    private onScrollEvent(event);
+    private fireEvent;
+    private onEvent;
+    private fireColumnEvent;
+    private fireScrollEvent;
+    private onScrollEvent;
     getMasterColumns(event: ColumnEvent): Column[];
     getColumnIds(event: ColumnEvent): string[];
     onColumnEvent(event: AgEvent): void;
-    private processGroupOpenedEvent(groupOpenedEvent);
-    private processColumnEvent(colEvent);
+    private processGroupOpenedEvent;
+    private processColumnEvent;
 }

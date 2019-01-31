@@ -11,7 +11,7 @@ export declare class PopupEditorWrapper extends Component implements ICellEditor
     static DOM_KEY_POPUP_EDITOR_WRAPPER: string;
     gridOptionsWrapper: GridOptionsWrapper;
     constructor(cellEditor: ICellEditorComp);
-    private onKeyDown(event);
+    private onKeyDown;
     getGui(): HTMLElement;
     init(params: ICellEditorParams): void;
     afterGuiAttached(): void;

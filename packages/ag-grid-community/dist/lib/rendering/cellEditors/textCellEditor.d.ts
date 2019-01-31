@@ -20,5 +20,5 @@ export declare class TextCellEditor extends Component implements ICellEditorComp
     afterGuiAttached(): void;
     focusIn(): void;
     getValue(): any;
-    private getStartValue(params);
+    private getStartValue;
 }

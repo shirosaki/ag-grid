@@ -22,17 +22,15 @@ var columnController_1 = require("../columnController/columnController");
 var columnApi_1 = require("../columnController/columnApi");
 var gridApi_1 = require("../gridApi");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var ScrollVisibleService = (function () {
+var ScrollVisibleService = /** @class */ (function () {
     function ScrollVisibleService() {
     }
     ScrollVisibleService.prototype.setScrollsVisible = function (params) {
-        var atLeastOneDifferent = this.bodyHorizontalScrollShowing !== params.bodyHorizontalScrollShowing ||
-            this.leftVerticalScrollShowing !== params.leftVerticalScrollShowing ||
-            this.rightVerticalScrollShowing !== params.rightVerticalScrollShowing;
+        var atLeastOneDifferent = this.horizontalScrollShowing !== params.horizontalScrollShowing ||
+            this.verticalScrollShowing !== params.verticalScrollShowing;
         if (atLeastOneDifferent) {
-            this.bodyHorizontalScrollShowing = params.bodyHorizontalScrollShowing;
-            this.leftVerticalScrollShowing = params.leftVerticalScrollShowing;
-            this.rightVerticalScrollShowing = params.rightVerticalScrollShowing;
+            this.horizontalScrollShowing = params.horizontalScrollShowing;
+            this.verticalScrollShowing = params.verticalScrollShowing;
             var event_1 = {
                 type: events_1.Events.EVENT_SCROLL_VISIBILITY_CHANGED,
                 api: this.gridApi,
@@ -42,16 +40,12 @@ var ScrollVisibleService = (function () {
         }
     };
     // used by pagination service - to know page height
-    ScrollVisibleService.prototype.isBodyHorizontalScrollShowing = function () {
-        return this.bodyHorizontalScrollShowing;
+    ScrollVisibleService.prototype.isHorizontalScrollShowing = function () {
+        return this.horizontalScrollShowing;
     };
     // used by header container
-    ScrollVisibleService.prototype.isLeftVerticalScrollShowing = function () {
-        return this.leftVerticalScrollShowing;
-    };
-    // used by header container
-    ScrollVisibleService.prototype.isRightVerticalScrollShowing = function () {
-        return this.rightVerticalScrollShowing;
+    ScrollVisibleService.prototype.isVerticalScrollShowing = function () {
+        return this.verticalScrollShowing;
     };
     __decorate([
         context_1.Autowired('eventService'),

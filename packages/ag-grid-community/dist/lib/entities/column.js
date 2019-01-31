@@ -28,7 +28,7 @@ var gridApi_1 = require("../gridApi");
 // appear as a child of either the original tree or the displayed tree. However the relevant group classes
 // for each type only implements one, as each group can only appear in it's associated tree (eg OriginalColumnGroup
 // can only appear in OriginalColumn tree).
-var Column = (function () {
+var Column = /** @class */ (function () {
     function Column(colDef, colId, primary) {
         this.moving = false;
         this.menuVisible = false;

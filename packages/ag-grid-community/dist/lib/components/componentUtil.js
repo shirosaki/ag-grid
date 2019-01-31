@@ -10,7 +10,7 @@ var events_1 = require("../events");
 var propertyKeys_1 = require("../propertyKeys");
 var utils_1 = require("../utils");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var ComponentUtil = (function () {
+var ComponentUtil = /** @class */ (function () {
     function ComponentUtil() {
     }
     ComponentUtil.getEventCallbacks = function () {

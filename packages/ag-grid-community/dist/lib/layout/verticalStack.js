@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var VerticalStack = (function () {
+var VerticalStack = /** @class */ (function () {
     function VerticalStack() {
         this.isLayoutPanel = true;
         this.childPanels = [];

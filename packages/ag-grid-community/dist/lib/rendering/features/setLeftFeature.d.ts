@@ -15,8 +15,8 @@ export declare class SetLeftFeature extends BeanStub {
     setColsSpanning(colsSpanning: Column[]): void;
     getColumnOrGroup(): ColumnGroupChild;
     init(): void;
-    private setLeftFirstTime();
-    private animateInLeft();
-    private onLeftChanged();
-    private setLeft(value);
+    private setLeftFirstTime;
+    private animateInLeft;
+    private onLeftChanged;
+    private setLeft;
 }

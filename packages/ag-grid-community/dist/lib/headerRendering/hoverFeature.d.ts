@@ -7,7 +7,7 @@ export declare class HoverFeature extends BeanStub {
     private columnHoverService;
     private columns;
     constructor(columns: Column[], element: HTMLElement);
-    private addMouseHoverListeners(element);
-    private onMouseOut();
-    private onMouseOver();
+    private addMouseHoverListeners;
+    private onMouseOut;
+    private onMouseOver;
 }

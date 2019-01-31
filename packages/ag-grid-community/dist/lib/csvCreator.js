@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -34,7 +37,7 @@ var gridOptionsWrapper_1 = require("./gridOptionsWrapper");
 var constants_1 = require("./constants");
 var utils_1 = require("./utils");
 var LINE_SEPARATOR = '\r\n';
-var CsvSerializingSession = (function (_super) {
+var CsvSerializingSession = /** @class */ (function (_super) {
     __extends(CsvSerializingSession, _super);
     function CsvSerializingSession(columnController, valueService, gridOptionsWrapper, processCellCallback, processHeaderCallback, suppressQuotes, columnSeparator) {
         var _this = _super.call(this, columnController, valueService, gridOptionsWrapper, processCellCallback, processHeaderCallback) || this;
@@ -129,7 +132,7 @@ var CsvSerializingSession = (function (_super) {
     return CsvSerializingSession;
 }(gridSerializer_1.BaseGridSerializingSession));
 exports.CsvSerializingSession = CsvSerializingSession;
-var BaseCreator = (function () {
+var BaseCreator = /** @class */ (function () {
     function BaseCreator() {
     }
     BaseCreator.prototype.setBeans = function (beans) {
@@ -167,7 +170,7 @@ var BaseCreator = (function () {
     return BaseCreator;
 }());
 exports.BaseCreator = BaseCreator;
-var CsvCreator = (function (_super) {
+var CsvCreator = /** @class */ (function (_super) {
     __extends(CsvCreator, _super);
     function CsvCreator() {
         return _super !== null && _super.apply(this, arguments) || this;

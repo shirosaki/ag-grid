@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -34,7 +37,7 @@ var utils_1 = require("../utils");
  * This class solves the 'max height' problem, where the user might want to show more data than
  * the max div height actually allows.
  */
-var HeightScaler = (function (_super) {
+var HeightScaler = /** @class */ (function (_super) {
     __extends(HeightScaler, _super);
     function HeightScaler() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -86,10 +89,11 @@ var HeightScaler = (function (_super) {
     HeightScaler.prototype.setOffset = function (newOffset) {
         // because we are talking pixels, no point in confusing things with half numbers
         var newOffsetFloor = typeof newOffset === 'number' ? Math.floor(newOffset) : null;
-        if (this.offset !== newOffsetFloor) {
-            this.offset = newOffsetFloor;
-            this.eventService.dispatchEvent({ type: eventKeys_1.Events.EVENT_HEIGHT_SCALE_CHANGED });
+        if (this.offset === newOffsetFloor) {
+            return;
         }
+        this.offset = newOffsetFloor;
+        this.eventService.dispatchEvent({ type: eventKeys_1.Events.EVENT_HEIGHT_SCALE_CHANGED });
     };
     HeightScaler.prototype.setModelHeight = function (modelHeight) {
         this.modelHeight = modelHeight;
@@ -105,27 +109,20 @@ var HeightScaler = (function (_super) {
         return this.uiContainerHeight;
     };
     HeightScaler.prototype.getRealPixelPosition = function (modelPixel) {
-        var uiPixel = modelPixel - this.offset;
-        return uiPixel;
+        return modelPixel - this.offset;
     };
     HeightScaler.prototype.getUiBodyHeight = function () {
         var pos = this.gridPanel.getVScrollPosition();
-        var bodyHeight = pos.bottom - pos.top;
-        if (this.gridPanel.isHorizontalScrollShowing()) {
-            bodyHeight -= this.scrollBarWidth;
-        }
-        return bodyHeight;
+        return pos.bottom - pos.top;
     };
     HeightScaler.prototype.getScrollPositionForPixel = function (rowTop) {
         if (this.pixelsToShave <= 0) {
             return rowTop;
         }
-        else {
-            var modelMaxScroll = this.modelHeight - this.getUiBodyHeight();
-            var scrollPercent = rowTop / modelMaxScroll;
-            var scrollPixel = this.maxScrollY * scrollPercent;
-            return scrollPixel;
-        }
+        var modelMaxScroll = this.modelHeight - this.getUiBodyHeight();
+        var scrollPercent = rowTop / modelMaxScroll;
+        var scrollPixel = this.maxScrollY * scrollPercent;
+        return scrollPixel;
     };
     __decorate([
         context_1.Autowired('eventService'),

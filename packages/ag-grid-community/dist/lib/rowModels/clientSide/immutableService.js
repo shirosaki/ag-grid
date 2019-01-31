@@ -19,7 +19,7 @@ var context_1 = require("../../context/context");
 var constants_1 = require("../../constants");
 var utils_1 = require("../../utils");
 var gridOptionsWrapper_1 = require("../../gridOptionsWrapper");
-var ImmutableService = (function () {
+var ImmutableService = /** @class */ (function () {
     function ImmutableService() {
     }
     ImmutableService.prototype.postConstruct = function () {

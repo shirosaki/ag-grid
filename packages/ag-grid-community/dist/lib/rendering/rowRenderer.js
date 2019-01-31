@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53,7 +56,7 @@ var pinnedRowModel_1 = require("../rowModels/pinnedRowModel");
 var beans_1 = require("./beans");
 var animationFrameService_1 = require("../misc/animationFrameService");
 var heightScaler_1 = require("./heightScaler");
-var RowRenderer = (function (_super) {
+var RowRenderer = /** @class */ (function (_super) {
     __extends(RowRenderer, _super);
     function RowRenderer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -80,6 +83,7 @@ var RowRenderer = (function (_super) {
         this.addDestroyableEventListener(this.eventService, events_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED, this.onDisplayedColumnsChanged.bind(this));
         this.addDestroyableEventListener(this.eventService, events_1.Events.EVENT_BODY_SCROLL, this.redrawAfterScroll.bind(this));
         this.addDestroyableEventListener(this.eventService, events_1.Events.EVENT_BODY_HEIGHT_CHANGED, this.redrawAfterScroll.bind(this));
+        this.printLayout = this.gridOptionsWrapper.getDomLayout() === constants_1.Constants.DOM_LAYOUT_PRINT;
         this.redrawAfterModelUpdate();
     };
     RowRenderer.prototype.onPageLoaded = function (refreshEvent) {
@@ -217,6 +221,16 @@ var RowRenderer = (function (_super) {
         }
     };
     RowRenderer.prototype.sizeContainerToPageHeight = function () {
+        var containers = [
+            this.rowContainers.body,
+            this.rowContainers.fullWidth,
+            this.rowContainers.pinnedLeft,
+            this.rowContainers.pinnedRight
+        ];
+        if (this.printLayout) {
+            containers.forEach(function (container) { return container.setHeight(null); });
+            return;
+        }
         var containerHeight = this.paginationProxy.getCurrentPageHeight();
         // we need at least 1 pixel for the horizontal scroll to work. so if there are now rows,
         // we still want the scroll to be present, otherwise there would be no way to access the columns
@@ -394,6 +408,12 @@ var RowRenderer = (function (_super) {
         _super.prototype.destroy.call(this);
         var rowIndexesToRemove = Object.keys(this.rowCompsByIndex);
         this.removeRowComps(rowIndexesToRemove);
+        this.floatingTopRowComps.forEach(function (rowComp) {
+            rowComp.destroy();
+        });
+        this.floatingBottomRowComps.forEach(function (rowComp) {
+            rowComp.destroy();
+        });
     };
     RowRenderer.prototype.binRowComps = function (recycleRows) {
         var _this = this;
@@ -934,8 +954,8 @@ var RowRenderer = (function (_super) {
             // by default, when we click a cell, it gets selected into a range, so to keep keyboard navigation
             // consistent, we set into range here also.
             if (this.rangeController) {
-                var gridCell_2 = new gridCell_1.GridCell({ rowIndex: nextCell.rowIndex, floating: nextCell.floating, column: nextCell.column });
-                this.rangeController.setRangeToCell(gridCell_2);
+                gridCell = new gridCell_1.GridCell({ rowIndex: nextCell.rowIndex, floating: nextCell.floating, column: nextCell.column });
+                this.rangeController.setRangeToCell(gridCell);
             }
             // we successfully tabbed onto a grid cell, so return true
             return nextCellComp;

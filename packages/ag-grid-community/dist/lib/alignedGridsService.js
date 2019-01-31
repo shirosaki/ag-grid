@@ -27,7 +27,7 @@ var context_1 = require("./context/context");
 var context_2 = require("./context/context");
 var context_3 = require("./context/context");
 var context_4 = require("./context/context");
-var AlignedGridsService = (function () {
+var AlignedGridsService = /** @class */ (function () {
     function AlignedGridsService() {
         // flag to mark if we are consuming. to avoid cyclic events (ie other grid firing back to master
         // while processing a master event) we mark this if consuming an event, and if we are, then

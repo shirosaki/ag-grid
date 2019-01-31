@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("../../context/context");
 var componentMetadataProvider_1 = require("./componentMetadataProvider");
 var utils_1 = require("../../utils");
-var AgComponentUtils = (function () {
+var AgComponentUtils = /** @class */ (function () {
     function AgComponentUtils() {
     }
     AgComponentUtils.prototype.adaptFunction = function (propertyName, hardcodedJsFunction, type, source) {
@@ -41,7 +41,7 @@ var AgComponentUtils = (function () {
         return null;
     };
     AgComponentUtils.prototype.adaptCellRendererFunction = function (callback) {
-        var Adapter = (function () {
+        var Adapter = /** @class */ (function () {
             function Adapter() {
             }
             Adapter.prototype.refresh = function (params) {

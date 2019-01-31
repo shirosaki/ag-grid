@@ -21,7 +21,7 @@ var utils_1 = require("../utils");
 var popupService_1 = require("../widgets/popupService");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var eventService_1 = require("../eventService");
-var StandardMenuFactory = (function () {
+var StandardMenuFactory = /** @class */ (function () {
     function StandardMenuFactory() {
     }
     StandardMenuFactory.prototype.hideActiveMenu = function () {

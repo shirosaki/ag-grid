@@ -21,7 +21,7 @@ var context_1 = require("../context/context");
 var gridCore_1 = require("../gridCore");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 var environment_1 = require("../environment");
-var PopupService = (function () {
+var PopupService = /** @class */ (function () {
     function PopupService() {
         this.activePopupElements = [];
     }
@@ -156,10 +156,10 @@ var PopupService = (function () {
         }
         var heightOfParent = parentRect.bottom - parentRect.top;
         var maxY = heightOfParent - minHeight - 5;
-        if (y > maxY) {
+        if (y > maxY) { // move position left, back into view
             return maxY;
         }
-        else if (y < 0) {
+        else if (y < 0) { // in case the popup has a negative value
             return 0;
         }
         else {
@@ -180,10 +180,10 @@ var PopupService = (function () {
         }
         var widthOfParent = parentRect.right - parentRect.left;
         var maxX = widthOfParent - minWidth - 5;
-        if (x > maxX) {
+        if (x > maxX) { // move position left, back into view
             return maxX;
         }
-        else if (x < 0) {
+        else if (x < 0) { // in case the popup has a negative value
             return 0;
         }
         else {

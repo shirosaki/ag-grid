@@ -16,7 +16,7 @@ export declare class LargeTextCellEditor extends Component implements ICellEdito
     private focusAfterAttached;
     constructor();
     init(params: ILargeTextEditorParams): void;
-    private onKeyDown(event);
+    private onKeyDown;
     afterGuiAttached(): void;
     getValue(): any;
     isPopup(): boolean;

@@ -3,7 +3,7 @@
 // Definitions by: Niall Crosby <https://github.com/ag-grid/>
 export declare class XmlFactory {
     createXml(xmlElement: XmlElement, booleanTransformer?: (currentValue: boolean) => string): string;
-    private returnAttributeIfPopulated(key, value, booleanTransformer?);
+    private returnAttributeIfPopulated;
 }
 export interface XmlElement {
     name: string;

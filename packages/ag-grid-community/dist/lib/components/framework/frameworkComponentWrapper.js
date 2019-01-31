@@ -6,7 +6,7 @@
  */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BaseComponentWrapper = (function () {
+var BaseComponentWrapper = /** @class */ (function () {
     function BaseComponentWrapper() {
     }
     BaseComponentWrapper.prototype.wrap = function (OriginalConstructor, mandatoryMethodList, optionalMethodList, componentName) {

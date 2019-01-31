@@ -25,7 +25,7 @@ var utils_1 = require("../utils");
 var animationFrameService_1 = require("../misc/animationFrameService");
 var columnController_1 = require("../columnController/columnController");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
-var NavigationService = (function () {
+var NavigationService = /** @class */ (function () {
     function NavigationService() {
     }
     NavigationService.prototype.init = function () {

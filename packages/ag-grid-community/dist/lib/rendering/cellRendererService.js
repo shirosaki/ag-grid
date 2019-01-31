@@ -21,7 +21,7 @@ var componentResolver_1 = require("../components/framework/componentResolver");
 var utils_1 = require("../utils");
 var gridOptionsWrapper_1 = require("../gridOptionsWrapper");
 /** Class to use a cellRenderer. */
-var CellRendererService = (function () {
+var CellRendererService = /** @class */ (function () {
     function CellRendererService() {
     }
     CellRendererService.prototype.useCellRenderer = function (target, eTarget, params) {

@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -44,7 +47,7 @@ var HeaderRowType;
     HeaderRowType[HeaderRowType["COLUMN"] = 1] = "COLUMN";
     HeaderRowType[HeaderRowType["FLOATING_FILTER"] = 2] = "FLOATING_FILTER";
 })(HeaderRowType = exports.HeaderRowType || (exports.HeaderRowType = {}));
-var HeaderRowComp = (function (_super) {
+var HeaderRowComp = /** @class */ (function (_super) {
     __extends(HeaderRowComp, _super);
     function HeaderRowComp(dept, type, pinned, dropTarget) {
         var _this = _super.call(this, "<div class=\"ag-header-row\" role=\"presentation\"/>") || this;
@@ -267,7 +270,7 @@ var HeaderRowComp = (function (_super) {
                         captureModelChangedResolveFunc(true);
                     }
                 });
-                return modelChanged.resolveNow(true, function (modelChanged) { return modelChanged; });
+                return modelChanged.resolveNow(true, function (changed) { return changed; });
             },
             //This one might be overriden from the colDef
             suppressFilterButton: false

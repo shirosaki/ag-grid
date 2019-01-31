@@ -6,7 +6,7 @@ import { RowNode } from "../entities/rowNode";
 export declare enum DragSourceType {
     ToolPanel = 0,
     HeaderCell = 1,
-    RowDrag = 2,
+    RowDrag = 2
 }
 export interface DragItem {
     rowNode?: RowNode;
@@ -55,11 +55,11 @@ export interface DropTarget {
 }
 export declare enum VDirection {
     Up = 0,
-    Down = 1,
+    Down = 1
 }
 export declare enum HDirection {
     Left = 0,
-    Right = 1,
+    Right = 1
 }
 export interface DraggingEvent {
     event: MouseEvent;
@@ -107,26 +107,26 @@ export declare class DragAndDropService {
     private eAggregateIcon;
     private ePivotIcon;
     private eDropNotAllowedIcon;
-    private init();
-    private setBeans(loggerFactory);
-    private getStringType(type);
+    private init;
+    private setBeans;
+    private getStringType;
     addDragSource(dragSource: DragSource, allowTouch?: boolean): void;
     removeDragSource(dragSource: DragSource): void;
-    private destroy();
+    private destroy;
     nudge(): void;
-    private onDragStart(dragSource, mouseEvent);
-    private onDragStop(mouseEvent);
-    private onDragging(mouseEvent, fromNudge);
-    private enterDragTargetIfExists(dropTarget, mouseEvent, hDirection, vDirection, fromNudge);
-    private leaveLastTargetIfExists(mouseEvent, hDirection, vDirection, fromNudge);
-    private getAllContainersFromDropTarget(dropTarget);
-    private isMouseOnDropTarget(mouseEvent, dropTarget);
+    private onDragStart;
+    private onDragStop;
+    private onDragging;
+    private enterDragTargetIfExists;
+    private leaveLastTargetIfExists;
+    private getAllContainersFromDropTarget;
+    private isMouseOnDropTarget;
     addDropTarget(dropTarget: DropTarget): void;
     workOutHDirection(event: MouseEvent): HDirection;
     workOutVDirection(event: MouseEvent): VDirection;
     createDropTargetEvent(dropTarget: DropTarget, event: MouseEvent, hDirection: HDirection, vDirection: VDirection, fromNudge: boolean): DraggingEvent;
-    private positionGhost(event);
-    private removeGhost();
-    private createGhost();
+    private positionGhost;
+    private removeGhost;
+    private createGhost;
     setGhostIcon(iconName: string, shake?: boolean): void;
 }

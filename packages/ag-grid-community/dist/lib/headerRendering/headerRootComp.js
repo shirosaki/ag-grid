@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -32,13 +35,12 @@ var context_1 = require("../context/context");
 var headerContainer_1 = require("./headerContainer");
 var eventService_1 = require("../eventService");
 var events_1 = require("../events");
-var scrollVisibleService_1 = require("../gridPanel/scrollVisibleService");
 var component_1 = require("../widgets/component");
 var componentAnnotations_1 = require("../widgets/componentAnnotations");
 var utils_1 = require("../utils");
 var gridApi_1 = require("../gridApi");
 var autoWidthCalculator_1 = require("../rendering/autoWidthCalculator");
-var HeaderRootComp = (function (_super) {
+var HeaderRootComp = /** @class */ (function (_super) {
     __extends(HeaderRootComp, _super);
     function HeaderRootComp() {
         return _super.call(this, HeaderRootComp.TEMPLATE) || this;
@@ -70,7 +72,7 @@ var HeaderRootComp = (function (_super) {
         }
     };
     HeaderRootComp.prototype.setHorizontalScroll = function (offset) {
-        this.eHeaderContainer.style.left = offset + 'px';
+        this.eHeaderContainer.style.transform = "translateX(" + offset + "px)";
     };
     HeaderRootComp.prototype.forEachHeaderElement = function (callback) {
         this.childContainers.forEach(function (childContainer) { return childContainer.forEachHeaderElement(callback); });
@@ -112,6 +114,9 @@ var HeaderRootComp = (function (_super) {
     HeaderRootComp.prototype.setRightVisible = function (visible) {
         utils_1.Utils.setVisible(this.ePinnedRightHeader, visible);
     };
+    HeaderRootComp.prototype.setHeaderContainerWidth = function (width) {
+        this.eHeaderContainer.style.width = width + "px";
+    };
     HeaderRootComp.TEMPLATE = "<div class=\"ag-header\" role=\"row\">\n            <div class=\"ag-pinned-left-header\" ref=\"ePinnedLeftHeader\" role=\"presentation\"></div>\n            <div class=\"ag-header-viewport\" ref=\"eHeaderViewport\" role=\"presentation\">\n                <div class=\"ag-header-container\" ref=\"eHeaderContainer\" role=\"presentation\"></div>\n            </div>\n            <div class=\"ag-pinned-right-header\" ref=\"ePinnedRightHeader\" role=\"presentation\"></div>\n        </div>";
     __decorate([
         componentAnnotations_1.RefSelector('ePinnedLeftHeader'),
@@ -145,10 +150,6 @@ var HeaderRootComp = (function (_super) {
         context_1.Autowired('eventService'),
         __metadata("design:type", eventService_1.EventService)
     ], HeaderRootComp.prototype, "eventService", void 0);
-    __decorate([
-        context_1.Autowired('scrollVisibleService'),
-        __metadata("design:type", scrollVisibleService_1.ScrollVisibleService)
-    ], HeaderRootComp.prototype, "scrollVisibleService", void 0);
     __decorate([
         context_1.Autowired('gridApi'),
         __metadata("design:type", gridApi_1.GridApi)

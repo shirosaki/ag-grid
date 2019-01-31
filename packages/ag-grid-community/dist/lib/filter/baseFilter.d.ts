@@ -12,7 +12,7 @@ export interface Comparator<T> {
 }
 export declare enum FilterConditionType {
     MAIN = 0,
-    CONDITION = 1,
+    CONDITION = 1
 }
 export interface CombinedFilter<T> {
     operator: string;
@@ -73,17 +73,17 @@ export declare abstract class BaseFilter<T, P extends IFilterParams, M> extends 
     getModel(): M | CombinedFilter<M>;
     getNullableModel(): M | CombinedFilter<M>;
     setModel(model: M | CombinedFilter<M>): void;
-    private doOnFilterChanged(applyNow?);
+    private doOnFilterChanged;
     onFilterChanged(applyNow?: boolean): void;
-    private redrawCondition();
-    private refreshOperatorUi();
+    private redrawCondition;
+    private refreshOperatorUi;
     onFloatingFilterChanged(change: FloatingFilterChange): boolean;
     generateFilterHeader(type: FilterConditionType): string;
-    private generateTemplate();
+    private generateTemplate;
     acceptsBooleanLogic(): boolean;
     wrapCondition(mainCondition: string): string;
-    private createConditionTemplate(type);
-    private createConditionBody(type);
+    private createConditionTemplate;
+    private createConditionBody;
     translate(toTranslate: string): string;
     getDebounceMs(filterParams: ITextFilterParams | INumberFilterParams): number;
 }
@@ -104,7 +104,7 @@ export declare abstract class ComparableBaseFilter<T, P extends IComparableFilte
     generateFilterHeader(type: FilterConditionType): string;
     initialiseFilterBodyUi(type: FilterConditionType): void;
     abstract getDefaultType(): string;
-    private onFilterTypeChanged(type);
+    private onFilterTypeChanged;
     isFilterActive(): boolean;
     setFilterType(filterType: string, type: FilterConditionType): void;
     isFilterConditionActive(type: FilterConditionType): boolean;
@@ -128,9 +128,9 @@ export interface IScalarFilterParams extends IComparableFilterParams {
 export declare abstract class ScalarBaseFilter<T, P extends IScalarFilterParams, M> extends ComparableBaseFilter<T, P, M> {
     static readonly DEFAULT_NULL_COMPARATOR: NullComparator;
     abstract comparator(): Comparator<T>;
-    private nullComparator(type);
+    private nullComparator;
     getDefaultType(): string;
-    private translateNull(type);
+    private translateNull;
     individualFilterPasses(params: IDoesFilterPassParams, type: FilterConditionType): boolean;
-    private doIndividualFilterPasses(params, type, filter);
+    private doIndividualFilterPasses;
 }

@@ -20,17 +20,17 @@ export declare class HeaderContainer {
     constructor(eContainer: HTMLElement, eViewport: HTMLElement, pinned: string);
     registerGridComp(gridPanel: GridPanel): void;
     forEachHeaderElement(callback: (renderedHeaderElement: Component) => void): void;
-    private init();
-    private onColumnRowGroupChanged();
-    private onColumnValueChanged();
-    private onColumnResized();
-    private onDisplayedColumnsChanged();
-    private onScrollVisibilityChanged();
-    private setWidthOfPinnedContainer();
+    private init;
+    private onColumnRowGroupChanged;
+    private onColumnValueChanged;
+    private onColumnResized;
+    private onDisplayedColumnsChanged;
+    private onScrollVisibilityChanged;
+    private setWidthOfPinnedContainer;
     destroy(): void;
-    private onGridColumnsChanged();
+    private onGridColumnsChanged;
     refresh(): void;
-    private setupDragAndDrop(gridComp);
-    private removeHeaderRowComps();
-    private createHeaderRowComps();
+    private setupDragAndDrop;
+    private removeHeaderRowComps;
+    private createHeaderRowComps;
 }

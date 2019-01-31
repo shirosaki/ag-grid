@@ -38,7 +38,7 @@ var autoGroupColService_1 = require("./autoGroupColService");
 var valueCache_1 = require("../valueService/valueCache");
 var gridApi_1 = require("../gridApi");
 var columnApi_1 = require("./columnApi");
-var ColumnController = (function () {
+var ColumnController = /** @class */ (function () {
     function ColumnController() {
         // header row count, based on user provided columns
         this.primaryHeaderRowCount = 0;
@@ -406,8 +406,14 @@ var ColumnController = (function () {
     ColumnController.prototype.isColumnInViewport = function (col) {
         var columnLeft = col.getLeft();
         var columnRight = col.getLeft() + col.getActualWidth();
-        var columnToMuchLeft = columnLeft < this.viewportLeft && columnRight < this.viewportLeft;
-        var columnToMuchRight = columnLeft > this.viewportRight && columnRight > this.viewportRight;
+        // adding 200 for buffer size, so some cols off viewport are rendered.
+        // this helps horizontal scrolling so user rarely sees white space (unless
+        // they scroll horizontally fast). however we are conservative, as the more
+        // buffer the slower the vertical redraw speed
+        var leftBounds = this.viewportLeft - 200;
+        var rightBounds = this.viewportRight + 200;
+        var columnToMuchLeft = columnLeft < leftBounds && columnRight < leftBounds;
+        var columnToMuchRight = columnLeft > rightBounds && columnRight > rightBounds;
         return !columnToMuchLeft && !columnToMuchRight;
     };
     // used by:
@@ -595,10 +601,10 @@ var ColumnController = (function () {
         }
     };
     ColumnController.prototype.setColumnWidth = function (key, // @key - the column who's size we want to change
-        newWidth, // @newWidth - width in pixels
-        takeFromAdjacent, // @takeFromAdjacent - if user has 'shift' pressed, then pixels are taken from adjacent column
-        finished, // @finished - ends up in the event, tells the user if more events are to come
-        source) {
+    newWidth, // @newWidth - width in pixels
+    takeFromAdjacent, // @takeFromAdjacent - if user has 'shift' pressed, then pixels are taken from adjacent column
+    finished, // @finished - ends up in the event, tells the user if more events are to come
+    source) {
         if (source === void 0) { source = "api"; }
         var col = this.getPrimaryOrGridColumn(key);
         if (!col) {
@@ -1018,6 +1024,10 @@ var ColumnController = (function () {
     ColumnController.prototype.setColumnsPinned = function (keys, pinned, source) {
         var _this = this;
         if (source === void 0) { source = "api"; }
+        if (this.gridOptionsWrapper.getDomLayout() === 'print') {
+            console.warn("Changing the column pinning status is not allowed with domLayout='print'");
+            return;
+        }
         this.columnAnimationService.start();
         var actualPinned;
         if (pinned === true || pinned === column_1.Column.PINNED_LEFT) {
@@ -1056,12 +1066,12 @@ var ColumnController = (function () {
     // with either one column (if it was just one col) or a list of columns
     // used by: autoResize, setVisible, setPinned
     ColumnController.prototype.actionOnGridColumns = function (// the column keys this action will be on
-        keys, 
-        // the action to do - if this returns false, the column was skipped
-        // and won't be included in the event
-        action, 
-        // should return back a column event of the right type
-        source, createEvent) {
+    keys, 
+    // the action to do - if this returns false, the column was skipped
+    // and won't be included in the event
+    action, 
+    // should return back a column event of the right type
+    source, createEvent) {
         var _this = this;
         if (utils_1.Utils.missingOrEmpty(keys)) {
             return;
@@ -1169,6 +1179,10 @@ var ColumnController = (function () {
         }
         var columnStateList = this.primaryColumns.map(this.createStateItemFromColumn.bind(this));
         if (!this.pivotMode) {
+            if (this.groupAutoColumns) {
+                // to keep the order of auto group column in setColumnState()
+                columnStateList.push({ colId: autoGroupColService_1.AutoGroupColService.GROUP_AUTO_COLUMN_ID });
+            }
             this.orderColumnStateList(columnStateList);
         }
         return columnStateList;
@@ -1218,6 +1232,9 @@ var ColumnController = (function () {
         var pivotIndexes = {};
         if (columnState) {
             columnState.forEach(function (stateItem) {
+                if (stateItem.colId == autoGroupColService_1.AutoGroupColService.GROUP_AUTO_COLUMN_ID) {
+                    return;
+                }
                 var column = _this.getPrimaryColumn(stateItem.colId);
                 if (!column) {
                     console.warn('ag-grid: column ' + stateItem.colId + ' not found');
@@ -1885,9 +1902,10 @@ var ColumnController = (function () {
         if (utils_1.Utils.missing(this.groupAutoColumns)) {
             return;
         }
-        this.gridColumns = this.groupAutoColumns.concat(this.gridColumns);
+        var autoGroupColumnIndex = this.gridOptionsWrapper.getAutoGroupColumnIndex() || 0;
+        utils_1.Utils.insertArrayIntoArray(this.gridColumns, this.groupAutoColumns, autoGroupColumnIndex);
         var autoColBalancedTree = this.balancedColumnTreeBuilder.createForAutoGroups(this.groupAutoColumns, this.gridBalancedTree);
-        this.gridBalancedTree = autoColBalancedTree.concat(this.gridBalancedTree);
+        utils_1.Utils.insertArrayIntoArray(this.gridBalancedTree, autoColBalancedTree, autoGroupColumnIndex);
     };
     // gets called after we copy down grid columns, to make sure any part of the gui
     // that tries to draw, eg the header, it will get empty lists of columns rather

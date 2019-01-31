@@ -14,7 +14,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var context_1 = require("./context/context");
 var LINE_SEPARATOR = '\r\n';
-var XmlFactory = (function () {
+var XmlFactory = /** @class */ (function () {
     function XmlFactory() {
     }
     XmlFactory.prototype.createXml = function (xmlElement, booleanTransformer) {

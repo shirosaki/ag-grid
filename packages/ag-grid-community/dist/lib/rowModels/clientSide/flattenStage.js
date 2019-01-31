@@ -22,7 +22,7 @@ var gridOptionsWrapper_1 = require("../../gridOptionsWrapper");
 var selectionController_1 = require("../../selectionController");
 var eventService_1 = require("../../eventService");
 var columnController_1 = require("../../columnController/columnController");
-var FlattenStage = (function () {
+var FlattenStage = /** @class */ (function () {
     function FlattenStage() {
     }
     FlattenStage.prototype.execute = function (params) {
@@ -78,7 +78,8 @@ var FlattenStage = (function () {
             var isParent = rowNode.hasChildren();
             var isGroupSuppressedNode = groupSuppressRow && isParent;
             var isSkippedLeafNode = skipLeafNodes && !isParent;
-            var isRemovedSingleChildrenGroup = groupRemoveSingleChildren && isParent && rowNode.childrenAfterGroup.length === 1;
+            var colDefGroupRemoveSingleChildren = rowNode.rowGroupColumn && rowNode.rowGroupColumn.getColDef().groupRemoveSingleChildren;
+            var isRemovedSingleChildrenGroup = (groupRemoveSingleChildren || colDefGroupRemoveSingleChildren) && isParent && rowNode.childrenAfterGroup.length === 1;
             var isRemovedLowestSingleChildrenGroup = groupRemoveLowestSingleChildren && isParent && rowNode.leafGroup && rowNode.childrenAfterGroup.length === 1;
             // hide open parents means when group is open, we don't show it. we also need to make sure the
             // group is expandable in the first place (as leaf groups are not expandable if pivot mode is on).

@@ -6,9 +6,12 @@
  */
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -63,7 +66,7 @@ var DEFAULT_TRANSLATIONS = {
  * Contains common logic to ALL filters.. Translation, apply and clear button
  * get/setModel context wiring....
  */
-var BaseFilter = (function (_super) {
+var BaseFilter = /** @class */ (function (_super) {
     __extends(BaseFilter, _super);
     function BaseFilter() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -320,7 +323,7 @@ exports.BaseFilter = BaseFilter;
 /**
  * Every filter with a dropdown where the user can specify a comparing type against the filter values
  */
-var ComparableBaseFilter = (function (_super) {
+var ComparableBaseFilter = /** @class */ (function (_super) {
     __extends(ComparableBaseFilter, _super);
     function ComparableBaseFilter() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -428,7 +431,7 @@ exports.ComparableBaseFilter = ComparableBaseFilter;
  * Comparable filter with scalar underlying values (ie numbers and dates. Strings are not scalar so have to extend
  * ComparableBaseFilter)
  */
-var ScalarBaseFilter = (function (_super) {
+var ScalarBaseFilter = /** @class */ (function (_super) {
     __extends(ScalarBaseFilter, _super);
     function ScalarBaseFilter() {
         return _super !== null && _super.apply(this, arguments) || this;

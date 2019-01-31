@@ -14,12 +14,12 @@ export declare class InfiniteCache extends RowNodeCache<InfiniteBlock, InfiniteC
     private columnApi;
     private gridApi;
     constructor(params: InfiniteCacheParams);
-    private setBeans(loggerFactory);
+    private setBeans;
     protected init(): void;
-    private moveItemsDown(block, moveFromIndex, moveCount);
-    private insertItems(block, indexToInsert, items);
+    private moveItemsDown;
+    private insertItems;
     insertItemsAtIndex(indexToInsert: number, items: any[]): void;
     getRow(rowIndex: number, dontCreatePage?: boolean): RowNode;
-    private createBlock(blockNumber);
+    private createBlock;
     refreshCache(): void;
 }

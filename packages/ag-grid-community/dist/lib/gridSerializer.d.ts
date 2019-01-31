@@ -60,9 +60,9 @@ export declare abstract class BaseGridSerializingSession<T> implements GridSeria
     columnController: ColumnController;
     valueService: ValueService;
     gridOptionsWrapper: GridOptionsWrapper;
-    processCellCallback: (params: ProcessCellForExportParams) => string;
-    processHeaderCallback: (params: ProcessHeaderForExportParams) => string;
-    cellAndHeaderEscaper: (rawValue: string) => string;
+    processCellCallback?: (params: ProcessCellForExportParams) => string;
+    processHeaderCallback?: (params: ProcessHeaderForExportParams) => string;
+    cellAndHeaderEscaper?: (rawValue: string) => string;
     constructor(columnController: ColumnController, valueService: ValueService, gridOptionsWrapper: GridOptionsWrapper, processCellCallback?: (params: ProcessCellForExportParams) => string, processHeaderCallback?: (params: ProcessHeaderForExportParams) => string, cellAndHeaderEscaper?: (rawValue: string) => string);
     abstract prepare(columnsToExport: Column[]): void;
     abstract addCustomHeader(customHeader: T): void;
@@ -73,9 +73,9 @@ export declare abstract class BaseGridSerializingSession<T> implements GridSeria
     abstract parse(): string;
     extractHeaderValue(column: Column): string;
     extractRowCellValue(column: Column, index: number, type: string, node?: RowNode): any;
-    private getHeaderName(callback, column);
-    private createValueForGroupNode(node);
-    private processCell(rowNode, column, value, processCellCallback, type);
+    private getHeaderName;
+    private createValueForGroupNode;
+    private processCell;
 }
 export declare class GridSerializer {
     private displayedGroupCreator;
@@ -87,10 +87,10 @@ export declare class GridSerializer {
     private gridOptionsWrapper;
     serialize<T>(gridSerializingSession: GridSerializingSession<T>, params?: ExportParams<T>): string;
     recursivelyAddHeaderGroups<T>(displayedGroups: ColumnGroupChild[], gridSerializingSession: GridSerializingSession<T>): void;
-    private doAddHeaderHeader<T>(gridSerializingSession, displayedGroups);
+    private doAddHeaderHeader;
 }
 export declare enum RowType {
     HEADER_GROUPING = 0,
     HEADER = 1,
-    BODY = 2,
+    BODY = 2
 }

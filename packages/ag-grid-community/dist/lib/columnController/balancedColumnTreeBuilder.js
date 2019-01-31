@@ -28,7 +28,7 @@ var context_1 = require("../context/context");
 var utils_1 = require("../utils");
 var defaultColumnTypes_1 = require("../entities/defaultColumnTypes");
 // takes in a list of columns, as specified by the column definitions, and returns column groups
-var BalancedColumnTreeBuilder = (function () {
+var BalancedColumnTreeBuilder = /** @class */ (function () {
     function BalancedColumnTreeBuilder() {
     }
     BalancedColumnTreeBuilder.prototype.setBeans = function (loggerFactory) {

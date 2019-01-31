@@ -5,6 +5,7 @@ import { GridOptionsWrapper } from "../gridOptionsWrapper";
 export interface RowContainerComponentParams {
     eContainer: HTMLElement;
     eViewport?: HTMLElement;
+    eWrapper?: HTMLElement;
     hideWhenNoChildren?: boolean;
 }
 /**
@@ -16,6 +17,7 @@ export declare class RowContainerComponent {
     gridOptionsWrapper: GridOptionsWrapper;
     private readonly eContainer;
     private readonly eViewport;
+    private readonly eWrapper;
     private readonly hideWhenNoChildren;
     private childCount;
     private visible;
@@ -26,12 +28,12 @@ export declare class RowContainerComponent {
     private lastPlacedElement;
     constructor(params: RowContainerComponentParams);
     setVerticalScrollPosition(verticalScrollPosition: number): void;
-    private postConstruct();
+    private postConstruct;
     getRowElement(compId: number): HTMLElement;
     setHeight(height: number): void;
     flushRowTemplates(): void;
     appendRowTemplate(rowTemplate: string, callback: () => void): void;
     ensureDomOrder(eRow: HTMLElement): void;
     removeRowElement(eRow: HTMLElement): void;
-    private checkVisibility();
+    private checkVisibility;
 }

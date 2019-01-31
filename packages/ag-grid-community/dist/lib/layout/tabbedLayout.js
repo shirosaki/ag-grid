@@ -7,7 +7,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("../utils");
-var TabbedLayout = (function () {
+var TabbedLayout = /** @class */ (function () {
     function TabbedLayout(params) {
         var _this = this;
         this.items = [];

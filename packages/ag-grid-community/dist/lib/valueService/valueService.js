@@ -23,7 +23,7 @@ var utils_1 = require("../utils");
 var events_1 = require("../events");
 var eventService_1 = require("../eventService");
 var valueCache_1 = require("./valueCache");
-var ValueService = (function () {
+var ValueService = /** @class */ (function () {
     function ValueService() {
         this.initialised = false;
     }

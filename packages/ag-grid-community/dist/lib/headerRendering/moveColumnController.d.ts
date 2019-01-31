@@ -31,15 +31,15 @@ export declare class MoveColumnController implements DropListener {
     setColumnsVisible(columns: Column[], visible: boolean, source?: ColumnEventType): void;
     setColumnsPinned(columns: Column[], pinned: string, source?: ColumnEventType): void;
     onDragStop(): void;
-    private normaliseX(x);
-    private checkCenterForScrolling(xAdjustedForScroll);
+    private normaliseX;
+    private checkCenterForScrolling;
     onDragging(draggingEvent: DraggingEvent, fromEnter?: boolean): void;
-    private normaliseDirection(hDirection);
-    private calculateOldIndex(movingCols);
-    private attemptMoveColumns(dragSourceType, allMovingColumns, hDirection, xAdjusted, fromEnter);
-    private calculateValidMoves(movingCols, draggingRight, x);
-    private isColumnHidden(displayedColumns, col);
-    private ensureIntervalStarted();
-    private ensureIntervalCleared();
-    private moveInterval();
+    private normaliseDirection;
+    private calculateOldIndex;
+    private attemptMoveColumns;
+    private calculateValidMoves;
+    private isColumnHidden;
+    private ensureIntervalStarted;
+    private ensureIntervalCleared;
+    private moveInterval;
 }

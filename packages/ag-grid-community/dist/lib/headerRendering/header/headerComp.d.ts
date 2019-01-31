@@ -40,16 +40,16 @@ export declare class HeaderComp extends Component implements IHeaderComp {
     private params;
     private lastMovingChanged;
     init(params: IHeaderParams): void;
-    private setupText(displayName);
-    private setupIcons(column);
-    private addInIcon(iconName, eParent, column);
-    private setupTap();
-    private setupMenu();
+    private setupText;
+    private setupIcons;
+    private addInIcon;
+    private setupTap;
+    private setupMenu;
     showMenu(eventSource: HTMLElement): void;
-    private removeSortIcons();
+    private removeSortIcons;
     setupSort(): void;
-    private onSortChanged();
-    private setMultiSortOrder();
-    private setupFilterIcon();
-    private onFilterChanged();
+    private onSortChanged;
+    private setMultiSortOrder;
+    private setupFilterIcon;
+    private onFilterChanged;
 }

@@ -16,7 +16,7 @@ export declare class BodyDropPivotTarget implements DropListener {
     getIconName(): string;
     /** Callback for when drag leaves */
     onDragLeave(draggingEvent: DraggingEvent): void;
-    private clearColumnsList();
+    private clearColumnsList;
     /** Callback for when dragging */
     onDragging(draggingEvent: DraggingEvent): void;
     /** Callback for when drag stops */
