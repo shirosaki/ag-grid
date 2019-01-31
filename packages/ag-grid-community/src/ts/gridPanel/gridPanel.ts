@@ -1093,6 +1093,8 @@ export class GridPanel extends Component {
             width += pinnedContainerWidths;
         }
 
+        this.headerRootComp.setHeaderContainerWidth(width);
+
         const widthPx = `${width}px`;
 
         this.eCenterContainer.style.width = widthPx;

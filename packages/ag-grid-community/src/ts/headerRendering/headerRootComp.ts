@@ -134,4 +134,8 @@ export class HeaderRootComp extends Component {
     public setRightVisible(visible: boolean): void {
         _.setVisible(this.ePinnedRightHeader, visible);
     }
+
+    public setHeaderContainerWidth(width: number) {
+        this.eHeaderContainer.style.width = `${width}px`;
+    }
 }

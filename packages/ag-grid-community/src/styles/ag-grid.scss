@@ -42,6 +42,9 @@ ag-grid-aurelia {
 
 .ag-root-wrapper {
     position: relative; // set to relative, so absolute popups appear relative to this
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
 }
 
 .ag-root-wrapper.ag-layout-normal {
@@ -118,12 +121,7 @@ ag-grid-aurelia {
 }
 
 .ag-header-viewport {
-    box-sizing: border-box;
-    height: 100%;
-    overflow: hidden;
     width: 0px;
-    min-width: 0px;
-    flex: 1;
 }
 
 .ag-header-row {
@@ -324,10 +322,29 @@ ag-grid-aurelia {
     padding-top: 30px;
 }
 
-.ag-body-viewport {
-    box-sizing: border-box;
-    display: flex;
+/**
+ ****************************
+ * Viewports
+ ****************************
+*/
+.ag-header-viewport,
+.ag-floating-top-viewport,
+.ag-body-viewport,
+.ag-pinned-left-cols-viewport,
+.ag-center-cols-viewport,
+.ag-pinned-right-cols-viewport,
+.ag-floating-bottom-viewport,
+.ag-body-horizontal-scroll-viewport,
+.ag-virtual-list-viewport {
+    position: relative;
+    height: 100%;
+    min-width: 0px;
     overflow: hidden;
+    flex: 1;
+}
+
+.ag-body-viewport {
+    display: flex;
 
     &.ag-layout-normal {
         height: 100%;
@@ -374,14 +391,6 @@ ag-grid-aurelia {
     position: relative; // otherwise the % width of children is not relative to this element
 }
 
-.ag-floating-top-viewport {
-    box-sizing: border-box;
-    overflow: hidden;
-    width: 0px;
-    min-width: 0px;
-    flex: 1;
-}
-
 .ag-floating-top-container {
     box-sizing: border-box;
     position: relative;
@@ -411,14 +420,6 @@ ag-grid-aurelia {
     position: relative; // otherwise the % width of children is not relative to this element
 }
 
-.ag-floating-bottom-viewport {
-    box-sizing: border-box;
-    overflow: hidden;
-    flex: 1;
-    width: 0px;
-    min-width: 0px;
-}
-
 .ag-floating-bottom-container {
     box-sizing: border-box;
     position: relative;
@@ -426,10 +427,7 @@ ag-grid-aurelia {
 }
 
 .ag-pinned-right-cols-viewport {
-    height: 100%;
-    overflow: hidden;
     flex-grow: 1000;
-    min-width: 0px;
     width: 0px;
 }
 
@@ -439,12 +437,8 @@ ag-grid-aurelia {
 }
 
 .ag-pinned-left-cols-viewport {
-    height: 100%;
     flex-grow: 1000;
-    overflow: hidden;;
-    min-width: 0px;
     width: 0px;
-    position: relative;
 }
 
 .ag-pinned-left-cols-container {
@@ -458,10 +452,8 @@ ag-grid-aurelia {
 }
 
 .ag-center-cols-viewport {
-    width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    position: relative;
 }
 
 .ag-center-cols-container {
@@ -470,10 +462,8 @@ ag-grid-aurelia {
 
 .ag-body-horizontal-scroll-viewport {
     min-height: 0;
-    position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    flex: 1;
 }
 
 .ag-body-horizontal-scroll-container {
@@ -756,7 +746,6 @@ ag-grid-aurelia {
 //z-index: 100
 
 .ag-virtual-list-viewport {
-    height: 100%;
     overflow-x: auto;
     width: 100%;
 }
