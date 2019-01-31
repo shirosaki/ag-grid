@@ -8,4 +8,5 @@ export declare class Ng2FrameworkFactory implements IFrameworkFactory {
     private _baseFrameworkFactory;
     constructor(_componentFactory: BaseComponentFactory, _ngZone: NgZone);
     setViewContainerRef(viewContainerRef: ViewContainerRef): void;
+    setTimeout(action: any, timeout?: any): void;
 }
