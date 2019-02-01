@@ -61,7 +61,7 @@ function toId($str) {
                         <ul class="list-unstyled">
                             <?php foreach ($item['links'] as $link) { ?>
                             <li><a href="<?= $link['url'] ?>"><?= $link['title'] ?> &rarr;</a></li>
-                            <? } ?>
+                            <?php } ?>
                         </ul>
                     </div>
 
@@ -69,7 +69,7 @@ function toId($str) {
                         <img src="<?=$item['img'] ?>" height="180" width="320">
                     </div>
                 </div>
-                <? } ?>
+                <?php } ?>
             </div>
     <?php } ?>
     </section>
