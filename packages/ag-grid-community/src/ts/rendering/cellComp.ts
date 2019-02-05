@@ -604,8 +604,7 @@ export class CellComp extends Component {
         if (this.tooltip !== newTooltip) {
             this.tooltip = newTooltip;
             if (_.exists(newTooltip)) {
-                let tooltipSanitised = _.escape(this.tooltip);
-                this.eParentOfValue.setAttribute('title', tooltipSanitised);
+                this.eParentOfValue.setAttribute('title', this.tooltip);
             } else {
                 this.eParentOfValue.removeAttribute('title');
             }
