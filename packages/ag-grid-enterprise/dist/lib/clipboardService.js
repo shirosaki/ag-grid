@@ -77,9 +77,10 @@ var ClipboardService = (function () {
             columns.forEach(function (column, index) {
                 if (!column.isCellEditable(rowNode))
                     return;
-                // ignore columns we don't have data for - happens when to range is bigger than copied data range
-                if (index >= currentRowData.length)
-                    return;
+                // repeat data for columns we don't have data for - happens when to range is bigger than copied data range
+                if (index >= currentRowData.length) {
+                    index = index % currentRowData.length;
+                }
                 var firstRowValue = currentRowData[index];
                 var processCellFromClipboardFunc = _this.gridOptionsWrapper.getProcessCellFromClipboardFunc();
                 firstRowValue = _this.userProcessCell(rowNode, column, firstRowValue, processCellFromClipboardFunc, main_1.Constants.EXPORT_TYPE_DRAG_COPY);

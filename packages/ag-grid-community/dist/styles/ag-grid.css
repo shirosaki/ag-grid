@@ -681,7 +681,7 @@ ag-grid-aurelia {
   display: table-cell; }
 
 .ag-virtual-list-viewport {
-  overflow-x: auto;
+  overflow: auto;
   width: 100%; }
 
 .ag-virtual-list-container {
