@@ -1366,7 +1366,7 @@
     padding: 4px;
     background: #1c1f20;
     padding: 0;
-    z-index: 1; }
+    z-index: 5; }
     .ag-theme-balham-dark .ag-popup-editor .ag-large-textarea textarea {
       height: auto;
       padding: 12px; }

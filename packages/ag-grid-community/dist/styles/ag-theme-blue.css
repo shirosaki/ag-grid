@@ -1257,7 +1257,7 @@
     box-shadow: none;
     padding: 4px;
     padding: 0;
-    z-index: 1; }
+    z-index: 5; }
     .ag-theme-blue .ag-popup-editor .ag-large-textarea textarea {
       height: auto;
       padding: 12px; }

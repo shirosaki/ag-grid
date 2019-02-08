@@ -1396,7 +1396,7 @@
     padding: 8px;
     background: #f5f5f5;
     padding: 0;
-    z-index: 1; }
+    z-index: 5; }
     .ag-theme-material .ag-popup-editor .ag-large-textarea textarea {
       background: transparent;
       box-sizing: border-box;
